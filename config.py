@@ -11,6 +11,11 @@ FYERS_APP_ID_HASH = os.getenv("FYERS_APP_ID_HASH", "b209632623b60de416ea3bcbd2b7
 
 TOKEN_PATH = Path("outputs/fyers_access_token.txt")
 
+
+#=====Good Stock Filter====
+AVG_VOL = 5000000
+AVG_PRICE = 500
+
 # === DATA SETTINGS ===
 SYMBOLS_FILE = Path("symbols.csv")
 HISTORICAL_DATA_FILE = Path("outputs/all_symbols_history.parquet")
