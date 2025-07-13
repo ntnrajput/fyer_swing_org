@@ -32464,3 +32464,1418 @@ Name: count, dtype: int64
 [2025-07-13 23:18:06] [INFO] - model.train_model -  Training advanced model on 7593 samples, testing on 1899 samples...
 [2025-07-13 23:18:06] [INFO] - model.train_model -  Selected 50 most important features
 [2025-07-13 23:18:06] [INFO] - model.train_model -  Optimizing hyperparameters...
+[2025-07-13 23:21:07] [INFO] - Main -  Starting model training...
+[2025-07-13 23:21:08] [INFO] - features.engineer_features -  Features added for NSE:ADANIPOWER-EQ
+[2025-07-13 23:21:08] [INFO] - features.engineer_features -  Features added for NSE:BAJFINANCE-EQ
+[2025-07-13 23:21:09] [INFO] - features.engineer_features -  Features added for NSE:BHARTIARTL-EQ
+[2025-07-13 23:21:09] [INFO] - features.engineer_features -  Features added for NSE:BSE-EQ
+[2025-07-13 23:21:09] [INFO] - features.engineer_features -  Features added for NSE:CDSL-EQ
+[2025-07-13 23:21:09] [INFO] - features.engineer_features -  Features added for NSE:COCHINSHIP-EQ
+[2025-07-13 23:21:09] [INFO] - features.engineer_features -  Features added for NSE:ELLEN-EQ
+[2025-07-13 23:21:10] [INFO] - features.engineer_features -  Features added for NSE:HDBFS-EQ
+[2025-07-13 23:21:10] [INFO] - features.engineer_features -  Features added for NSE:HDFCBANK-EQ
+[2025-07-13 23:21:10] [INFO] - features.engineer_features -  Features added for NSE:INFY-EQ
+[2025-07-13 23:21:11] [INFO] - features.engineer_features -  Features added for NSE:PAYTM-EQ
+[2025-07-13 23:21:11] [INFO] - features.engineer_features -  Features added for NSE:RELIANCE-EQ
+[2025-07-13 23:21:11] [INFO] - features.engineer_features -  Features added for NSE:SBIN-EQ
+[2025-07-13 23:21:11] [INFO] - features.engineer_features -  Features added for NSE:SHRIRAMFIN-EQ
+[2025-07-13 23:21:12] [INFO] - features.engineer_features -  Features added for NSE:TATAMOTORS-EQ
+[2025-07-13 23:21:12] [INFO] - model.train_model -  Loading data for advanced model training...
+[2025-07-13 23:21:12] [INFO] - model.train_model -  Validating available features...
+[2025-07-13 23:21:12] [INFO] - model.train_model - Available Feature Categories:
+[2025-07-13 23:21:12] [INFO] - model.train_model -     Technical Indicators: 3 features
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - rsi
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - atr
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - bb_position
+[2025-07-13 23:21:12] [INFO] - model.train_model -     EMA Features: 7 features
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - ema20
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - ema50
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - ema200
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - ema20_above_ema50
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - ema20_distance
+[2025-07-13 23:21:12] [INFO] - model.train_model -       ... and 2 more
+[2025-07-13 23:21:12] [INFO] - model.train_model -     Candlestick Patterns: 7 features
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - is_doji
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - is_hammer
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - is_bullish
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - is_bearish
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - body_to_range
+[2025-07-13 23:21:12] [INFO] - model.train_model -       ... and 2 more
+[2025-07-13 23:21:12] [INFO] - model.train_model -     Support/Resistance: 6 features
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - norm_dist_to_support
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - norm_dist_to_resistance
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - support_strength
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - resistance_strength
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - nearest_support
+[2025-07-13 23:21:12] [INFO] - model.train_model -       ... and 1 more
+[2025-07-13 23:21:12] [INFO] - model.train_model -     Volatility & Returns: 8 features
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - daily_return
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - range_pct
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - volatility_5
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - volatility_10
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - volatility_20
+[2025-07-13 23:21:12] [INFO] - model.train_model -       ... and 3 more
+[2025-07-13 23:21:12] [INFO] - model.train_model -     Volume Features: 2 features
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - volume_ratio
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - price_volume
+[2025-07-13 23:21:12] [INFO] - model.train_model -     Trend Features: 3 features
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - ema20_distance
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - ema50_distance
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - ema_spread
+[2025-07-13 23:21:12] [INFO] - model.train_model -     Advanced Features: 2 features
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - gap_up
+[2025-07-13 23:21:12] [INFO] - model.train_model -       - gap_down
+[2025-07-13 23:21:12] [INFO] - model.train_model -  Missing Feature Categories:
+[2025-07-13 23:21:12] [INFO] - model.train_model -     Volume Features: 2 missing features
+[2025-07-13 23:21:12] [INFO] - model.train_model -     Trend Features: 1 missing features
+[2025-07-13 23:21:12] [INFO] - model.train_model -     Advanced Features: 5 missing features
+[2025-07-13 23:21:12] [INFO] - model.train_model -  Total Features Available: 38
+[2025-07-13 23:21:12] [INFO] - model.train_model -  Creating advanced features...
+[2025-07-13 23:21:12] [INFO] - model.train_model -  Filtering and preparing training data...
+[2025-07-13 23:21:12] [INFO] - model.train_model -  Initial data shape: (9688, 192)
+[2025-07-13 23:21:12] [INFO] - model.train_model -  Target column info: target_hit
+0.0    6841
+1.0    2700
+Name: count, dtype: int64
+[2025-07-13 23:21:12] [INFO] - model.train_model -  After filtering NaN targets: (9541, 192)
+[2025-07-13 23:21:12] [INFO] - model.train_model -  Cleaning target variable...
+[2025-07-13 23:21:12] [INFO] - model.train_model -  Unique target values: [0 1]
+[2025-07-13 23:21:12] [INFO] - model.train_model -  After filtering to binary targets: (9541, 192)
+[2025-07-13 23:21:12] [INFO] - model.train_model -  After removing NaN values from feature columns: (9492, 181)
+[2025-07-13 23:21:12] [INFO] - model.train_model -  Using 176 features for training
+[2025-07-13 23:21:12] [INFO] - model.train_model -  Handling class imbalance...
+[2025-07-13 23:21:12] [INFO] - model.train_model -    Class distribution: {0: 6812, 1: 2680}
+[2025-07-13 23:21:12] [INFO] - model.train_model -    Unique classes (cleaned): [0 1]
+[2025-07-13 23:21:12] [INFO] - model.train_model -    Classes dtype: int64
+[2025-07-13 23:21:12] [INFO] - model.train_model -    Class weights: {np.int64(0): np.float64(0.6967116852613036), np.int64(1): np.float64(1.7708955223880598)}
+[2025-07-13 23:21:13] [INFO] - model.train_model -  Training advanced model on 7593 samples, testing on 1899 samples...
+[2025-07-13 23:21:13] [INFO] - model.train_model -  Selected 50 most important features
+[2025-07-13 23:21:13] [INFO] - model.train_model -  Optimizing hyperparameters...
+[2025-07-13 23:21:24] [INFO] - model.train_model -  Best RF AUC: 1.000
+[2025-07-13 23:21:24] [INFO] - model.train_model -  Best GB AUC: 1.000
+[2025-07-13 23:21:24] [INFO] - model.train_model -  Creating ensemble model...
+[2025-07-13 23:21:27] [INFO] - model.train_model -  Evaluating model performance...
+[2025-07-13 23:21:27] [INFO] - model.train_model - 
+TRADING PERFORMANCE METRICS:
+[2025-07-13 23:21:27] [INFO] - model.train_model -     Win Rate: 100.0%
+[2025-07-13 23:21:27] [INFO] - model.train_model -     AUC Score: 1.000
+[2025-07-13 23:21:27] [INFO] - model.train_model -     Precision: 1.000
+[2025-07-13 23:21:27] [INFO] - model.train_model -     Recall: 1.000
+[2025-07-13 23:21:27] [INFO] - model.train_model - 
+ Classification Report:
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      1320
+           1       1.00      1.00      1.00       579
+
+    accuracy                           1.00      1899
+   macro avg       1.00      1.00      1.00      1899
+weighted avg       1.00      1.00      1.00      1899
+
+[2025-07-13 23:21:27] [INFO] - model.train_model -  Advanced model pipeline saved to model\model.pkl
+[2025-07-13 23:21:27] [INFO] - model.train_model - 
+ TRADING RECOMMENDATIONS:
+[2025-07-13 23:21:27] [INFO] - model.train_model -     Model shows strong predictive power - suitable for live trading
+[2025-07-13 23:21:27] [INFO] - model.train_model -     Recommended position sizing: Conservative (model win rate: 100.0%)
+[2025-07-13 23:21:27] [INFO] - model.train_model -     Suitable for swing trading timeframes: 2-10 days
+[2025-07-13 23:21:27] [INFO] - Main -  Saving latest data (15 records) to outputs\latest_full_data.parquet
+[2025-07-13 23:27:16] [INFO] - Main -  Starting model training...
+[2025-07-13 23:27:17] [INFO] - features.engineer_features -  Features added for NSE:ADANIPOWER-EQ
+[2025-07-13 23:27:17] [INFO] - features.engineer_features -  Features added for NSE:BAJFINANCE-EQ
+[2025-07-13 23:27:18] [INFO] - features.engineer_features -  Features added for NSE:BHARTIARTL-EQ
+[2025-07-13 23:27:18] [INFO] - features.engineer_features -  Features added for NSE:BSE-EQ
+[2025-07-13 23:27:18] [INFO] - features.engineer_features -  Features added for NSE:CDSL-EQ
+[2025-07-13 23:27:18] [INFO] - features.engineer_features -  Features added for NSE:COCHINSHIP-EQ
+[2025-07-13 23:27:19] [INFO] - features.engineer_features -  Features added for NSE:ELLEN-EQ
+[2025-07-13 23:27:19] [INFO] - features.engineer_features -  Features added for NSE:HDBFS-EQ
+[2025-07-13 23:27:19] [INFO] - features.engineer_features -  Features added for NSE:HDFCBANK-EQ
+[2025-07-13 23:27:19] [INFO] - features.engineer_features -  Features added for NSE:INFY-EQ
+[2025-07-13 23:27:20] [INFO] - features.engineer_features -  Features added for NSE:PAYTM-EQ
+[2025-07-13 23:27:20] [INFO] - features.engineer_features -  Features added for NSE:RELIANCE-EQ
+[2025-07-13 23:27:20] [INFO] - features.engineer_features -  Features added for NSE:SBIN-EQ
+[2025-07-13 23:27:20] [INFO] - features.engineer_features -  Features added for NSE:SHRIRAMFIN-EQ
+[2025-07-13 23:27:21] [INFO] - features.engineer_features -  Features added for NSE:TATAMOTORS-EQ
+[2025-07-13 23:27:21] [INFO] - model.train_model -  Loading data for advanced model training...
+[2025-07-13 23:27:21] [INFO] - model.train_model -  Validating available features...
+[2025-07-13 23:27:21] [INFO] - model.train_model - Available Feature Categories:
+[2025-07-13 23:27:21] [INFO] - model.train_model -     Technical Indicators: 3 features
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - rsi
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - atr
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - bb_position
+[2025-07-13 23:27:21] [INFO] - model.train_model -     EMA Features: 7 features
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - ema20
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - ema50
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - ema200
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - ema20_above_ema50
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - ema20_distance
+[2025-07-13 23:27:21] [INFO] - model.train_model -       ... and 2 more
+[2025-07-13 23:27:21] [INFO] - model.train_model -     Candlestick Patterns: 7 features
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - is_doji
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - is_hammer
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - is_bullish
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - is_bearish
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - body_to_range
+[2025-07-13 23:27:21] [INFO] - model.train_model -       ... and 2 more
+[2025-07-13 23:27:21] [INFO] - model.train_model -     Support/Resistance: 6 features
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - norm_dist_to_support
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - norm_dist_to_resistance
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - support_strength
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - resistance_strength
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - nearest_support
+[2025-07-13 23:27:21] [INFO] - model.train_model -       ... and 1 more
+[2025-07-13 23:27:21] [INFO] - model.train_model -     Volatility & Returns: 8 features
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - daily_return
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - range_pct
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - volatility_5
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - volatility_10
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - volatility_20
+[2025-07-13 23:27:21] [INFO] - model.train_model -       ... and 3 more
+[2025-07-13 23:27:21] [INFO] - model.train_model -     Volume Features: 2 features
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - volume_ratio
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - price_volume
+[2025-07-13 23:27:21] [INFO] - model.train_model -     Trend Features: 3 features
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - ema20_distance
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - ema50_distance
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - ema_spread
+[2025-07-13 23:27:21] [INFO] - model.train_model -     Advanced Features: 2 features
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - gap_up
+[2025-07-13 23:27:21] [INFO] - model.train_model -       - gap_down
+[2025-07-13 23:27:21] [INFO] - model.train_model -  Missing Feature Categories:
+[2025-07-13 23:27:21] [INFO] - model.train_model -     Volume Features: 2 missing features
+[2025-07-13 23:27:21] [INFO] - model.train_model -     Trend Features: 1 missing features
+[2025-07-13 23:27:21] [INFO] - model.train_model -     Advanced Features: 5 missing features
+[2025-07-13 23:27:21] [INFO] - model.train_model -  Total Features Available: 38
+[2025-07-13 23:27:21] [INFO] - model.train_model -  Creating advanced features...
+[2025-07-13 23:27:21] [INFO] - model.train_model -  Filtering and preparing training data...
+[2025-07-13 23:27:21] [INFO] - model.train_model -  Initial data shape: (9688, 192)
+[2025-07-13 23:27:21] [INFO] - model.train_model -  Target column info: target_hit
+0.0    6841
+1.0    2700
+Name: count, dtype: int64
+[2025-07-13 23:27:21] [INFO] - model.train_model -  After filtering NaN targets: (9541, 192)
+[2025-07-13 23:27:21] [INFO] - model.train_model -  Cleaning target variable...
+[2025-07-13 23:27:21] [INFO] - model.train_model -  Unique target values: [0 1]
+[2025-07-13 23:27:21] [INFO] - model.train_model -  After filtering to binary targets: (9541, 192)
+[2025-07-13 23:27:21] [INFO] - model.train_model -  After removing NaN values from feature columns: (9492, 181)
+[2025-07-13 23:27:21] [INFO] - model.train_model -  Using 176 features for training
+[2025-07-13 23:27:21] [INFO] - model.train_model -  Handling class imbalance...
+[2025-07-13 23:27:21] [INFO] - model.train_model -    Class distribution: {0: 6812, 1: 2680}
+[2025-07-13 23:27:21] [INFO] - model.train_model -    Unique classes (cleaned): [0 1]
+[2025-07-13 23:27:21] [INFO] - model.train_model -    Classes dtype: int64
+[2025-07-13 23:27:21] [INFO] - model.train_model -    Class weights: {np.int64(0): np.float64(0.6967116852613036), np.int64(1): np.float64(1.7708955223880598)}
+[2025-07-13 23:27:22] [INFO] - model.train_model -  Training advanced model on 7593 samples, testing on 1899 samples...
+[2025-07-13 23:27:22] [INFO] - model.train_model -  Selected 50 most important features
+[2025-07-13 23:27:22] [INFO] - model.train_model -  Optimizing hyperparameters...
+[2025-07-13 23:27:33] [INFO] - model.train_model -  Best RF AUC: 1.000
+[2025-07-13 23:27:33] [INFO] - model.train_model -  Best GB AUC: 1.000
+[2025-07-13 23:27:33] [INFO] - model.train_model -  Creating ensemble model...
+[2025-07-13 23:27:37] [INFO] - model.train_model -  Evaluating model performance...
+[2025-07-13 23:27:37] [INFO] - model.train_model - 
+TRADING PERFORMANCE METRICS:
+[2025-07-13 23:27:37] [INFO] - model.train_model -     Win Rate: 100.0%
+[2025-07-13 23:27:37] [INFO] - model.train_model -     AUC Score: 1.000
+[2025-07-13 23:27:37] [INFO] - model.train_model -     Precision: 1.000
+[2025-07-13 23:27:37] [INFO] - model.train_model -     Recall: 1.000
+[2025-07-13 23:27:37] [INFO] - model.train_model - 
+ Classification Report:
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00      1320
+           1       1.00      1.00      1.00       579
+
+    accuracy                           1.00      1899
+   macro avg       1.00      1.00      1.00      1899
+weighted avg       1.00      1.00      1.00      1899
+
+[2025-07-13 23:27:37] [INFO] - model.train_model -  Advanced model pipeline saved to model\model.pkl
+[2025-07-13 23:27:37] [INFO] - model.train_model - 
+ TRADING RECOMMENDATIONS:
+[2025-07-13 23:27:37] [INFO] - model.train_model -     Model shows strong predictive power - suitable for live trading
+[2025-07-13 23:27:37] [INFO] - model.train_model -     Recommended position sizing: Conservative (model win rate: 100.0%)
+[2025-07-13 23:27:37] [INFO] - model.train_model -     Suitable for swing trading timeframes: 2-10 days
+[2025-07-13 23:27:37] [INFO] - Main -  Saving latest data (15 records) to outputs\latest_full_data.parquet
+[2025-07-13 23:39:24] [INFO] - Main -  Starting model training...
+[2025-07-13 23:39:25] [INFO] - features.engineer_features -  Features added for NSE:ADANIPOWER-EQ
+[2025-07-13 23:39:25] [INFO] - features.engineer_features -  Features added for NSE:BAJFINANCE-EQ
+[2025-07-13 23:39:25] [INFO] - features.engineer_features -  Features added for NSE:BHARTIARTL-EQ
+[2025-07-13 23:39:26] [INFO] - features.engineer_features -  Features added for NSE:BSE-EQ
+[2025-07-13 23:39:26] [INFO] - features.engineer_features -  Features added for NSE:CDSL-EQ
+[2025-07-13 23:39:26] [INFO] - features.engineer_features -  Features added for NSE:COCHINSHIP-EQ
+[2025-07-13 23:39:26] [INFO] - features.engineer_features -  Features added for NSE:ELLEN-EQ
+[2025-07-13 23:39:26] [INFO] - features.engineer_features -  Features added for NSE:HDBFS-EQ
+[2025-07-13 23:39:27] [INFO] - features.engineer_features -  Features added for NSE:HDFCBANK-EQ
+[2025-07-13 23:39:27] [INFO] - features.engineer_features -  Features added for NSE:INFY-EQ
+[2025-07-13 23:39:27] [INFO] - features.engineer_features -  Features added for NSE:PAYTM-EQ
+[2025-07-13 23:39:28] [INFO] - features.engineer_features -  Features added for NSE:RELIANCE-EQ
+[2025-07-13 23:39:28] [INFO] - features.engineer_features -  Features added for NSE:SBIN-EQ
+[2025-07-13 23:39:28] [INFO] - features.engineer_features -  Features added for NSE:SHRIRAMFIN-EQ
+[2025-07-13 23:39:28] [INFO] - features.engineer_features -  Features added for NSE:TATAMOTORS-EQ
+[2025-07-13 23:39:28] [INFO] - model.train_model - Loading data for simplified model training...
+[2025-07-13 23:39:28] [INFO] - model.train_model - Validating available features...
+[2025-07-13 23:39:28] [INFO] - model.train_model - Available Core Features:
+[2025-07-13 23:39:28] [INFO] - model.train_model -   Technical Indicators: ['rsi', 'atr', 'bb_position']
+[2025-07-13 23:39:28] [INFO] - model.train_model -   Price Movement: ['daily_return', 'range_pct']
+[2025-07-13 23:39:28] [INFO] - model.train_model -   Volume: ['volume_ratio']
+[2025-07-13 23:39:28] [INFO] - model.train_model -   Support/Resistance: ['norm_dist_to_support', 'norm_dist_to_resistance']
+[2025-07-13 23:39:28] [INFO] - model.train_model - Total Core Features Available: 8
+[2025-07-13 23:39:28] [INFO] - model.train_model - Creating basic features...
+[2025-07-13 23:39:28] [INFO] - model.train_model - Filtering and preparing training data...
+[2025-07-13 23:39:28] [INFO] - model.train_model - Initial data shape: (9688, 160)
+[2025-07-13 23:39:28] [INFO] - model.train_model - After filtering to binary targets: (9541, 160)
+[2025-07-13 23:39:28] [INFO] - model.train_model - Using 14 core features for training
+[2025-07-13 23:39:28] [INFO] - model.train_model - Selected features: ['rsi', 'atr', 'bb_position', 'daily_return', 'range_pct', 'volume_ratio', 'trend_strength', 'norm_dist_to_support', 'norm_dist_to_resistance', 'rsi_oversold', 'rsi_overbought', 'ema20_distance', 'ema50_distance', 'ema_spread']
+[2025-07-13 23:39:28] [INFO] - model.train_model - Class distribution: {0: 6836, 1: 2686}
+[2025-07-13 23:39:28] [INFO] - model.train_model - Class weights: {np.int64(0): np.float64(0.696459918080749), np.int64(1): np.float64(1.772524199553239)}
+[2025-07-13 23:39:28] [INFO] - model.train_model - Training on 7617 samples, testing on 1905 samples
+[2025-07-13 23:39:28] [INFO] - model.train_model - Selected 10 most important features: ['atr', 'bb_position', 'daily_return', 'range_pct', 'trend_strength', 'norm_dist_to_support', 'norm_dist_to_resistance', 'ema20_distance', 'ema50_distance', 'ema_spread']
+[2025-07-13 23:39:28] [INFO] - model.train_model - Creating simple model...
+[2025-07-13 23:39:30] [INFO] - model.train_model - RF Cross-validation AUC: 0.587 (+/- 0.068)
+[2025-07-13 23:39:30] [INFO] - model.train_model - LR Cross-validation AUC: 0.567 (+/- 0.070)
+[2025-07-13 23:39:30] [INFO] - model.train_model - Selected Random Forest model
+[2025-07-13 23:39:30] [INFO] - model.train_model - Evaluating model performance...
+[2025-07-13 23:39:30] [INFO] - model.train_model - 
+MODEL PERFORMANCE METRICS:
+[2025-07-13 23:39:30] [INFO] - model.train_model -   Win Rate: 38.2%
+[2025-07-13 23:39:30] [INFO] - model.train_model -   AUC Score: 0.619
+[2025-07-13 23:39:30] [INFO] - model.train_model -   Precision: 0.382
+[2025-07-13 23:39:30] [INFO] - model.train_model -   Recall: 0.539
+[2025-07-13 23:39:30] [INFO] - model.train_model -   Train Accuracy: 0.722
+[2025-07-13 23:39:30] [INFO] - model.train_model -   Test Accuracy: 0.595
+[2025-07-13 23:39:30] [INFO] - model.train_model -   Overfitting Gap: 0.127
+[2025-07-13 23:39:30] [WARNING] - model.train_model -   WARNING: Potential overfitting detected!
+[2025-07-13 23:39:30] [INFO] - model.train_model - 
+Top 5 Most Important Features:
+[2025-07-13 23:39:30] [INFO] - model.train_model -   1. norm_dist_to_resistance: 0.243
+[2025-07-13 23:39:30] [INFO] - model.train_model -   2. norm_dist_to_support: 0.137
+[2025-07-13 23:39:30] [INFO] - model.train_model -   3. atr: 0.135
+[2025-07-13 23:39:30] [INFO] - model.train_model -   4. ema50_distance: 0.109
+[2025-07-13 23:39:30] [INFO] - model.train_model -   5. ema20_distance: 0.084
+[2025-07-13 23:39:31] [INFO] - model.train_model - Simplified model pipeline saved to model\model.pkl
+[2025-07-13 23:39:31] [INFO] - model.train_model - 
+TRADING RECOMMENDATIONS:
+[2025-07-13 23:39:31] [WARNING] - model.train_model -   Model may still be overfitting - use with caution
+[2025-07-13 23:39:31] [INFO] - model.train_model -   Model needs improvement - consider more data or different features
+[2025-07-13 23:39:31] [INFO] - model.train_model -   Conservative approach recommended (win rate: 38.2%)
+[2025-07-13 23:39:31] [INFO] - Main -  Saving latest data (15 records) to outputs\latest_full_data.parquet
+[2025-07-13 23:40:50] [INFO] - Main -  Starting model training...
+[2025-07-13 23:40:51] [INFO] - features.engineer_features -  Features added for NSE:20MICRONS-EQ
+[2025-07-13 23:40:51] [INFO] - features.engineer_features -  Features added for NSE:360ONE-EQ
+[2025-07-13 23:40:52] [INFO] - features.engineer_features -  Features added for NSE:63MOONS-EQ
+[2025-07-13 23:40:52] [INFO] - features.engineer_features -  Features added for NSE:AADHARHFC-EQ
+[2025-07-13 23:40:52] [INFO] - features.engineer_features -  Features added for NSE:AARTECH-EQ
+[2025-07-13 23:40:52] [INFO] - features.engineer_features -  Features added for NSE:AARTIDRUGS-EQ
+[2025-07-13 23:40:53] [INFO] - features.engineer_features -  Features added for NSE:AARTIIND-EQ
+[2025-07-13 23:40:53] [INFO] - features.engineer_features -  Features added for NSE:AARTIPHARM-EQ
+[2025-07-13 23:40:53] [INFO] - features.engineer_features -  Features added for NSE:ABB-EQ
+[2025-07-13 23:40:53] [INFO] - features.engineer_features -  Features added for NSE:ABCAPITAL-EQ
+[2025-07-13 23:40:54] [INFO] - features.engineer_features -  Features added for NSE:ABDL-EQ
+[2025-07-13 23:40:54] [INFO] - features.engineer_features -  Features added for NSE:ABFRL-EQ
+[2025-07-13 23:40:54] [INFO] - features.engineer_features -  Features added for NSE:ABINFRA-BE
+[2025-07-13 23:40:54] [INFO] - features.engineer_features -  Features added for NSE:ABLBL-EQ
+[2025-07-13 23:40:55] [INFO] - features.engineer_features -  Features added for NSE:ABSLBANETF-EQ
+[2025-07-13 23:40:55] [INFO] - features.engineer_features -  Features added for NSE:ACC-EQ
+[2025-07-13 23:40:55] [INFO] - features.engineer_features -  Features added for NSE:ACE-EQ
+[2025-07-13 23:40:55] [INFO] - features.engineer_features -  Features added for NSE:ACI-EQ
+[2025-07-13 23:40:55] [INFO] - features.engineer_features -  Features added for NSE:ACLGATI-EQ
+[2025-07-13 23:40:56] [INFO] - features.engineer_features -  Features added for NSE:ACMESOLAR-EQ
+[2025-07-13 23:40:56] [INFO] - features.engineer_features -  Features added for NSE:ADANIENSOL-EQ
+[2025-07-13 23:40:56] [INFO] - features.engineer_features -  Features added for NSE:ADANIENT-EQ
+[2025-07-13 23:40:56] [INFO] - features.engineer_features -  Features added for NSE:ADANIGREEN-EQ
+[2025-07-13 23:40:57] [INFO] - features.engineer_features -  Features added for NSE:ADANIPORTS-EQ
+[2025-07-13 23:40:57] [INFO] - features.engineer_features -  Features added for NSE:ADANIPOWER-EQ
+[2025-07-13 23:40:57] [INFO] - features.engineer_features -  Features added for NSE:ADFFOODS-EQ
+[2025-07-13 23:40:58] [INFO] - features.engineer_features -  Features added for NSE:ADSL-EQ
+[2025-07-13 23:40:58] [INFO] - features.engineer_features -  Features added for NSE:ADVENZYMES-EQ
+[2025-07-13 23:40:58] [INFO] - features.engineer_features -  Features added for NSE:AEGISLOG-EQ
+[2025-07-13 23:40:58] [INFO] - features.engineer_features -  Features added for NSE:AEGISVOPAK-EQ
+[2025-07-13 23:40:58] [INFO] - features.engineer_features -  Features added for NSE:AEROENTER-EQ
+[2025-07-13 23:40:59] [INFO] - features.engineer_features -  Features added for NSE:AEROFLEX-EQ
+[2025-07-13 23:40:59] [INFO] - features.engineer_features -  Features added for NSE:AETHER-EQ
+[2025-07-13 23:40:59] [INFO] - features.engineer_features -  Features added for NSE:AFCONS-EQ
+[2025-07-13 23:40:59] [INFO] - features.engineer_features -  Features added for NSE:AFFLE-EQ
+[2025-07-13 23:40:59] [INFO] - features.engineer_features -  Features added for NSE:AGARWALEYE-EQ
+[2025-07-13 23:41:00] [INFO] - features.engineer_features -  Features added for NSE:AGI-EQ
+[2025-07-13 23:41:00] [INFO] - features.engineer_features -  Features added for NSE:AGIIL-EQ
+[2025-07-13 23:41:00] [INFO] - features.engineer_features -  Features added for NSE:AIIL-EQ
+[2025-07-13 23:41:00] [INFO] - features.engineer_features -  Features added for NSE:AJANTPHARM-EQ
+[2025-07-13 23:41:01] [INFO] - features.engineer_features -  Features added for NSE:AJAXENGG-EQ
+[2025-07-13 23:41:01] [INFO] - features.engineer_features -  Features added for NSE:AKUMS-EQ
+[2025-07-13 23:41:01] [INFO] - features.engineer_features -  Features added for NSE:ALEMBICLTD-EQ
+[2025-07-13 23:41:01] [INFO] - features.engineer_features -  Features added for NSE:ALKEM-EQ
+[2025-07-13 23:41:02] [INFO] - features.engineer_features -  Features added for NSE:ALKYLAMINE-EQ
+[2025-07-13 23:41:02] [INFO] - features.engineer_features -  Features added for NSE:AMBER-EQ
+[2025-07-13 23:41:02] [INFO] - features.engineer_features -  Features added for NSE:AMBUJACEM-EQ
+[2025-07-13 23:41:02] [INFO] - features.engineer_features -  Features added for NSE:AMJLAND-EQ
+[2025-07-13 23:41:03] [INFO] - features.engineer_features -  Features added for NSE:ANANDRATHI-EQ
+[2025-07-13 23:41:03] [INFO] - features.engineer_features -  Features added for NSE:ANANTRAJ-EQ
+[2025-07-13 23:41:03] [INFO] - features.engineer_features -  Features added for NSE:ANDHRAPAP-EQ
+[2025-07-13 23:41:03] [INFO] - features.engineer_features -  Features added for NSE:ANDHRSUGAR-EQ
+[2025-07-13 23:41:04] [INFO] - features.engineer_features -  Features added for NSE:ANGELONE-EQ
+[2025-07-13 23:41:04] [INFO] - features.engineer_features -  Features added for NSE:ANURAS-EQ
+[2025-07-13 23:41:04] [INFO] - features.engineer_features -  Features added for NSE:APARINDS-EQ
+[2025-07-13 23:41:04] [INFO] - features.engineer_features -  Features added for NSE:APLAPOLLO-EQ
+[2025-07-13 23:41:05] [INFO] - features.engineer_features -  Features added for NSE:APLLTD-EQ
+[2025-07-13 23:41:05] [INFO] - features.engineer_features -  Features added for NSE:APOLLO-EQ
+[2025-07-13 23:41:05] [INFO] - features.engineer_features -  Features added for NSE:APOLLOHOSP-EQ
+[2025-07-13 23:41:05] [INFO] - features.engineer_features -  Features added for NSE:APOLLOPIPE-EQ
+[2025-07-13 23:41:06] [INFO] - features.engineer_features -  Features added for NSE:APOLLOTYRE-EQ
+[2025-07-13 23:41:06] [INFO] - features.engineer_features -  Features added for NSE:APTECHT-BE
+[2025-07-13 23:41:06] [INFO] - features.engineer_features -  Features added for NSE:ARE&M-EQ
+[2025-07-13 23:41:06] [INFO] - features.engineer_features -  Features added for NSE:ARIHANTCAP-EQ
+[2025-07-13 23:41:07] [INFO] - features.engineer_features -  Features added for NSE:ARISINFRA-EQ
+[2025-07-13 23:41:07] [INFO] - features.engineer_features -  Features added for NSE:ARKADE-EQ
+[2025-07-13 23:41:07] [INFO] - features.engineer_features -  Features added for NSE:ARTEMISMED-EQ
+[2025-07-13 23:41:07] [INFO] - features.engineer_features -  Features added for NSE:ARVIND-EQ
+[2025-07-13 23:41:08] [INFO] - features.engineer_features -  Features added for NSE:ARVINDFASN-EQ
+[2025-07-13 23:41:08] [INFO] - features.engineer_features -  Features added for NSE:ASAL-EQ
+[2025-07-13 23:41:08] [INFO] - features.engineer_features -  Features added for NSE:ASHAPURMIN-EQ
+[2025-07-13 23:41:08] [INFO] - features.engineer_features -  Features added for NSE:ASHOKA-EQ
+[2025-07-13 23:41:09] [INFO] - features.engineer_features -  Features added for NSE:ASHOKLEY-EQ
+[2025-07-13 23:41:09] [INFO] - features.engineer_features -  Features added for NSE:ASIANENE-EQ
+[2025-07-13 23:41:09] [INFO] - features.engineer_features -  Features added for NSE:ASIANPAINT-EQ
+[2025-07-13 23:41:09] [INFO] - features.engineer_features -  Features added for NSE:ASIANTILES-BE
+[2025-07-13 23:41:09] [INFO] - features.engineer_features -  Features added for NSE:ASKAUTOLTD-EQ
+[2025-07-13 23:41:10] [INFO] - features.engineer_features -  Features added for NSE:ASTERDM-EQ
+[2025-07-13 23:41:10] [INFO] - features.engineer_features -  Features added for NSE:ASTRAL-EQ
+[2025-07-13 23:41:10] [INFO] - features.engineer_features -  Features added for NSE:ASTRAMICRO-EQ
+[2025-07-13 23:41:10] [INFO] - features.engineer_features -  Features added for NSE:ATHERENERG-EQ
+[2025-07-13 23:41:11] [INFO] - features.engineer_features -  Features added for NSE:AUBANK-EQ
+[2025-07-13 23:41:11] [INFO] - features.engineer_features -  Features added for NSE:AURIONPRO-EQ
+[2025-07-13 23:41:11] [INFO] - features.engineer_features -  Features added for NSE:AUROPHARMA-EQ
+[2025-07-13 23:41:11] [INFO] - features.engineer_features -  Features added for NSE:AUTOBEES-EQ
+[2025-07-13 23:41:12] [INFO] - features.engineer_features -  Features added for NSE:AVALON-EQ
+[2025-07-13 23:41:12] [INFO] - features.engineer_features -  Features added for NSE:AVANTEL-EQ
+[2025-07-13 23:41:12] [INFO] - features.engineer_features -  Features added for NSE:AVANTIFEED-EQ
+[2025-07-13 23:41:12] [INFO] - features.engineer_features -  Features added for NSE:AVL-EQ
+[2025-07-13 23:41:13] [INFO] - features.engineer_features -  Features added for NSE:AWFIS-EQ
+[2025-07-13 23:41:13] [INFO] - features.engineer_features -  Features added for NSE:AWHCL-EQ
+[2025-07-13 23:41:13] [INFO] - features.engineer_features -  Features added for NSE:AWL-EQ
+[2025-07-13 23:41:13] [INFO] - features.engineer_features -  Features added for NSE:AXISCADES-BE
+[2025-07-13 23:41:14] [INFO] - features.engineer_features -  Features added for NSE:AXISGOLD-EQ
+[2025-07-13 23:41:14] [INFO] - features.engineer_features -  Features added for NSE:AXISILVER-EQ
+[2025-07-13 23:41:14] [INFO] - features.engineer_features -  Features added for NSE:AZAD-EQ
+[2025-07-13 23:41:14] [INFO] - features.engineer_features -  Features added for NSE:BAJAJ-AUTO-EQ
+[2025-07-13 23:41:15] [INFO] - features.engineer_features -  Features added for NSE:BAJAJCON-EQ
+[2025-07-13 23:41:15] [INFO] - features.engineer_features -  Features added for NSE:BAJAJELEC-EQ
+[2025-07-13 23:41:15] [INFO] - features.engineer_features -  Features added for NSE:BAJAJFINSV-EQ
+[2025-07-13 23:41:15] [INFO] - features.engineer_features -  Features added for NSE:BAJAJHCARE-EQ
+[2025-07-13 23:41:16] [INFO] - features.engineer_features -  Features added for NSE:BAJAJHFL-EQ
+[2025-07-13 23:41:16] [INFO] - features.engineer_features -  Features added for NSE:BAJAJINDEF-EQ
+[2025-07-13 23:41:16] [INFO] - features.engineer_features -  Features added for NSE:BAJEL-BE
+[2025-07-13 23:41:16] [INFO] - features.engineer_features -  Features added for NSE:BAJFINANCE-EQ
+[2025-07-13 23:41:17] [INFO] - features.engineer_features -  Features added for NSE:BALAJITELE-BE
+[2025-07-13 23:41:17] [INFO] - features.engineer_features -  Features added for NSE:BALAMINES-EQ
+[2025-07-13 23:41:17] [INFO] - features.engineer_features -  Features added for NSE:BALAXI-EQ
+[2025-07-13 23:41:17] [INFO] - features.engineer_features -  Features added for NSE:BALKRISIND-EQ
+[2025-07-13 23:41:18] [INFO] - features.engineer_features -  Features added for NSE:BALMLAWRIE-EQ
+[2025-07-13 23:41:18] [INFO] - features.engineer_features -  Features added for NSE:BALRAMCHIN-EQ
+[2025-07-13 23:41:18] [INFO] - features.engineer_features -  Features added for NSE:BALUFORGE-BE
+[2025-07-13 23:41:18] [INFO] - features.engineer_features -  Features added for NSE:BANCOINDIA-EQ
+[2025-07-13 23:41:19] [INFO] - features.engineer_features -  Features added for NSE:BANDHANBNK-EQ
+[2025-07-13 23:41:19] [INFO] - features.engineer_features -  Features added for NSE:BANKBARODA-EQ
+[2025-07-13 23:41:19] [INFO] - features.engineer_features -  Features added for NSE:BANKBEES-EQ
+[2025-07-13 23:41:19] [INFO] - features.engineer_features -  Features added for NSE:BANKETFADD-EQ
+[2025-07-13 23:41:20] [INFO] - features.engineer_features -  Features added for NSE:BANKIETF-EQ
+[2025-07-13 23:41:20] [INFO] - features.engineer_features -  Features added for NSE:BANKINDIA-EQ
+[2025-07-13 23:41:20] [INFO] - features.engineer_features -  Features added for NSE:BANSALWIRE-EQ
+[2025-07-13 23:41:20] [INFO] - features.engineer_features -  Features added for NSE:BARBEQUE-EQ
+[2025-07-13 23:41:20] [INFO] - features.engineer_features -  Features added for NSE:BATAINDIA-EQ
+[2025-07-13 23:41:21] [INFO] - features.engineer_features -  Features added for NSE:BBOX-BE
+[2025-07-13 23:41:21] [INFO] - features.engineer_features -  Features added for NSE:BDL-EQ
+[2025-07-13 23:41:21] [INFO] - features.engineer_features -  Features added for NSE:BEL-EQ
+[2025-07-13 23:41:21] [INFO] - features.engineer_features -  Features added for NSE:BELRISE-EQ
+[2025-07-13 23:41:22] [INFO] - features.engineer_features -  Features added for NSE:BEML-EQ
+[2025-07-13 23:41:22] [INFO] - features.engineer_features -  Features added for NSE:BEPL-EQ
+[2025-07-13 23:41:22] [INFO] - features.engineer_features -  Features added for NSE:BERGEPAINT-EQ
+[2025-07-13 23:41:22] [INFO] - features.engineer_features -  Features added for NSE:BFUTILITIE-EQ
+[2025-07-13 23:41:23] [INFO] - features.engineer_features -  Features added for NSE:BHARATFORG-EQ
+[2025-07-13 23:41:23] [INFO] - features.engineer_features -  Features added for NSE:BHARATSE-BE
+[2025-07-13 23:41:23] [INFO] - features.engineer_features -  Features added for NSE:BHARATWIRE-EQ
+[2025-07-13 23:41:23] [INFO] - features.engineer_features -  Features added for NSE:BHARTIARTL-EQ
+[2025-07-13 23:41:24] [INFO] - features.engineer_features -  Features added for NSE:BHARTIHEXA-EQ
+[2025-07-13 23:41:24] [INFO] - features.engineer_features -  Features added for NSE:BHEL-EQ
+[2025-07-13 23:41:24] [INFO] - features.engineer_features -  Features added for NSE:BIGBLOC-EQ
+[2025-07-13 23:41:24] [INFO] - features.engineer_features -  Features added for NSE:BIKAJI-EQ
+[2025-07-13 23:41:25] [INFO] - features.engineer_features -  Features added for NSE:BIOCON-EQ
+[2025-07-13 23:41:25] [INFO] - features.engineer_features -  Features added for NSE:BIRLACABLE-BE
+[2025-07-13 23:41:25] [INFO] - features.engineer_features -  Features added for NSE:BIRLACORPN-EQ
+[2025-07-13 23:41:25] [INFO] - features.engineer_features -  Features added for NSE:BIRLAMONEY-EQ
+[2025-07-13 23:41:25] [INFO] - features.engineer_features -  Features added for NSE:BLACKBUCK-EQ
+[2025-07-13 23:41:26] [INFO] - features.engineer_features -  Features added for NSE:BLAL-EQ
+[2025-07-13 23:41:26] [INFO] - features.engineer_features -  Features added for NSE:BLISSGVS-EQ
+[2025-07-13 23:41:26] [INFO] - features.engineer_features -  Features added for NSE:BLKASHYAP-EQ
+[2025-07-13 23:41:26] [INFO] - features.engineer_features -  Features added for NSE:BLS-EQ
+[2025-07-13 23:41:27] [INFO] - features.engineer_features -  Features added for NSE:BLSE-BE
+[2025-07-13 23:41:27] [INFO] - features.engineer_features -  Features added for NSE:BLUEJET-EQ
+[2025-07-13 23:41:27] [INFO] - features.engineer_features -  Features added for NSE:BLUESTARCO-EQ
+[2025-07-13 23:41:27] [INFO] - features.engineer_features -  Features added for NSE:BLUSPRING-EQ
+[2025-07-13 23:41:28] [INFO] - features.engineer_features -  Features added for NSE:BODALCHEM-EQ
+[2025-07-13 23:41:28] [INFO] - features.engineer_features -  Features added for NSE:BORANA-EQ
+[2025-07-13 23:41:28] [INFO] - features.engineer_features -  Features added for NSE:BOROLTD-EQ
+[2025-07-13 23:41:28] [INFO] - features.engineer_features -  Features added for NSE:BORORENEW-EQ
+[2025-07-13 23:41:28] [INFO] - features.engineer_features -  Features added for NSE:BOROSCI-EQ
+[2025-07-13 23:41:29] [INFO] - features.engineer_features -  Features added for NSE:BRIGADE-EQ
+[2025-07-13 23:41:29] [INFO] - features.engineer_features -  Features added for NSE:BSE-EQ
+[2025-07-13 23:41:29] [INFO] - features.engineer_features -  Features added for NSE:BSLGOLDETF-EQ
+[2025-07-13 23:41:29] [INFO] - features.engineer_features -  Features added for NSE:BSOFT-EQ
+[2025-07-13 23:41:30] [INFO] - features.engineer_features -  Features added for NSE:BYKE-BE
+[2025-07-13 23:41:30] [INFO] - features.engineer_features -  Features added for NSE:CAMPUS-EQ
+[2025-07-13 23:41:30] [INFO] - features.engineer_features -  Features added for NSE:CAMS-EQ
+[2025-07-13 23:41:30] [INFO] - features.engineer_features -  Features added for NSE:CANBK-EQ
+[2025-07-13 23:41:31] [INFO] - features.engineer_features -  Features added for NSE:CANTABIL-EQ
+[2025-07-13 23:41:31] [INFO] - features.engineer_features -  Features added for NSE:CAPACITE-EQ
+[2025-07-13 23:41:31] [INFO] - features.engineer_features -  Features added for NSE:CAPLIPOINT-EQ
+[2025-07-13 23:41:32] [INFO] - features.engineer_features -  Features added for NSE:CARERATING-EQ
+[2025-07-13 23:41:32] [INFO] - features.engineer_features -  Features added for NSE:CARRARO-EQ
+[2025-07-13 23:41:32] [INFO] - features.engineer_features -  Features added for NSE:CARYSIL-EQ
+[2025-07-13 23:41:32] [INFO] - features.engineer_features -  Features added for NSE:CASHIETF-EQ
+[2025-07-13 23:41:32] [INFO] - features.engineer_features -  Features added for NSE:CASTROLIND-EQ
+[2025-07-13 23:41:33] [INFO] - features.engineer_features -  Features added for NSE:CCL-EQ
+[2025-07-13 23:41:33] [INFO] - features.engineer_features -  Features added for NSE:CDSL-EQ
+[2025-07-13 23:41:33] [INFO] - features.engineer_features -  Features added for NSE:CEATLTD-EQ
+[2025-07-13 23:41:33] [INFO] - features.engineer_features -  Features added for NSE:CEIGALL-EQ
+[2025-07-13 23:41:34] [INFO] - features.engineer_features -  Features added for NSE:CELLO-EQ
+[2025-07-13 23:41:34] [INFO] - features.engineer_features -  Features added for NSE:CGCL-EQ
+[2025-07-13 23:41:34] [INFO] - features.engineer_features -  Features added for NSE:CGPOWER-EQ
+[2025-07-13 23:41:34] [INFO] - features.engineer_features -  Features added for NSE:CHALET-EQ
+[2025-07-13 23:41:35] [INFO] - features.engineer_features -  Features added for NSE:CHENNPETRO-EQ
+[2025-07-13 23:41:35] [INFO] - features.engineer_features -  Features added for NSE:CHOICEIN-EQ
+[2025-07-13 23:41:35] [INFO] - features.engineer_features -  Features added for NSE:CHOLAFIN-EQ
+[2025-07-13 23:41:35] [INFO] - features.engineer_features -  Features added for NSE:CHOLAHLDNG-EQ
+[2025-07-13 23:41:36] [INFO] - features.engineer_features -  Features added for NSE:CIEINDIA-EQ
+[2025-07-13 23:41:36] [INFO] - features.engineer_features -  Features added for NSE:CIPLA-EQ
+[2025-07-13 23:41:36] [INFO] - features.engineer_features -  Features added for NSE:CLSEL-EQ
+[2025-07-13 23:41:37] [INFO] - features.engineer_features -  Features added for NSE:CMSINFO-EQ
+[2025-07-13 23:41:37] [INFO] - features.engineer_features -  Features added for NSE:COALINDIA-EQ
+[2025-07-13 23:41:37] [INFO] - features.engineer_features -  Features added for NSE:COCHINSHIP-EQ
+[2025-07-13 23:41:37] [INFO] - features.engineer_features -  Features added for NSE:COFORGE-EQ
+[2025-07-13 23:41:38] [INFO] - features.engineer_features -  Features added for NSE:COHANCE-EQ
+[2025-07-13 23:41:38] [INFO] - features.engineer_features -  Features added for NSE:COLPAL-EQ
+[2025-07-13 23:41:38] [INFO] - features.engineer_features -  Features added for NSE:COMSYN-EQ
+[2025-07-13 23:41:38] [INFO] - features.engineer_features -  Features added for NSE:CONCOR-EQ
+[2025-07-13 23:41:39] [INFO] - features.engineer_features -  Features added for NSE:CONCORDBIO-EQ
+[2025-07-13 23:41:39] [INFO] - features.engineer_features -  Features added for NSE:CONFIPET-EQ
+[2025-07-13 23:41:39] [INFO] - features.engineer_features -  Features added for NSE:CONSUMBEES-EQ
+[2025-07-13 23:41:39] [INFO] - features.engineer_features -  Features added for NSE:COROMANDEL-EQ
+[2025-07-13 23:41:40] [INFO] - features.engineer_features -  Features added for NSE:COSMOFIRST-EQ
+[2025-07-13 23:41:40] [INFO] - features.engineer_features -  Features added for NSE:CPSEETF-EQ
+[2025-07-13 23:41:40] [INFO] - features.engineer_features -  Features added for NSE:CREDITACC-EQ
+[2025-07-13 23:41:40] [INFO] - features.engineer_features -  Features added for NSE:CROMPTON-EQ
+[2025-07-13 23:41:41] [INFO] - features.engineer_features -  Features added for NSE:CSBBANK-EQ
+[2025-07-13 23:41:41] [INFO] - features.engineer_features -  Features added for NSE:CUMMINSIND-EQ
+[2025-07-13 23:41:41] [INFO] - features.engineer_features -  Features added for NSE:CUPID-EQ
+[2025-07-13 23:41:41] [INFO] - features.engineer_features -  Features added for NSE:CYIENTDLM-EQ
+[2025-07-13 23:41:42] [INFO] - features.engineer_features -  Features added for NSE:DABUR-EQ
+[2025-07-13 23:41:42] [INFO] - features.engineer_features -  Features added for NSE:DALBHARAT-EQ
+[2025-07-13 23:41:42] [INFO] - features.engineer_features -  Features added for NSE:DALMIASUG-EQ
+[2025-07-13 23:41:42] [INFO] - features.engineer_features -  Features added for NSE:DAMCAPITAL-EQ
+[2025-07-13 23:41:43] [INFO] - features.engineer_features -  Features added for NSE:DATAMATICS-EQ
+[2025-07-13 23:41:43] [INFO] - features.engineer_features -  Features added for NSE:DATAPATTNS-EQ
+[2025-07-13 23:41:43] [INFO] - features.engineer_features -  Features added for NSE:DBCORP-EQ
+[2025-07-13 23:41:43] [INFO] - features.engineer_features -  Features added for NSE:DBEIL-EQ
+[2025-07-13 23:41:44] [INFO] - features.engineer_features -  Features added for NSE:DBL-EQ
+[2025-07-13 23:41:44] [INFO] - features.engineer_features -  Features added for NSE:DBREALTY-EQ
+[2025-07-13 23:41:44] [INFO] - features.engineer_features -  Features added for NSE:DCAL-BE
+[2025-07-13 23:41:44] [INFO] - features.engineer_features -  Features added for NSE:DCBBANK-EQ
+[2025-07-13 23:41:45] [INFO] - features.engineer_features -  Features added for NSE:DCMSHRIRAM-EQ
+[2025-07-13 23:41:45] [INFO] - features.engineer_features -  Features added for NSE:DCMSRIND-EQ
+[2025-07-13 23:41:45] [INFO] - features.engineer_features -  Features added for NSE:DCW-EQ
+[2025-07-13 23:41:45] [INFO] - features.engineer_features -  Features added for NSE:DCXINDIA-EQ
+[2025-07-13 23:41:46] [INFO] - features.engineer_features -  Features added for NSE:DDEVPLSTIK-EQ
+[2025-07-13 23:41:46] [INFO] - features.engineer_features -  Features added for NSE:DEEDEV-EQ
+[2025-07-13 23:41:46] [INFO] - features.engineer_features -  Features added for NSE:DEEPAKFERT-EQ
+[2025-07-13 23:41:46] [INFO] - features.engineer_features -  Features added for NSE:DEEPAKNTR-EQ
+[2025-07-13 23:41:46] [INFO] - features.engineer_features -  Features added for NSE:DEEPINDS-EQ
+[2025-07-13 23:41:47] [INFO] - features.engineer_features -  Features added for NSE:DELHIVERY-EQ
+[2025-07-13 23:41:47] [INFO] - features.engineer_features -  Features added for NSE:DELTACORP-EQ
+[2025-07-13 23:41:47] [INFO] - features.engineer_features -  Features added for NSE:DENTA-EQ
+[2025-07-13 23:41:47] [INFO] - features.engineer_features -  Features added for NSE:DHAMPURSUG-EQ
+[2025-07-13 23:41:48] [INFO] - features.engineer_features -  Features added for NSE:DHANI-EQ
+[2025-07-13 23:41:48] [INFO] - features.engineer_features -  Features added for NSE:DHARMAJ-BE
+[2025-07-13 23:41:48] [INFO] - features.engineer_features -  Features added for NSE:DIACABS-EQ
+[2025-07-13 23:41:48] [INFO] - features.engineer_features -  Features added for NSE:DIFFNKG-EQ
+[2025-07-13 23:41:48] [INFO] - features.engineer_features -  Features added for NSE:DIGITIDE-EQ
+[2025-07-13 23:41:49] [INFO] - features.engineer_features -  Features added for NSE:DIVISLAB-EQ
+[2025-07-13 23:41:49] [INFO] - features.engineer_features -  Features added for NSE:DIXON-EQ
+[2025-07-13 23:41:49] [INFO] - features.engineer_features -  Features added for NSE:DLF-EQ
+[2025-07-13 23:41:49] [INFO] - features.engineer_features -  Features added for NSE:DLINKINDIA-EQ
+[2025-07-13 23:41:50] [INFO] - features.engineer_features -  Features added for NSE:DMART-EQ
+[2025-07-13 23:41:50] [INFO] - features.engineer_features -  Features added for NSE:DMCC-EQ
+[2025-07-13 23:41:50] [INFO] - features.engineer_features -  Features added for NSE:DOLATALGO-EQ
+[2025-07-13 23:41:50] [INFO] - features.engineer_features -  Features added for NSE:DOMS-EQ
+[2025-07-13 23:41:51] [INFO] - features.engineer_features -  Features added for NSE:DONEAR-EQ
+[2025-07-13 23:41:51] [INFO] - features.engineer_features -  Features added for NSE:DREDGECORP-EQ
+[2025-07-13 23:41:51] [INFO] - features.engineer_features -  Features added for NSE:DRREDDY-EQ
+[2025-07-13 23:41:52] [INFO] - features.engineer_features -  Features added for NSE:DYCL-EQ
+[2025-07-13 23:41:52] [INFO] - features.engineer_features -  Features added for NSE:ECOSMOBLTY-EQ
+[2025-07-13 23:41:52] [INFO] - features.engineer_features -  Features added for NSE:EDELWEISS-EQ
+[2025-07-13 23:41:52] [INFO] - features.engineer_features -  Features added for NSE:EGOLD-EQ
+[2025-07-13 23:41:52] [INFO] - features.engineer_features -  Features added for NSE:EICHERMOT-EQ
+[2025-07-13 23:41:53] [INFO] - features.engineer_features -  Features added for NSE:EIDPARRY-EQ
+[2025-07-13 23:41:53] [INFO] - features.engineer_features -  Features added for NSE:EIEL-EQ
+[2025-07-13 23:41:53] [INFO] - features.engineer_features -  Features added for NSE:EIHOTEL-EQ
+[2025-07-13 23:41:53] [INFO] - features.engineer_features -  Features added for NSE:EKC-EQ
+[2025-07-13 23:41:54] [INFO] - features.engineer_features -  Features added for NSE:ELECON-EQ
+[2025-07-13 23:41:54] [INFO] - features.engineer_features -  Features added for NSE:ELECTCAST-EQ
+[2025-07-13 23:41:54] [INFO] - features.engineer_features -  Features added for NSE:ELGIEQUIP-EQ
+[2025-07-13 23:41:54] [INFO] - features.engineer_features -  Features added for NSE:ELIN-BE
+[2025-07-13 23:41:55] [INFO] - features.engineer_features -  Features added for NSE:ELLEN-EQ
+[2025-07-13 23:41:55] [INFO] - features.engineer_features -  Features added for NSE:EMAMILTD-EQ
+[2025-07-13 23:41:55] [INFO] - features.engineer_features -  Features added for NSE:EMBDL-EQ
+[2025-07-13 23:41:55] [INFO] - features.engineer_features -  Features added for NSE:EMCURE-EQ
+[2025-07-13 23:41:56] [INFO] - features.engineer_features -  Features added for NSE:EMIL-EQ
+[2025-07-13 23:41:56] [INFO] - features.engineer_features -  Features added for NSE:EMSLIMITED-EQ
+[2025-07-13 23:41:56] [INFO] - features.engineer_features -  Features added for NSE:ENDURANCE-EQ
+[2025-07-13 23:41:56] [INFO] - features.engineer_features -  Features added for NSE:ENGINERSIN-EQ
+[2025-07-13 23:41:56] [INFO] - features.engineer_features -  Features added for NSE:ENRIN-EQ
+[2025-07-13 23:41:57] [INFO] - features.engineer_features -  Features added for NSE:EPACK-EQ
+[2025-07-13 23:41:57] [INFO] - features.engineer_features -  Features added for NSE:EPL-EQ
+[2025-07-13 23:41:57] [INFO] - features.engineer_features -  Features added for NSE:EQUITASBNK-EQ
+[2025-07-13 23:41:57] [INFO] - features.engineer_features -  Features added for NSE:ERIS-EQ
+[2025-07-13 23:41:58] [INFO] - features.engineer_features -  Features added for NSE:ESCORTS-EQ
+[2025-07-13 23:41:58] [INFO] - features.engineer_features -  Features added for NSE:ESTER-EQ
+[2025-07-13 23:41:58] [INFO] - features.engineer_features -  Features added for NSE:EUREKAFORB-EQ
+[2025-07-13 23:41:58] [INFO] - features.engineer_features -  Features added for NSE:EVEREADY-EQ
+[2025-07-13 23:41:59] [INFO] - features.engineer_features -  Features added for NSE:EXICOM-EQ
+[2025-07-13 23:41:59] [INFO] - features.engineer_features -  Features added for NSE:EXIDEIND-EQ
+[2025-07-13 23:41:59] [INFO] - features.engineer_features -  Features added for NSE:FACT-EQ
+[2025-07-13 23:41:59] [INFO] - features.engineer_features -  Features added for NSE:FDC-EQ
+[2025-07-13 23:42:00] [INFO] - features.engineer_features -  Features added for NSE:FEDERALBNK-EQ
+[2025-07-13 23:42:00] [INFO] - features.engineer_features -  Features added for NSE:FEDFINA-EQ
+[2025-07-13 23:42:00] [INFO] - features.engineer_features -  Features added for NSE:FILATEX-EQ
+[2025-07-13 23:42:00] [INFO] - features.engineer_features -  Features added for NSE:FINCABLES-EQ
+[2025-07-13 23:42:01] [INFO] - features.engineer_features -  Features added for NSE:FINOPB-EQ
+[2025-07-13 23:42:01] [INFO] - features.engineer_features -  Features added for NSE:FINPIPE-EQ
+[2025-07-13 23:42:01] [INFO] - features.engineer_features -  Features added for NSE:FIRSTCRY-EQ
+[2025-07-13 23:42:01] [INFO] - features.engineer_features -  Features added for NSE:FIVESTAR-EQ
+[2025-07-13 23:42:02] [INFO] - features.engineer_features -  Features added for NSE:FLAIR-EQ
+[2025-07-13 23:42:02] [INFO] - features.engineer_features -  Features added for NSE:FLUOROCHEM-EQ
+[2025-07-13 23:42:02] [INFO] - features.engineer_features -  Features added for NSE:FMGOETZE-EQ
+[2025-07-13 23:42:02] [INFO] - features.engineer_features -  Features added for NSE:FOCUS-BE
+[2025-07-13 23:42:03] [INFO] - features.engineer_features -  Features added for NSE:FOODSIN-BE
+[2025-07-13 23:42:03] [INFO] - features.engineer_features -  Features added for NSE:FORCEMOT-EQ
+[2025-07-13 23:42:03] [INFO] - features.engineer_features -  Features added for NSE:FORTIS-EQ
+[2025-07-13 23:42:03] [INFO] - features.engineer_features -  Features added for NSE:FSL-EQ
+[2025-07-13 23:42:04] [INFO] - features.engineer_features -  Features added for NSE:FUSION-EQ
+[2025-07-13 23:42:04] [INFO] - features.engineer_features -  Features added for NSE:GABRIEL-EQ
+[2025-07-13 23:42:04] [INFO] - features.engineer_features -  Features added for NSE:GAEL-EQ
+[2025-07-13 23:42:04] [INFO] - features.engineer_features -  Features added for NSE:GAIL-EQ
+[2025-07-13 23:42:05] [INFO] - features.engineer_features -  Features added for NSE:GALLANTT-EQ
+[2025-07-13 23:42:05] [INFO] - features.engineer_features -  Features added for NSE:GANDHAR-EQ
+[2025-07-13 23:42:05] [INFO] - features.engineer_features -  Features added for NSE:GANESHHOUC-EQ
+[2025-07-13 23:42:05] [INFO] - features.engineer_features -  Features added for NSE:GARUDA-EQ
+[2025-07-13 23:42:05] [INFO] - features.engineer_features -  Features added for NSE:GATEWAY-EQ
+[2025-07-13 23:42:06] [INFO] - features.engineer_features -  Features added for NSE:GENESYS-EQ
+[2025-07-13 23:42:06] [INFO] - features.engineer_features -  Features added for NSE:GENSOL-BE
+[2025-07-13 23:42:06] [INFO] - features.engineer_features -  Features added for NSE:GENUSPOWER-EQ
+[2025-07-13 23:42:07] [INFO] - features.engineer_features -  Features added for NSE:GEOJITFSL-EQ
+[2025-07-13 23:42:07] [INFO] - features.engineer_features -  Features added for NSE:GEPIL-EQ
+[2025-07-13 23:42:07] [INFO] - features.engineer_features -  Features added for NSE:GESHIP-EQ
+[2025-07-13 23:42:07] [INFO] - features.engineer_features -  Features added for NSE:GHCL-EQ
+[2025-07-13 23:42:08] [INFO] - features.engineer_features -  Features added for NSE:GHCLTEXTIL-EQ
+[2025-07-13 23:42:08] [INFO] - features.engineer_features -  Features added for NSE:GICHSGFIN-EQ
+[2025-07-13 23:42:08] [INFO] - features.engineer_features -  Features added for NSE:GICRE-EQ
+[2025-07-13 23:42:08] [INFO] - features.engineer_features -  Features added for NSE:GILT5YBEES-EQ
+[2025-07-13 23:42:09] [INFO] - features.engineer_features -  Features added for NSE:GIPCL-EQ
+[2025-07-13 23:42:09] [INFO] - features.engineer_features -  Features added for NSE:GLAND-EQ
+[2025-07-13 23:42:09] [INFO] - features.engineer_features -  Features added for NSE:GLAXO-EQ
+[2025-07-13 23:42:10] [INFO] - features.engineer_features -  Features added for NSE:GLENMARK-EQ
+[2025-07-13 23:42:10] [INFO] - features.engineer_features -  Features added for NSE:GLOBECIVIL-BE
+[2025-07-13 23:42:10] [INFO] - features.engineer_features -  Features added for NSE:GMBREW-EQ
+[2025-07-13 23:42:10] [INFO] - features.engineer_features -  Features added for NSE:GMRAIRPORT-EQ
+[2025-07-13 23:42:10] [INFO] - features.engineer_features -  Features added for NSE:GMRP&UI-EQ
+[2025-07-13 23:42:11] [INFO] - features.engineer_features -  Features added for NSE:GNFC-EQ
+[2025-07-13 23:42:11] [INFO] - features.engineer_features -  Features added for NSE:GOCLCORP-EQ
+[2025-07-13 23:42:11] [INFO] - features.engineer_features -  Features added for NSE:GOCOLORS-EQ
+[2025-07-13 23:42:11] [INFO] - features.engineer_features -  Features added for NSE:GODAVARIB-BE
+[2025-07-13 23:42:12] [INFO] - features.engineer_features -  Features added for NSE:GODFRYPHLP-EQ
+[2025-07-13 23:42:12] [INFO] - features.engineer_features -  Features added for NSE:GODIGIT-EQ
+[2025-07-13 23:42:12] [INFO] - features.engineer_features -  Features added for NSE:GODREJAGRO-EQ
+[2025-07-13 23:42:12] [INFO] - features.engineer_features -  Features added for NSE:GODREJCP-EQ
+[2025-07-13 23:42:13] [INFO] - features.engineer_features -  Features added for NSE:GODREJIND-EQ
+[2025-07-13 23:42:13] [INFO] - features.engineer_features -  Features added for NSE:GODREJPROP-EQ
+[2025-07-13 23:42:13] [INFO] - features.engineer_features -  Features added for NSE:GOKEX-EQ
+[2025-07-13 23:42:14] [INFO] - features.engineer_features -  Features added for NSE:GOKULAGRO-EQ
+[2025-07-13 23:42:14] [INFO] - features.engineer_features -  Features added for NSE:GOLD1-EQ
+[2025-07-13 23:42:14] [INFO] - features.engineer_features -  Features added for NSE:GOLDBEES-EQ
+[2025-07-13 23:42:14] [INFO] - features.engineer_features -  Features added for NSE:GOLDETF-EQ
+[2025-07-13 23:42:14] [INFO] - features.engineer_features -  Features added for NSE:GOLDETFADD-EQ
+[2025-07-13 23:42:15] [INFO] - features.engineer_features -  Features added for NSE:GOLDIAM-EQ
+[2025-07-13 23:42:15] [INFO] - features.engineer_features -  Features added for NSE:GOLDIETF-EQ
+[2025-07-13 23:42:15] [INFO] - features.engineer_features -  Features added for NSE:GOLDSHARE-EQ
+[2025-07-13 23:42:15] [INFO] - features.engineer_features -  Features added for NSE:GOPAL-EQ
+[2025-07-13 23:42:16] [INFO] - features.engineer_features -  Features added for NSE:GPIL-EQ
+[2025-07-13 23:42:16] [INFO] - features.engineer_features -  Features added for NSE:GPPL-EQ
+[2025-07-13 23:42:16] [INFO] - features.engineer_features -  Features added for NSE:GPTHEALTH-EQ
+[2025-07-13 23:42:16] [INFO] - features.engineer_features -  Features added for NSE:GPTINFRA-EQ
+[2025-07-13 23:42:16] [INFO] - features.engineer_features -  Features added for NSE:GRANULES-EQ
+[2025-07-13 23:42:17] [INFO] - features.engineer_features -  Features added for NSE:GRASIM-EQ
+[2025-07-13 23:42:17] [INFO] - features.engineer_features -  Features added for NSE:GRAVITA-EQ
+[2025-07-13 23:42:17] [INFO] - features.engineer_features -  Features added for NSE:GREAVESCOT-EQ
+[2025-07-13 23:42:18] [INFO] - features.engineer_features -  Features added for NSE:GREENPANEL-EQ
+[2025-07-13 23:42:18] [INFO] - features.engineer_features -  Features added for NSE:GREENPLY-EQ
+[2025-07-13 23:42:18] [INFO] - features.engineer_features -  Features added for NSE:GRMOVER-EQ
+[2025-07-13 23:42:19] [INFO] - features.engineer_features -  Features added for NSE:GROWWDEFNC-EQ
+[2025-07-13 23:42:19] [INFO] - features.engineer_features -  Features added for NSE:GROWWGOLD-EQ
+[2025-07-13 23:42:19] [INFO] - features.engineer_features -  Features added for NSE:GROWWLIQID-EQ
+[2025-07-13 23:42:19] [INFO] - features.engineer_features -  Features added for NSE:GROWWSLVR-EQ
+[2025-07-13 23:42:19] [INFO] - features.engineer_features -  Features added for NSE:GSFC-EQ
+[2025-07-13 23:42:20] [INFO] - features.engineer_features -  Features added for NSE:GSLSU-EQ
+[2025-07-13 23:42:20] [INFO] - features.engineer_features -  Features added for NSE:GSPL-EQ
+[2025-07-13 23:42:20] [INFO] - features.engineer_features -  Features added for NSE:GTPL-EQ
+[2025-07-13 23:42:20] [INFO] - features.engineer_features -  Features added for NSE:GUJGASLTD-EQ
+[2025-07-13 23:42:21] [INFO] - features.engineer_features -  Features added for NSE:GUJTHEM-EQ
+[2025-07-13 23:42:21] [INFO] - features.engineer_features -  Features added for NSE:GULFOILLUB-EQ
+[2025-07-13 23:42:21] [INFO] - features.engineer_features -  Features added for NSE:GVT&D-EQ
+[2025-07-13 23:42:21] [INFO] - features.engineer_features -  Features added for NSE:HAL-EQ
+[2025-07-13 23:42:22] [INFO] - features.engineer_features -  Features added for NSE:HAPPSTMNDS-EQ
+[2025-07-13 23:42:22] [INFO] - features.engineer_features -  Features added for NSE:HARIOMPIPE-EQ
+[2025-07-13 23:42:22] [INFO] - features.engineer_features -  Features added for NSE:HARSHA-EQ
+[2025-07-13 23:42:23] [INFO] - features.engineer_features -  Features added for NSE:HAVELLS-EQ
+[2025-07-13 23:42:23] [INFO] - features.engineer_features -  Features added for NSE:HBLENGINE-EQ
+[2025-07-13 23:42:23] [INFO] - features.engineer_features -  Features added for NSE:HCG-EQ
+[2025-07-13 23:42:23] [INFO] - features.engineer_features -  Features added for NSE:HCLTECH-EQ
+[2025-07-13 23:42:23] [INFO] - features.engineer_features -  Features added for NSE:HDBFS-EQ
+[2025-07-13 23:42:24] [INFO] - features.engineer_features -  Features added for NSE:HDFCAMC-EQ
+[2025-07-13 23:42:24] [INFO] - features.engineer_features -  Features added for NSE:HDFCBANK-EQ
+[2025-07-13 23:42:24] [INFO] - features.engineer_features -  Features added for NSE:HDFCGOLD-EQ
+[2025-07-13 23:42:25] [INFO] - features.engineer_features -  Features added for NSE:HDFCLIFE-EQ
+[2025-07-13 23:42:25] [INFO] - features.engineer_features -  Features added for NSE:HDFCNIFBAN-EQ
+[2025-07-13 23:42:25] [INFO] - features.engineer_features -  Features added for NSE:HDFCNIFTY-EQ
+[2025-07-13 23:42:25] [INFO] - features.engineer_features -  Features added for NSE:HDFCSILVER-EQ
+[2025-07-13 23:42:25] [INFO] - features.engineer_features -  Features added for NSE:HDFCSML250-EQ
+[2025-07-13 23:42:26] [INFO] - features.engineer_features -  Features added for NSE:HEALTHIETF-EQ
+[2025-07-13 23:42:26] [INFO] - features.engineer_features -  Features added for NSE:HEG-EQ
+[2025-07-13 23:42:26] [INFO] - features.engineer_features -  Features added for NSE:HEIDELBERG-EQ
+[2025-07-13 23:42:27] [INFO] - features.engineer_features -  Features added for NSE:HEMIPROP-EQ
+[2025-07-13 23:42:27] [INFO] - features.engineer_features -  Features added for NSE:HERITGFOOD-EQ
+[2025-07-13 23:42:27] [INFO] - features.engineer_features -  Features added for NSE:HEROMOTOCO-EQ
+[2025-07-13 23:42:27] [INFO] - features.engineer_features -  Features added for NSE:HEXT-EQ
+[2025-07-13 23:42:27] [INFO] - features.engineer_features -  Features added for NSE:HFCL-EQ
+[2025-07-13 23:42:28] [INFO] - features.engineer_features -  Features added for NSE:HGINFRA-EQ
+[2025-07-13 23:42:28] [INFO] - features.engineer_features -  Features added for NSE:HIKAL-EQ
+[2025-07-13 23:42:28] [INFO] - features.engineer_features -  Features added for NSE:HILTON-BE
+[2025-07-13 23:42:29] [INFO] - features.engineer_features -  Features added for NSE:HIMATSEIDE-EQ
+[2025-07-13 23:42:29] [INFO] - features.engineer_features -  Features added for NSE:HINDALCO-EQ
+[2025-07-13 23:42:29] [INFO] - features.engineer_features -  Features added for NSE:HINDCOPPER-EQ
+[2025-07-13 23:42:29] [INFO] - features.engineer_features -  Features added for NSE:HINDOILEXP-EQ
+[2025-07-13 23:42:30] [INFO] - features.engineer_features -  Features added for NSE:HINDPETRO-EQ
+[2025-07-13 23:42:30] [INFO] - features.engineer_features -  Features added for NSE:HINDUNILVR-EQ
+[2025-07-13 23:42:30] [INFO] - features.engineer_features -  Features added for NSE:HINDWAREAP-EQ
+[2025-07-13 23:42:31] [INFO] - features.engineer_features -  Features added for NSE:HINDZINC-EQ
+[2025-07-13 23:42:31] [INFO] - features.engineer_features -  Features added for NSE:HITECH-EQ
+[2025-07-13 23:42:31] [INFO] - features.engineer_features -  Features added for NSE:HLEGLAS-EQ
+[2025-07-13 23:42:31] [INFO] - features.engineer_features -  Features added for NSE:HNDFDS-EQ
+[2025-07-13 23:42:32] [INFO] - features.engineer_features -  Features added for NSE:HNGSNGBEES-EQ
+[2025-07-13 23:42:32] [INFO] - features.engineer_features -  Features added for NSE:HOMEFIRST-EQ
+[2025-07-13 23:42:32] [INFO] - features.engineer_features -  Features added for NSE:HONASA-EQ
+[2025-07-13 23:42:32] [INFO] - features.engineer_features -  Features added for NSE:HPAL-EQ
+[2025-07-13 23:42:33] [INFO] - features.engineer_features -  Features added for NSE:HPL-EQ
+[2025-07-13 23:42:33] [INFO] - features.engineer_features -  Features added for NSE:HSCL-EQ
+[2025-07-13 23:42:33] [INFO] - features.engineer_features -  Features added for NSE:HUBTOWN-EQ
+[2025-07-13 23:42:34] [INFO] - features.engineer_features -  Features added for NSE:HUDCO-EQ
+[2025-07-13 23:42:34] [INFO] - features.engineer_features -  Features added for NSE:HUHTAMAKI-EQ
+[2025-07-13 23:42:34] [INFO] - features.engineer_features -  Features added for NSE:HYUNDAI-EQ
+[2025-07-13 23:42:34] [INFO] - features.engineer_features -  Features added for NSE:ICICIGI-EQ
+[2025-07-13 23:42:34] [INFO] - features.engineer_features -  Features added for NSE:ICICIPRULI-EQ
+[2025-07-13 23:42:35] [INFO] - features.engineer_features -  Features added for NSE:ICIL-EQ
+[2025-07-13 23:42:35] [INFO] - features.engineer_features -  Features added for NSE:IDBI-EQ
+[2025-07-13 23:42:35] [INFO] - features.engineer_features -  Features added for NSE:IDEAFORGE-EQ
+[2025-07-13 23:42:36] [INFO] - features.engineer_features -  Features added for NSE:IDFCFIRSTB-EQ
+[2025-07-13 23:42:36] [INFO] - features.engineer_features -  Features added for NSE:IEX-EQ
+[2025-07-13 23:42:36] [INFO] - features.engineer_features -  Features added for NSE:IFCI-EQ
+[2025-07-13 23:42:36] [INFO] - features.engineer_features -  Features added for NSE:IGCL-BE
+[2025-07-13 23:42:36] [INFO] - features.engineer_features -  Features added for NSE:IGIL-EQ
+[2025-07-13 23:42:37] [INFO] - features.engineer_features -  Features added for NSE:IGL-EQ
+[2025-07-13 23:42:37] [INFO] - features.engineer_features -  Features added for NSE:IIFL-EQ
+[2025-07-13 23:42:37] [INFO] - features.engineer_features -  Features added for NSE:IIFLCAPS-EQ
+[2025-07-13 23:42:37] [INFO] - features.engineer_features -  Features added for NSE:IKS-EQ
+[2025-07-13 23:42:38] [INFO] - features.engineer_features -  Features added for NSE:IMAGICAA-EQ
+[2025-07-13 23:42:38] [INFO] - features.engineer_features -  Features added for NSE:IMFA-EQ
+[2025-07-13 23:42:38] [INFO] - features.engineer_features -  Features added for NSE:INDGN-EQ
+[2025-07-13 23:42:38] [INFO] - features.engineer_features -  Features added for NSE:INDHOTEL-EQ
+[2025-07-13 23:42:39] [INFO] - features.engineer_features -  Features added for NSE:INDIACEM-EQ
+[2025-07-13 23:42:39] [INFO] - features.engineer_features -  Features added for NSE:INDIAGLYCO-EQ
+[2025-07-13 23:42:39] [INFO] - features.engineer_features -  Features added for NSE:INDIAMART-EQ
+[2025-07-13 23:42:40] [INFO] - features.engineer_features -  Features added for NSE:INDIANB-EQ
+[2025-07-13 23:42:40] [INFO] - features.engineer_features -  Features added for NSE:INDIASHLTR-EQ
+[2025-07-13 23:42:40] [INFO] - features.engineer_features -  Features added for NSE:INDIGO-EQ
+[2025-07-13 23:42:40] [INFO] - features.engineer_features -  Features added for NSE:INDOAMIN-EQ
+[2025-07-13 23:42:41] [INFO] - features.engineer_features -  Features added for NSE:INDOBORAX-EQ
+[2025-07-13 23:42:41] [INFO] - features.engineer_features -  Features added for NSE:INDOSTAR-EQ
+[2025-07-13 23:42:41] [INFO] - features.engineer_features -  Features added for NSE:INDRAMEDCO-EQ
+[2025-07-13 23:42:41] [INFO] - features.engineer_features -  Features added for NSE:INDUSTOWER-EQ
+[2025-07-13 23:42:42] [INFO] - features.engineer_features -  Features added for NSE:INFRAIETF-EQ
+[2025-07-13 23:42:42] [INFO] - features.engineer_features -  Features added for NSE:INFY-EQ
+[2025-07-13 23:42:42] [INFO] - features.engineer_features -  Features added for NSE:INOXGREEN-BE
+[2025-07-13 23:42:42] [INFO] - features.engineer_features -  Features added for NSE:INOXINDIA-EQ
+[2025-07-13 23:42:43] [INFO] - features.engineer_features -  Features added for NSE:INOXWIND-EQ
+[2025-07-13 23:42:43] [INFO] - features.engineer_features -  Features added for NSE:INTERARCH-BE
+[2025-07-13 23:42:43] [INFO] - features.engineer_features -  Features added for NSE:IOC-EQ
+[2025-07-13 23:42:43] [INFO] - features.engineer_features -  Features added for NSE:IOLCP-EQ
+[2025-07-13 23:42:44] [INFO] - features.engineer_features -  Features added for NSE:IONEXCHANG-EQ
+[2025-07-13 23:42:44] [INFO] - features.engineer_features -  Features added for NSE:IPCALAB-EQ
+[2025-07-13 23:42:44] [INFO] - features.engineer_features -  Features added for NSE:IPL-EQ
+[2025-07-13 23:42:45] [INFO] - features.engineer_features -  Features added for NSE:IRCTC-EQ
+[2025-07-13 23:42:45] [INFO] - features.engineer_features -  Features added for NSE:IREDA-EQ
+[2025-07-13 23:42:45] [INFO] - features.engineer_features -  Features added for NSE:IRFC-EQ
+[2025-07-13 23:42:45] [INFO] - features.engineer_features -  Features added for NSE:IRMENERGY-EQ
+[2025-07-13 23:42:46] [INFO] - features.engineer_features -  Features added for NSE:ITC-EQ
+[2025-07-13 23:42:46] [INFO] - features.engineer_features -  Features added for NSE:ITCHOTELS-EQ
+[2025-07-13 23:42:46] [INFO] - features.engineer_features -  Features added for NSE:ITI-EQ
+[2025-07-13 23:42:46] [INFO] - features.engineer_features -  Features added for NSE:IXIGO-EQ
+[2025-07-13 23:42:46] [INFO] - features.engineer_features -  Features added for NSE:JAGRAN-EQ
+[2025-07-13 23:42:47] [INFO] - features.engineer_features -  Features added for NSE:JAGSNPHARM-EQ
+[2025-07-13 23:42:47] [INFO] - features.engineer_features -  Features added for NSE:JAIBALAJI-EQ
+[2025-07-13 23:42:47] [INFO] - features.engineer_features -  Features added for NSE:JAMNAAUTO-EQ
+[2025-07-13 23:42:48] [INFO] - features.engineer_features -  Features added for NSE:JASH-EQ
+[2025-07-13 23:42:48] [INFO] - features.engineer_features -  Features added for NSE:JAYBARMARU-EQ
+[2025-07-13 23:42:48] [INFO] - features.engineer_features -  Features added for NSE:JAYSREETEA-EQ
+[2025-07-13 23:42:48] [INFO] - features.engineer_features -  Features added for NSE:JBCHEPHARM-EQ
+[2025-07-13 23:42:49] [INFO] - features.engineer_features -  Features added for NSE:JBMA-EQ
+[2025-07-13 23:42:49] [INFO] - features.engineer_features -  Features added for NSE:JGCHEM-EQ
+[2025-07-13 23:42:49] [INFO] - features.engineer_features -  Features added for NSE:JINDALSAW-EQ
+[2025-07-13 23:42:49] [INFO] - features.engineer_features -  Features added for NSE:JINDALSTEL-EQ
+[2025-07-13 23:42:50] [INFO] - features.engineer_features -  Features added for NSE:JINDRILL-EQ
+[2025-07-13 23:42:50] [INFO] - features.engineer_features -  Features added for NSE:JINDWORLD-EQ
+[2025-07-13 23:42:50] [INFO] - features.engineer_features -  Features added for NSE:JIOFIN-EQ
+[2025-07-13 23:42:51] [INFO] - features.engineer_features -  Features added for NSE:JISLJALEQS-EQ
+[2025-07-13 23:42:51] [INFO] - features.engineer_features -  Features added for NSE:JKCEMENT-EQ
+[2025-07-13 23:42:51] [INFO] - features.engineer_features -  Features added for NSE:JKIL-EQ
+[2025-07-13 23:42:51] [INFO] - features.engineer_features -  Features added for NSE:JKLAKSHMI-EQ
+[2025-07-13 23:42:52] [INFO] - features.engineer_features -  Features added for NSE:JKPAPER-EQ
+[2025-07-13 23:42:52] [INFO] - features.engineer_features -  Features added for NSE:JKTYRE-EQ
+[2025-07-13 23:42:52] [INFO] - features.engineer_features -  Features added for NSE:JMFINANCIL-EQ
+[2025-07-13 23:42:52] [INFO] - features.engineer_features -  Features added for NSE:JSFB-EQ
+[2025-07-13 23:42:53] [INFO] - features.engineer_features -  Features added for NSE:JSL-EQ
+[2025-07-13 23:42:53] [INFO] - features.engineer_features -  Features added for NSE:JSWENERGY-EQ
+[2025-07-13 23:42:53] [INFO] - features.engineer_features -  Features added for NSE:JSWINFRA-EQ
+[2025-07-13 23:42:53] [INFO] - features.engineer_features -  Features added for NSE:JSWSTEEL-EQ
+[2025-07-13 23:42:54] [INFO] - features.engineer_features -  Features added for NSE:JTEKTINDIA-EQ
+[2025-07-13 23:42:54] [INFO] - features.engineer_features -  Features added for NSE:JTLIND-EQ
+[2025-07-13 23:42:54] [INFO] - features.engineer_features -  Features added for NSE:JUBLFOOD-EQ
+[2025-07-13 23:42:55] [INFO] - features.engineer_features -  Features added for NSE:JUBLINGREA-EQ
+[2025-07-13 23:42:55] [INFO] - features.engineer_features -  Features added for NSE:JUBLPHARMA-EQ
+[2025-07-13 23:42:55] [INFO] - features.engineer_features -  Features added for NSE:JUNIORBEES-EQ
+[2025-07-13 23:42:55] [INFO] - features.engineer_features -  Features added for NSE:JUNIPER-EQ
+[2025-07-13 23:42:55] [INFO] - features.engineer_features -  Features added for NSE:JUSTDIAL-EQ
+[2025-07-13 23:42:56] [INFO] - features.engineer_features -  Features added for NSE:JWL-EQ
+[2025-07-13 23:42:56] [INFO] - features.engineer_features -  Features added for NSE:JYOTHYLAB-EQ
+[2025-07-13 23:42:56] [INFO] - features.engineer_features -  Features added for NSE:JYOTICNC-EQ
+[2025-07-13 23:42:57] [INFO] - features.engineer_features -  Features added for NSE:KAJARIACER-EQ
+[2025-07-13 23:42:57] [INFO] - features.engineer_features -  Features added for NSE:KALAMANDIR-EQ
+[2025-07-13 23:42:57] [INFO] - features.engineer_features -  Features added for NSE:KALPATARU-EQ
+[2025-07-13 23:42:57] [INFO] - features.engineer_features -  Features added for NSE:KALYANKJIL-EQ
+[2025-07-13 23:42:57] [INFO] - features.engineer_features -  Features added for NSE:KANSAINER-EQ
+[2025-07-13 23:42:58] [INFO] - features.engineer_features -  Features added for NSE:KARURVYSYA-EQ
+[2025-07-13 23:42:58] [INFO] - features.engineer_features -  Features added for NSE:KAYNES-EQ
+[2025-07-13 23:42:58] [INFO] - features.engineer_features -  Features added for NSE:KCP-EQ
+[2025-07-13 23:42:58] [INFO] - features.engineer_features -  Features added for NSE:KEC-EQ
+[2025-07-13 23:42:59] [INFO] - features.engineer_features -  Features added for NSE:KECL-EQ
+[2025-07-13 23:42:59] [INFO] - features.engineer_features -  Features added for NSE:KEI-EQ
+[2025-07-13 23:42:59] [INFO] - features.engineer_features -  Features added for NSE:KELLTONTEC-EQ
+[2025-07-13 23:43:00] [INFO] - features.engineer_features -  Features added for NSE:KERNEX-BE
+[2025-07-13 23:43:00] [INFO] - features.engineer_features -  Features added for NSE:KFINTECH-EQ
+[2025-07-13 23:43:00] [INFO] - features.engineer_features -  Features added for NSE:KHAICHEM-BE
+[2025-07-13 23:43:00] [INFO] - features.engineer_features -  Features added for NSE:KIMS-EQ
+[2025-07-13 23:43:01] [INFO] - features.engineer_features -  Features added for NSE:KIOCL-EQ
+[2025-07-13 23:43:01] [INFO] - features.engineer_features -  Features added for NSE:KIRIINDUS-EQ
+[2025-07-13 23:43:01] [INFO] - features.engineer_features -  Features added for NSE:KIRLOSBROS-EQ
+[2025-07-13 23:43:02] [INFO] - features.engineer_features -  Features added for NSE:KIRLOSENG-EQ
+[2025-07-13 23:43:02] [INFO] - features.engineer_features -  Features added for NSE:KIRLPNU-EQ
+[2025-07-13 23:43:02] [INFO] - features.engineer_features -  Features added for NSE:KITEX-EQ
+[2025-07-13 23:43:02] [INFO] - features.engineer_features -  Features added for NSE:KNRCON-EQ
+[2025-07-13 23:43:03] [INFO] - features.engineer_features -  Features added for NSE:KOKUYOCMLN-EQ
+[2025-07-13 23:43:03] [INFO] - features.engineer_features -  Features added for NSE:KOLTEPATIL-EQ
+[2025-07-13 23:43:03] [INFO] - features.engineer_features -  Features added for NSE:KOPRAN-EQ
+[2025-07-13 23:43:03] [INFO] - features.engineer_features -  Features added for NSE:KOTAKBANK-EQ
+[2025-07-13 23:43:04] [INFO] - features.engineer_features -  Features added for NSE:KPEL-EQ
+[2025-07-13 23:43:04] [INFO] - features.engineer_features -  Features added for NSE:KPIL-EQ
+[2025-07-13 23:43:04] [INFO] - features.engineer_features -  Features added for NSE:KPITTECH-EQ
+[2025-07-13 23:43:04] [INFO] - features.engineer_features -  Features added for NSE:KPRMILL-EQ
+[2025-07-13 23:43:05] [INFO] - features.engineer_features -  Features added for NSE:KRBL-EQ
+[2025-07-13 23:43:05] [INFO] - features.engineer_features -  Features added for NSE:KRISHANA-EQ
+[2025-07-13 23:43:05] [INFO] - features.engineer_features -  Features added for NSE:KRN-EQ
+[2025-07-13 23:43:05] [INFO] - features.engineer_features -  Features added for NSE:KRONOX-EQ
+[2025-07-13 23:43:06] [INFO] - features.engineer_features -  Features added for NSE:KROSS-EQ
+[2025-07-13 23:43:06] [INFO] - features.engineer_features -  Features added for NSE:KSB-EQ
+[2025-07-13 23:43:06] [INFO] - features.engineer_features -  Features added for NSE:KSCL-EQ
+[2025-07-13 23:43:06] [INFO] - features.engineer_features -  Features added for NSE:KSL-EQ
+[2025-07-13 23:43:07] [INFO] - features.engineer_features -  Features added for NSE:KTKBANK-EQ
+[2025-07-13 23:43:07] [INFO] - features.engineer_features -  Features added for NSE:LALPATHLAB-EQ
+[2025-07-13 23:43:07] [INFO] - features.engineer_features -  Features added for NSE:LANDMARK-EQ
+[2025-07-13 23:43:08] [INFO] - features.engineer_features -  Features added for NSE:LAOPALA-EQ
+[2025-07-13 23:43:08] [INFO] - features.engineer_features -  Features added for NSE:LATENTVIEW-EQ
+[2025-07-13 23:43:08] [INFO] - features.engineer_features -  Features added for NSE:LAURUSLABS-EQ
+[2025-07-13 23:43:08] [INFO] - features.engineer_features -  Features added for NSE:LAXMIDENTL-EQ
+[2025-07-13 23:43:08] [INFO] - features.engineer_features -  Features added for NSE:LEMONTREE-EQ
+[2025-07-13 23:43:09] [INFO] - features.engineer_features -  Features added for NSE:LICHSGFIN-EQ
+[2025-07-13 23:43:09] [INFO] - features.engineer_features -  Features added for NSE:LICI-EQ
+[2025-07-13 23:43:09] [INFO] - features.engineer_features -  Features added for NSE:LINC-BE
+[2025-07-13 23:43:10] [INFO] - features.engineer_features -  Features added for NSE:LIQUID-EQ
+[2025-07-13 23:43:10] [INFO] - features.engineer_features -  Features added for NSE:LIQUID1-EQ
+[2025-07-13 23:43:10] [INFO] - features.engineer_features -  Features added for NSE:LIQUIDADD-EQ
+[2025-07-13 23:43:10] [INFO] - features.engineer_features -  Features added for NSE:LIQUIDBEES-EQ
+[2025-07-13 23:43:10] [INFO] - features.engineer_features -  Features added for NSE:LIQUIDBETF-EQ
+[2025-07-13 23:43:11] [INFO] - features.engineer_features -  Features added for NSE:LIQUIDCASE-EQ
+[2025-07-13 23:43:11] [INFO] - features.engineer_features -  Features added for NSE:LIQUIDETF-EQ
+[2025-07-13 23:43:11] [INFO] - features.engineer_features -  Features added for NSE:LIQUIDIETF-EQ
+[2025-07-13 23:43:11] [INFO] - features.engineer_features -  Features added for NSE:LLOYDSENGG-EQ
+[2025-07-13 23:43:12] [INFO] - features.engineer_features -  Features added for NSE:LLOYDSENT-EQ
+[2025-07-13 23:43:12] [INFO] - features.engineer_features -  Features added for NSE:LLOYDSME-EQ
+[2025-07-13 23:43:12] [INFO] - features.engineer_features -  Features added for NSE:LODHA-EQ
+[2025-07-13 23:43:12] [INFO] - features.engineer_features -  Features added for NSE:LT-EQ
+[2025-07-13 23:43:13] [INFO] - features.engineer_features -  Features added for NSE:LTF-EQ
+[2025-07-13 23:43:13] [INFO] - features.engineer_features -  Features added for NSE:LTFOODS-EQ
+[2025-07-13 23:43:13] [INFO] - features.engineer_features -  Features added for NSE:LTIM-EQ
+[2025-07-13 23:43:13] [INFO] - features.engineer_features -  Features added for NSE:LTTS-EQ
+[2025-07-13 23:43:14] [INFO] - features.engineer_features -  Features added for NSE:LUMAXTECH-EQ
+[2025-07-13 23:43:14] [INFO] - features.engineer_features -  Features added for NSE:LUPIN-EQ
+[2025-07-13 23:43:14] [INFO] - features.engineer_features -  Features added for NSE:LXCHEM-EQ
+[2025-07-13 23:43:15] [INFO] - features.engineer_features -  Features added for NSE:M&M-EQ
+[2025-07-13 23:43:15] [INFO] - features.engineer_features -  Features added for NSE:M&MFIN-EQ
+[2025-07-13 23:43:15] [INFO] - features.engineer_features -  Features added for NSE:MAANALU-BE
+[2025-07-13 23:43:15] [INFO] - features.engineer_features -  Features added for NSE:MADRASFERT-EQ
+[2025-07-13 23:43:16] [INFO] - features.engineer_features -  Features added for NSE:MAFANG-EQ
+[2025-07-13 23:43:16] [INFO] - features.engineer_features -  Features added for NSE:MAHABANK-EQ
+[2025-07-13 23:43:16] [INFO] - features.engineer_features -  Features added for NSE:MAHLIFE-EQ
+[2025-07-13 23:43:17] [INFO] - features.engineer_features -  Features added for NSE:MAHLOG-EQ
+[2025-07-13 23:43:17] [INFO] - features.engineer_features -  Features added for NSE:MAHSEAMLES-EQ
+[2025-07-13 23:43:17] [INFO] - features.engineer_features -  Features added for NSE:MAMATA-EQ
+[2025-07-13 23:43:17] [INFO] - features.engineer_features -  Features added for NSE:MANAKCOAT-EQ
+[2025-07-13 23:43:17] [INFO] - features.engineer_features -  Features added for NSE:MANALIPETC-EQ
+[2025-07-13 23:43:18] [INFO] - features.engineer_features -  Features added for NSE:MANAPPURAM-EQ
+[2025-07-13 23:43:18] [INFO] - features.engineer_features -  Features added for NSE:MANBA-EQ
+[2025-07-13 23:43:18] [INFO] - features.engineer_features -  Features added for NSE:MANGCHEFER-EQ
+[2025-07-13 23:43:18] [INFO] - features.engineer_features -  Features added for NSE:MANINDS-EQ
+[2025-07-13 23:43:19] [INFO] - features.engineer_features -  Features added for NSE:MANINFRA-EQ
+[2025-07-13 23:43:19] [INFO] - features.engineer_features -  Features added for NSE:MANKIND-EQ
+[2025-07-13 23:43:19] [INFO] - features.engineer_features -  Features added for NSE:MANORAMA-EQ
+[2025-07-13 23:43:20] [INFO] - features.engineer_features -  Features added for NSE:MANYAVAR-EQ
+[2025-07-13 23:43:20] [INFO] - features.engineer_features -  Features added for NSE:MAPMYINDIA-EQ
+[2025-07-13 23:43:20] [INFO] - features.engineer_features -  Features added for NSE:MARATHON-EQ
+[2025-07-13 23:43:20] [INFO] - features.engineer_features -  Features added for NSE:MARICO-EQ
+[2025-07-13 23:43:21] [INFO] - features.engineer_features -  Features added for NSE:MARINE-BE
+[2025-07-13 23:43:21] [INFO] - features.engineer_features -  Features added for NSE:MARKSANS-EQ
+[2025-07-13 23:43:21] [INFO] - features.engineer_features -  Features added for NSE:MARUTI-EQ
+[2025-07-13 23:43:22] [INFO] - features.engineer_features -  Features added for NSE:MASFIN-EQ
+[2025-07-13 23:43:22] [INFO] - features.engineer_features -  Features added for NSE:MASTEK-EQ
+[2025-07-13 23:43:22] [INFO] - features.engineer_features -  Features added for NSE:MASTERTR-EQ
+[2025-07-13 23:43:22] [INFO] - features.engineer_features -  Features added for NSE:MAWANASUG-EQ
+[2025-07-13 23:43:23] [INFO] - features.engineer_features -  Features added for NSE:MAXESTATES-EQ
+[2025-07-13 23:43:23] [INFO] - features.engineer_features -  Features added for NSE:MAXHEALTH-EQ
+[2025-07-13 23:43:23] [INFO] - features.engineer_features -  Features added for NSE:MAYURUNIQ-EQ
+[2025-07-13 23:43:23] [INFO] - features.engineer_features -  Features added for NSE:MAZDA-EQ
+[2025-07-13 23:43:24] [INFO] - features.engineer_features -  Features added for NSE:MBAPL-EQ
+[2025-07-13 23:43:24] [INFO] - features.engineer_features -  Features added for NSE:MCLOUD-EQ
+[2025-07-13 23:43:24] [INFO] - features.engineer_features -  Features added for NSE:MCX-EQ
+[2025-07-13 23:43:24] [INFO] - features.engineer_features -  Features added for NSE:MEDANTA-EQ
+[2025-07-13 23:43:25] [INFO] - features.engineer_features -  Features added for NSE:MEDIASSIST-EQ
+[2025-07-13 23:43:25] [INFO] - features.engineer_features -  Features added for NSE:MEDPLUS-EQ
+[2025-07-13 23:43:25] [INFO] - features.engineer_features -  Features added for NSE:MEGASOFT-BE
+[2025-07-13 23:43:25] [INFO] - features.engineer_features -  Features added for NSE:METROPOLIS-EQ
+[2025-07-13 23:43:26] [INFO] - features.engineer_features -  Features added for NSE:MFSL-EQ
+[2025-07-13 23:43:26] [INFO] - features.engineer_features -  Features added for NSE:MGL-EQ
+[2025-07-13 23:43:26] [INFO] - features.engineer_features -  Features added for NSE:MHRIL-EQ
+[2025-07-13 23:43:27] [INFO] - features.engineer_features -  Features added for NSE:MICEL-EQ
+[2025-07-13 23:43:27] [INFO] - features.engineer_features -  Features added for NSE:MID150BEES-EQ
+[2025-07-13 23:43:27] [INFO] - features.engineer_features -  Features added for NSE:MIDHANI-EQ
+[2025-07-13 23:43:28] [INFO] - features.engineer_features -  Features added for NSE:MINDACORP-EQ
+[2025-07-13 23:43:28] [INFO] - features.engineer_features -  Features added for NSE:MINDTECK-BE
+[2025-07-13 23:43:28] [INFO] - features.engineer_features -  Features added for NSE:MMTC-EQ
+[2025-07-13 23:43:28] [INFO] - features.engineer_features -  Features added for NSE:MOBIKWIK-EQ
+[2025-07-13 23:43:29] [INFO] - features.engineer_features -  Features added for NSE:MODEFENCE-EQ
+[2025-07-13 23:43:29] [INFO] - features.engineer_features -  Features added for NSE:MOIL-EQ
+[2025-07-13 23:43:29] [INFO] - features.engineer_features -  Features added for NSE:MOLDTECH-EQ
+[2025-07-13 23:43:29] [INFO] - features.engineer_features -  Features added for NSE:MOM100-EQ
+[2025-07-13 23:43:29] [INFO] - features.engineer_features -  Features added for NSE:MOMENTUM50-EQ
+[2025-07-13 23:43:30] [INFO] - features.engineer_features -  Features added for NSE:MOMOMENTUM-EQ
+[2025-07-13 23:43:30] [INFO] - features.engineer_features -  Features added for NSE:MON100-EQ
+[2025-07-13 23:43:30] [INFO] - features.engineer_features -  Features added for NSE:MONARCH-EQ
+[2025-07-13 23:43:31] [INFO] - features.engineer_features -  Features added for NSE:MONQ50-EQ
+[2025-07-13 23:43:31] [INFO] - features.engineer_features -  Features added for NSE:MOREALTY-EQ
+[2025-07-13 23:43:31] [INFO] - features.engineer_features -  Features added for NSE:MOREPENLAB-EQ
+[2025-07-13 23:43:31] [INFO] - features.engineer_features -  Features added for NSE:MOSCHIP-EQ
+[2025-07-13 23:43:32] [INFO] - features.engineer_features -  Features added for NSE:MOTHERSON-EQ
+[2025-07-13 23:43:32] [INFO] - features.engineer_features -  Features added for NSE:MOTILALOFS-EQ
+[2025-07-13 23:43:32] [INFO] - features.engineer_features -  Features added for NSE:MPHASIS-EQ
+[2025-07-13 23:43:32] [INFO] - features.engineer_features -  Features added for NSE:MRPL-EQ
+[2025-07-13 23:43:33] [INFO] - features.engineer_features -  Features added for NSE:MSTCLTD-EQ
+[2025-07-13 23:43:33] [INFO] - features.engineer_features -  Features added for NSE:MSUMI-EQ
+[2025-07-13 23:43:33] [INFO] - features.engineer_features -  Features added for NSE:MTARTECH-EQ
+[2025-07-13 23:43:34] [INFO] - features.engineer_features -  Features added for NSE:MUFIN-EQ
+[2025-07-13 23:43:34] [INFO] - features.engineer_features -  Features added for NSE:MUFTI-EQ
+[2025-07-13 23:43:34] [INFO] - features.engineer_features -  Features added for NSE:MUKANDLTD-EQ
+[2025-07-13 23:43:34] [INFO] - features.engineer_features -  Features added for NSE:MUNJALAU-EQ
+[2025-07-13 23:43:35] [INFO] - features.engineer_features -  Features added for NSE:MUNJALSHOW-EQ
+[2025-07-13 23:43:35] [INFO] - features.engineer_features -  Features added for NSE:MUTHOOTFIN-EQ
+[2025-07-13 23:43:35] [INFO] - features.engineer_features -  Features added for NSE:MUTHOOTMF-EQ
+[2025-07-13 23:43:35] [INFO] - features.engineer_features -  Features added for NSE:MVGJL-EQ
+[2025-07-13 23:43:36] [INFO] - features.engineer_features -  Features added for NSE:NACLIND-BE
+[2025-07-13 23:43:36] [INFO] - features.engineer_features -  Features added for NSE:NAM-INDIA-EQ
+[2025-07-13 23:43:36] [INFO] - features.engineer_features -  Features added for NSE:NATCOPHARM-EQ
+[2025-07-13 23:43:36] [INFO] - features.engineer_features -  Features added for NSE:NAUKRI-EQ
+[2025-07-13 23:43:37] [INFO] - features.engineer_features -  Features added for NSE:NAVA-EQ
+[2025-07-13 23:43:37] [INFO] - features.engineer_features -  Features added for NSE:NAVINFLUOR-EQ
+[2025-07-13 23:43:37] [INFO] - features.engineer_features -  Features added for NSE:NAVKARCORP-EQ
+[2025-07-13 23:43:38] [INFO] - features.engineer_features -  Features added for NSE:NAVNETEDUL-EQ
+[2025-07-13 23:43:38] [INFO] - features.engineer_features -  Features added for NSE:NAZARA-EQ
+[2025-07-13 23:43:38] [INFO] - features.engineer_features -  Features added for NSE:NBCC-EQ
+[2025-07-13 23:43:38] [INFO] - features.engineer_features -  Features added for NSE:NCC-EQ
+[2025-07-13 23:43:39] [INFO] - features.engineer_features -  Features added for NSE:NCLIND-EQ
+[2025-07-13 23:43:39] [INFO] - features.engineer_features -  Features added for NSE:NDRAUTO-EQ
+[2025-07-13 23:43:39] [INFO] - features.engineer_features -  Features added for NSE:NDTV-BE
+[2025-07-13 23:43:40] [INFO] - features.engineer_features -  Features added for NSE:NELCAST-EQ
+[2025-07-13 23:43:40] [INFO] - features.engineer_features -  Features added for NSE:NELCO-EQ
+[2025-07-13 23:43:40] [INFO] - features.engineer_features -  Features added for NSE:NESCO-EQ
+[2025-07-13 23:43:41] [INFO] - features.engineer_features -  Features added for NSE:NESTLEIND-EQ
+[2025-07-13 23:43:41] [INFO] - features.engineer_features -  Features added for NSE:NETWEB-EQ
+[2025-07-13 23:43:41] [INFO] - features.engineer_features -  Features added for NSE:NETWORK18-EQ
+[2025-07-13 23:43:41] [INFO] - features.engineer_features -  Features added for NSE:NEWGEN-EQ
+[2025-07-13 23:43:42] [INFO] - features.engineer_features -  Features added for NSE:NEXT50IETF-EQ
+[2025-07-13 23:43:42] [INFO] - features.engineer_features -  Features added for NSE:NFL-EQ
+[2025-07-13 23:43:42] [INFO] - features.engineer_features -  Features added for NSE:NH-EQ
+[2025-07-13 23:43:42] [INFO] - features.engineer_features -  Features added for NSE:NHPC-EQ
+[2025-07-13 23:43:43] [INFO] - features.engineer_features -  Features added for NSE:NIACL-EQ
+[2025-07-13 23:43:43] [INFO] - features.engineer_features -  Features added for NSE:NIBE-EQ
+[2025-07-13 23:43:43] [INFO] - features.engineer_features -  Features added for NSE:NIFTYBEES-EQ
+[2025-07-13 23:43:44] [INFO] - features.engineer_features -  Features added for NSE:NIFTYIETF-EQ
+[2025-07-13 23:43:44] [INFO] - features.engineer_features -  Features added for NSE:NIITLTD-EQ
+[2025-07-13 23:43:44] [INFO] - features.engineer_features -  Features added for NSE:NIITMTS-EQ
+[2025-07-13 23:43:44] [INFO] - features.engineer_features -  Features added for NSE:NITCO-EQ
+[2025-07-13 23:43:45] [INFO] - features.engineer_features -  Features added for NSE:NITINSPIN-EQ
+[2025-07-13 23:43:45] [INFO] - features.engineer_features -  Features added for NSE:NIVABUPA-EQ
+[2025-07-13 23:43:45] [INFO] - features.engineer_features -  Features added for NSE:NLCINDIA-EQ
+[2025-07-13 23:43:45] [INFO] - features.engineer_features -  Features added for NSE:NMDC-EQ
+[2025-07-13 23:43:46] [INFO] - features.engineer_features -  Features added for NSE:NOCIL-EQ
+[2025-07-13 23:43:46] [INFO] - features.engineer_features -  Features added for NSE:NORTHARC-EQ
+[2025-07-13 23:43:46] [INFO] - features.engineer_features -  Features added for NSE:NRBBEARING-EQ
+[2025-07-13 23:43:46] [INFO] - features.engineer_features -  Features added for NSE:NRL-BE
+[2025-07-13 23:43:47] [INFO] - features.engineer_features -  Features added for NSE:NTPC-EQ
+[2025-07-13 23:43:47] [INFO] - features.engineer_features -  Features added for NSE:NTPCGREEN-EQ
+[2025-07-13 23:43:47] [INFO] - features.engineer_features -  Features added for NSE:NUVAMA-EQ
+[2025-07-13 23:43:47] [INFO] - features.engineer_features -  Features added for NSE:NYKAA-EQ
+[2025-07-13 23:43:48] [INFO] - features.engineer_features -  Features added for NSE:OBEROIRLTY-EQ
+[2025-07-13 23:43:48] [INFO] - features.engineer_features -  Features added for NSE:OCCLLTD-BE
+[2025-07-13 23:43:48] [INFO] - features.engineer_features -  Features added for NSE:OFSS-EQ
+[2025-07-13 23:43:48] [INFO] - features.engineer_features -  Features added for NSE:OIL-EQ
+[2025-07-13 23:43:49] [INFO] - features.engineer_features -  Features added for NSE:OLECTRA-EQ
+[2025-07-13 23:43:49] [INFO] - features.engineer_features -  Features added for NSE:OMAXE-EQ
+[2025-07-13 23:43:49] [INFO] - features.engineer_features -  Features added for NSE:OMINFRAL-EQ
+[2025-07-13 23:43:49] [INFO] - features.engineer_features -  Features added for NSE:ONEPOINT-BE
+[2025-07-13 23:43:50] [INFO] - features.engineer_features -  Features added for NSE:ONESOURCE-EQ
+[2025-07-13 23:43:50] [INFO] - features.engineer_features -  Features added for NSE:ONGC-EQ
+[2025-07-13 23:43:50] [INFO] - features.engineer_features -  Features added for NSE:ONMOBILE-EQ
+[2025-07-13 23:43:50] [INFO] - features.engineer_features -  Features added for NSE:OPTIEMUS-EQ
+[2025-07-13 23:43:51] [INFO] - features.engineer_features -  Features added for NSE:ORCHPHARMA-EQ
+[2025-07-13 23:43:51] [INFO] - features.engineer_features -  Features added for NSE:ORIENTCEM-EQ
+[2025-07-13 23:43:51] [INFO] - features.engineer_features -  Features added for NSE:ORIENTELEC-EQ
+[2025-07-13 23:43:52] [INFO] - features.engineer_features -  Features added for NSE:ORIENTHOT-EQ
+[2025-07-13 23:43:52] [INFO] - features.engineer_features -  Features added for NSE:ORIENTTECH-EQ
+[2025-07-13 23:43:52] [INFO] - features.engineer_features -  Features added for NSE:OSWALAGRO-EQ
+[2025-07-13 23:43:52] [INFO] - features.engineer_features -  Features added for NSE:OSWALPUMPS-EQ
+[2025-07-13 23:43:52] [INFO] - features.engineer_features -  Features added for NSE:PAKKA-EQ
+[2025-07-13 23:43:53] [INFO] - features.engineer_features -  Features added for NSE:PANACEABIO-EQ
+[2025-07-13 23:43:53] [INFO] - features.engineer_features -  Features added for NSE:PARACABLES-EQ
+[2025-07-13 23:43:53] [INFO] - features.engineer_features -  Features added for NSE:PARADEEP-EQ
+[2025-07-13 23:43:54] [INFO] - features.engineer_features -  Features added for NSE:PARAGMILK-EQ
+[2025-07-13 23:43:54] [INFO] - features.engineer_features -  Features added for NSE:PARKHOTELS-EQ
+[2025-07-13 23:43:54] [INFO] - features.engineer_features -  Features added for NSE:PATANJALI-EQ
+[2025-07-13 23:43:54] [INFO] - features.engineer_features -  Features added for NSE:PAYTM-EQ
+[2025-07-13 23:43:55] [INFO] - features.engineer_features -  Features added for NSE:PCBL-EQ
+[2025-07-13 23:43:55] [INFO] - features.engineer_features -  Features added for NSE:PEL-EQ
+[2025-07-13 23:43:55] [INFO] - features.engineer_features -  Features added for NSE:PENIND-EQ
+[2025-07-13 23:43:55] [INFO] - features.engineer_features -  Features added for NSE:PERSISTENT-EQ
+[2025-07-13 23:43:56] [INFO] - features.engineer_features -  Features added for NSE:PETRONET-EQ
+[2025-07-13 23:43:56] [INFO] - features.engineer_features -  Features added for NSE:PFC-EQ
+[2025-07-13 23:43:56] [INFO] - features.engineer_features -  Features added for NSE:PFOCUS-EQ
+[2025-07-13 23:43:57] [INFO] - features.engineer_features -  Features added for NSE:PGEL-EQ
+[2025-07-13 23:43:57] [INFO] - features.engineer_features -  Features added for NSE:PGIL-EQ
+[2025-07-13 23:43:57] [INFO] - features.engineer_features -  Features added for NSE:PHOENIXLTD-EQ
+[2025-07-13 23:43:58] [INFO] - features.engineer_features -  Features added for NSE:PIDILITIND-EQ
+[2025-07-13 23:43:58] [INFO] - features.engineer_features -  Features added for NSE:PIIND-EQ
+[2025-07-13 23:43:58] [INFO] - features.engineer_features -  Features added for NSE:PLATIND-EQ
+[2025-07-13 23:43:58] [INFO] - features.engineer_features -  Features added for NSE:PNB-EQ
+[2025-07-13 23:43:59] [INFO] - features.engineer_features -  Features added for NSE:PNBGILTS-EQ
+[2025-07-13 23:43:59] [INFO] - features.engineer_features -  Features added for NSE:PNBHOUSING-EQ
+[2025-07-13 23:43:59] [INFO] - features.engineer_features -  Features added for NSE:PNCINFRA-EQ
+[2025-07-13 23:43:59] [INFO] - features.engineer_features -  Features added for NSE:PNGJL-EQ
+[2025-07-13 23:44:00] [INFO] - features.engineer_features -  Features added for NSE:POCL-EQ
+[2025-07-13 23:44:00] [INFO] - features.engineer_features -  Features added for NSE:POKARNA-EQ
+[2025-07-13 23:44:00] [INFO] - features.engineer_features -  Features added for NSE:POLICYBZR-EQ
+[2025-07-13 23:44:00] [INFO] - features.engineer_features -  Features added for NSE:POLYCAB-EQ
+[2025-07-13 23:44:01] [INFO] - features.engineer_features -  Features added for NSE:POLYMED-EQ
+[2025-07-13 23:44:01] [INFO] - features.engineer_features -  Features added for NSE:POLYPLEX-EQ
+[2025-07-13 23:44:01] [INFO] - features.engineer_features -  Features added for NSE:POONAWALLA-EQ
+[2025-07-13 23:44:02] [INFO] - features.engineer_features -  Features added for NSE:POWERGRID-EQ
+[2025-07-13 23:44:02] [INFO] - features.engineer_features -  Features added for NSE:POWERINDIA-EQ
+[2025-07-13 23:44:02] [INFO] - features.engineer_features -  Features added for NSE:PPLPHARMA-EQ
+[2025-07-13 23:44:03] [INFO] - features.engineer_features -  Features added for NSE:PRAJIND-EQ
+[2025-07-13 23:44:03] [INFO] - features.engineer_features -  Features added for NSE:PRAKASH-EQ
+[2025-07-13 23:44:03] [INFO] - features.engineer_features -  Features added for NSE:PRECAM-EQ
+[2025-07-13 23:44:03] [INFO] - features.engineer_features -  Features added for NSE:PRECWIRE-EQ
+[2025-07-13 23:44:04] [INFO] - features.engineer_features -  Features added for NSE:PREMEXPLN-EQ
+[2025-07-13 23:44:04] [INFO] - features.engineer_features -  Features added for NSE:PREMIERENE-EQ
+[2025-07-13 23:44:04] [INFO] - features.engineer_features -  Features added for NSE:PRESTIGE-EQ
+[2025-07-13 23:44:05] [INFO] - features.engineer_features -  Features added for NSE:PRICOLLTD-EQ
+[2025-07-13 23:44:05] [INFO] - features.engineer_features -  Features added for NSE:PRINCEPIPE-EQ
+[2025-07-13 23:44:05] [INFO] - features.engineer_features -  Features added for NSE:PRIVISCL-EQ
+[2025-07-13 23:44:05] [INFO] - features.engineer_features -  Features added for NSE:PROSTARM-EQ
+[2025-07-13 23:44:05] [INFO] - features.engineer_features -  Features added for NSE:PROTEAN-EQ
+[2025-07-13 23:44:06] [INFO] - features.engineer_features -  Features added for NSE:PRSMJOHNSN-EQ
+[2025-07-13 23:44:06] [INFO] - features.engineer_features -  Features added for NSE:PSPPROJECT-EQ
+[2025-07-13 23:44:06] [INFO] - features.engineer_features -  Features added for NSE:PSUBNKBEES-EQ
+[2025-07-13 23:44:06] [INFO] - features.engineer_features -  Features added for NSE:PSUBNKIETF-EQ
+[2025-07-13 23:44:07] [INFO] - features.engineer_features -  Features added for NSE:PTC-EQ
+[2025-07-13 23:44:07] [INFO] - features.engineer_features -  Features added for NSE:PURVA-EQ
+[2025-07-13 23:44:07] [INFO] - features.engineer_features -  Features added for NSE:PVRINOX-EQ
+[2025-07-13 23:44:07] [INFO] - features.engineer_features -  Features added for NSE:PVSL-EQ
+[2025-07-13 23:44:08] [INFO] - features.engineer_features -  Features added for NSE:QGOLDHALF-EQ
+[2025-07-13 23:44:08] [INFO] - features.engineer_features -  Features added for NSE:QPOWER-EQ
+[2025-07-13 23:44:08] [INFO] - features.engineer_features -  Features added for NSE:QUADFUTURE-EQ
+[2025-07-13 23:44:08] [INFO] - features.engineer_features -  Features added for NSE:QUESS-EQ
+[2025-07-13 23:44:09] [INFO] - features.engineer_features -  Features added for NSE:QUICKHEAL-EQ
+[2025-07-13 23:44:09] [INFO] - features.engineer_features -  Features added for NSE:RADHIKAJWE-EQ
+[2025-07-13 23:44:09] [INFO] - features.engineer_features -  Features added for NSE:RADIANTCMS-EQ
+[2025-07-13 23:44:09] [INFO] - features.engineer_features -  Features added for NSE:RADICO-EQ
+[2025-07-13 23:44:10] [INFO] - features.engineer_features -  Features added for NSE:RAILTEL-EQ
+[2025-07-13 23:44:10] [INFO] - features.engineer_features -  Features added for NSE:RAIN-EQ
+[2025-07-13 23:44:10] [INFO] - features.engineer_features -  Features added for NSE:RAINBOW-EQ
+[2025-07-13 23:44:10] [INFO] - features.engineer_features -  Features added for NSE:RAJESHEXPO-EQ
+[2025-07-13 23:44:11] [INFO] - features.engineer_features -  Features added for NSE:RAJOOENG-EQ
+[2025-07-13 23:44:11] [INFO] - features.engineer_features -  Features added for NSE:RALLIS-EQ
+[2025-07-13 23:44:11] [INFO] - features.engineer_features -  Features added for NSE:RAMCOCEM-EQ
+[2025-07-13 23:44:11] [INFO] - features.engineer_features -  Features added for NSE:RAMCOIND-EQ
+[2025-07-13 23:44:12] [INFO] - features.engineer_features -  Features added for NSE:RAMCOSYS-BE
+[2025-07-13 23:44:12] [INFO] - features.engineer_features -  Features added for NSE:RAMKY-EQ
+[2025-07-13 23:44:12] [INFO] - features.engineer_features -  Features added for NSE:RATEGAIN-EQ
+[2025-07-13 23:44:13] [INFO] - features.engineer_features -  Features added for NSE:RATNAVEER-EQ
+[2025-07-13 23:44:13] [INFO] - features.engineer_features -  Features added for NSE:RAYMOND-EQ
+[2025-07-13 23:44:13] [INFO] - features.engineer_features -  Features added for NSE:RAYMONDLSL-EQ
+[2025-07-13 23:44:13] [INFO] - features.engineer_features -  Features added for NSE:RAYMONDREL-BE
+[2025-07-13 23:44:13] [INFO] - features.engineer_features -  Features added for NSE:RBA-EQ
+[2025-07-13 23:44:14] [INFO] - features.engineer_features -  Features added for NSE:RBLBANK-EQ
+[2025-07-13 23:44:14] [INFO] - features.engineer_features -  Features added for NSE:RCF-EQ
+[2025-07-13 23:44:14] [INFO] - features.engineer_features -  Features added for NSE:RECLTD-EQ
+[2025-07-13 23:44:14] [INFO] - features.engineer_features -  Features added for NSE:REDINGTON-EQ
+[2025-07-13 23:44:15] [INFO] - features.engineer_features -  Features added for NSE:REDTAPE-EQ
+[2025-07-13 23:44:15] [INFO] - features.engineer_features -  Features added for NSE:REFEX-EQ
+[2025-07-13 23:44:15] [INFO] - features.engineer_features -  Features added for NSE:RELAXO-EQ
+[2025-07-13 23:44:16] [INFO] - features.engineer_features -  Features added for NSE:RELIANCE-EQ
+[2025-07-13 23:44:16] [INFO] - features.engineer_features -  Features added for NSE:RELIGARE-EQ
+[2025-07-13 23:44:16] [INFO] - features.engineer_features -  Features added for NSE:RELINFRA-BE
+[2025-07-13 23:44:16] [INFO] - features.engineer_features -  Features added for NSE:RELTD-BE
+[2025-07-13 23:44:17] [INFO] - features.engineer_features -  Features added for NSE:REMSONSIND-EQ
+[2025-07-13 23:44:17] [INFO] - features.engineer_features -  Features added for NSE:REPCOHOME-EQ
+[2025-07-13 23:44:17] [INFO] - features.engineer_features -  Features added for NSE:RESPONIND-EQ
+[2025-07-13 23:44:17] [INFO] - features.engineer_features -  Features added for NSE:RGL-EQ
+[2025-07-13 23:44:18] [INFO] - features.engineer_features -  Features added for NSE:RHIM-EQ
+[2025-07-13 23:44:18] [INFO] - features.engineer_features -  Features added for NSE:RICOAUTO-EQ
+[2025-07-13 23:44:18] [INFO] - features.engineer_features -  Features added for NSE:RIIL-EQ
+[2025-07-13 23:44:19] [INFO] - features.engineer_features -  Features added for NSE:RITCO-EQ
+[2025-07-13 23:44:19] [INFO] - features.engineer_features -  Features added for NSE:RITES-EQ
+[2025-07-13 23:44:19] [INFO] - features.engineer_features -  Features added for NSE:RKFORGE-EQ
+[2025-07-13 23:44:19] [INFO] - features.engineer_features -  Features added for NSE:RKSWAMY-EQ
+[2025-07-13 23:44:20] [INFO] - features.engineer_features -  Features added for NSE:ROTO-EQ
+[2025-07-13 23:44:20] [INFO] - features.engineer_features -  Features added for NSE:ROUTE-EQ
+[2025-07-13 23:44:20] [INFO] - features.engineer_features -  Features added for NSE:RPOWER-BE
+[2025-07-13 23:44:20] [INFO] - features.engineer_features -  Features added for NSE:RRKABEL-EQ
+[2025-07-13 23:44:21] [INFO] - features.engineer_features -  Features added for NSE:RSYSTEMS-EQ
+[2025-07-13 23:44:21] [INFO] - features.engineer_features -  Features added for NSE:RTNINDIA-EQ
+[2025-07-13 23:44:21] [INFO] - features.engineer_features -  Features added for NSE:RUPA-EQ
+[2025-07-13 23:44:22] [INFO] - features.engineer_features -  Features added for NSE:RVNL-EQ
+[2025-07-13 23:44:22] [INFO] - features.engineer_features -  Features added for NSE:SAGCEM-EQ
+[2025-07-13 23:44:22] [INFO] - features.engineer_features -  Features added for NSE:SAIL-EQ
+[2025-07-13 23:44:23] [INFO] - features.engineer_features -  Features added for NSE:SAILIFE-EQ
+[2025-07-13 23:44:23] [INFO] - features.engineer_features -  Features added for NSE:SAKSOFT-EQ
+[2025-07-13 23:44:23] [INFO] - features.engineer_features -  Features added for NSE:SALZERELEC-EQ
+[2025-07-13 23:44:23] [INFO] - features.engineer_features -  Features added for NSE:SAMBHV-EQ
+[2025-07-13 23:44:23] [INFO] - features.engineer_features -  Features added for NSE:SAMHI-EQ
+[2025-07-13 23:44:24] [INFO] - features.engineer_features -  Features added for NSE:SAMMAANCAP-EQ
+[2025-07-13 23:44:24] [INFO] - features.engineer_features -  Features added for NSE:SANATHAN-EQ
+[2025-07-13 23:44:24] [INFO] - features.engineer_features -  Features added for NSE:SANDHAR-EQ
+[2025-07-13 23:44:24] [INFO] - features.engineer_features -  Features added for NSE:SANDUMA-EQ
+[2025-07-13 23:44:25] [INFO] - features.engineer_features -  Features added for NSE:SANGHIIND-EQ
+[2025-07-13 23:44:25] [INFO] - features.engineer_features -  Features added for NSE:SANGHVIMOV-EQ
+[2025-07-13 23:44:25] [INFO] - features.engineer_features -  Features added for NSE:SANSTAR-EQ
+[2025-07-13 23:44:25] [INFO] - features.engineer_features -  Features added for NSE:SAPPHIRE-EQ
+[2025-07-13 23:44:26] [INFO] - features.engineer_features -  Features added for NSE:SARDAEN-EQ
+[2025-07-13 23:44:26] [INFO] - features.engineer_features -  Features added for NSE:SAREGAMA-EQ
+[2025-07-13 23:44:26] [INFO] - features.engineer_features -  Features added for NSE:SARLAPOLY-BE
+[2025-07-13 23:44:27] [INFO] - features.engineer_features -  Features added for NSE:SATIA-EQ
+[2025-07-13 23:44:27] [INFO] - features.engineer_features -  Features added for NSE:SATIN-EQ
+[2025-07-13 23:44:27] [INFO] - features.engineer_features -  Features added for NSE:SAURASHCEM-EQ
+[2025-07-13 23:44:27] [INFO] - features.engineer_features -  Features added for NSE:SBFC-EQ
+[2025-07-13 23:44:28] [INFO] - features.engineer_features -  Features added for NSE:SBICARD-EQ
+[2025-07-13 23:44:28] [INFO] - features.engineer_features -  Features added for NSE:SBILIFE-EQ
+[2025-07-13 23:44:28] [INFO] - features.engineer_features -  Features added for NSE:SBIN-EQ
+[2025-07-13 23:44:28] [INFO] - features.engineer_features -  Features added for NSE:SBISILVER-EQ
+[2025-07-13 23:44:29] [INFO] - features.engineer_features -  Features added for NSE:SCHAND-EQ
+[2025-07-13 23:44:29] [INFO] - features.engineer_features -  Features added for NSE:SCHNEIDER-BE
+[2025-07-13 23:44:29] [INFO] - features.engineer_features -  Features added for NSE:SCI-EQ
+[2025-07-13 23:44:30] [INFO] - features.engineer_features -  Features added for NSE:SCILAL-EQ
+[2025-07-13 23:44:30] [INFO] - features.engineer_features -  Features added for NSE:SCODATUBES-EQ
+[2025-07-13 23:44:30] [INFO] - features.engineer_features -  Features added for NSE:SDBL-EQ
+[2025-07-13 23:44:30] [INFO] - features.engineer_features -  Features added for NSE:SELAN-EQ
+[2025-07-13 23:44:31] [INFO] - features.engineer_features -  Features added for NSE:SENCO-EQ
+[2025-07-13 23:44:31] [INFO] - features.engineer_features -  Features added for NSE:SENORES-EQ
+[2025-07-13 23:44:31] [INFO] - features.engineer_features -  Features added for NSE:SEQUENT-EQ
+[2025-07-13 23:44:31] [INFO] - features.engineer_features -  Features added for NSE:SETFGOLD-EQ
+[2025-07-13 23:44:32] [INFO] - features.engineer_features -  Features added for NSE:SETFNIF50-EQ
+[2025-07-13 23:44:32] [INFO] - features.engineer_features -  Features added for NSE:SETFNIFBK-EQ
+[2025-07-13 23:44:32] [INFO] - features.engineer_features -  Features added for NSE:SFL-EQ
+[2025-07-13 23:44:32] [INFO] - features.engineer_features -  Features added for NSE:SGLTL-BE
+[2025-07-13 23:44:33] [INFO] - features.engineer_features -  Features added for NSE:SHAILY-EQ
+[2025-07-13 23:44:33] [INFO] - features.engineer_features -  Features added for NSE:SHAKTIPUMP-EQ
+[2025-07-13 23:44:33] [INFO] - features.engineer_features -  Features added for NSE:SHALBY-EQ
+[2025-07-13 23:44:34] [INFO] - features.engineer_features -  Features added for NSE:SHALPAINTS-EQ
+[2025-07-13 23:44:34] [INFO] - features.engineer_features -  Features added for NSE:SHANKARA-EQ
+[2025-07-13 23:44:34] [INFO] - features.engineer_features -  Features added for NSE:SHARDAMOTR-EQ
+[2025-07-13 23:44:34] [INFO] - features.engineer_features -  Features added for NSE:SHAREINDIA-EQ
+[2025-07-13 23:44:35] [INFO] - features.engineer_features -  Features added for NSE:SHILPAMED-BE
+[2025-07-13 23:44:35] [INFO] - features.engineer_features -  Features added for NSE:SHK-EQ
+[2025-07-13 23:44:35] [INFO] - features.engineer_features -  Features added for NSE:SHREDIGCEM-EQ
+[2025-07-13 23:44:36] [INFO] - features.engineer_features -  Features added for NSE:SHREEPUSHK-EQ
+[2025-07-13 23:44:36] [INFO] - features.engineer_features -  Features added for NSE:SHRIPISTON-EQ
+[2025-07-13 23:44:36] [INFO] - features.engineer_features -  Features added for NSE:SHRIRAMFIN-EQ
+[2025-07-13 23:44:36] [INFO] - features.engineer_features -  Features added for NSE:SHRIRAMPPS-EQ
+[2025-07-13 23:44:37] [INFO] - features.engineer_features -  Features added for NSE:SHYAMMETL-EQ
+[2025-07-13 23:44:37] [INFO] - features.engineer_features -  Features added for NSE:SIEMENS-EQ
+[2025-07-13 23:44:37] [INFO] - features.engineer_features -  Features added for NSE:SIGNATURE-EQ
+[2025-07-13 23:44:37] [INFO] - features.engineer_features -  Features added for NSE:SIGNPOST-EQ
+[2025-07-13 23:44:38] [INFO] - features.engineer_features -  Features added for NSE:SILVER-EQ
+[2025-07-13 23:44:38] [INFO] - features.engineer_features -  Features added for NSE:SILVER1-EQ
+[2025-07-13 23:44:38] [INFO] - features.engineer_features -  Features added for NSE:SILVERADD-EQ
+[2025-07-13 23:44:38] [INFO] - features.engineer_features -  Features added for NSE:SILVERBEES-EQ
+[2025-07-13 23:44:39] [INFO] - features.engineer_features -  Features added for NSE:SILVERETF-EQ
+[2025-07-13 23:44:39] [INFO] - features.engineer_features -  Features added for NSE:SILVERIETF-EQ
+[2025-07-13 23:44:39] [INFO] - features.engineer_features -  Features added for NSE:SILVRETF-EQ
+[2025-07-13 23:44:39] [INFO] - features.engineer_features -  Features added for NSE:SIRCA-EQ
+[2025-07-13 23:44:40] [INFO] - features.engineer_features -  Features added for NSE:SIS-EQ
+[2025-07-13 23:44:40] [INFO] - features.engineer_features -  Features added for NSE:SIYSIL-EQ
+[2025-07-13 23:44:40] [INFO] - features.engineer_features -  Features added for NSE:SJS-EQ
+[2025-07-13 23:44:40] [INFO] - features.engineer_features -  Features added for NSE:SJVN-EQ
+[2025-07-13 23:44:41] [INFO] - features.engineer_features -  Features added for NSE:SKIPPER-EQ
+[2025-07-13 23:44:41] [INFO] - features.engineer_features -  Features added for NSE:SKYGOLD-EQ
+[2025-07-13 23:44:41] [INFO] - features.engineer_features -  Features added for NSE:SMCGLOBAL-EQ
+[2025-07-13 23:44:41] [INFO] - features.engineer_features -  Features added for NSE:SMLISUZU-EQ
+[2025-07-13 23:44:42] [INFO] - features.engineer_features -  Features added for NSE:SMSPHARMA-EQ
+[2025-07-13 23:44:42] [INFO] - features.engineer_features -  Features added for NSE:SNOWMAN-EQ
+[2025-07-13 23:44:42] [INFO] - features.engineer_features -  Features added for NSE:SOBHA-EQ
+[2025-07-13 23:44:43] [INFO] - features.engineer_features -  Features added for NSE:SOLARA-EQ
+[2025-07-13 23:44:43] [INFO] - features.engineer_features -  Features added for NSE:SOLARINDS-EQ
+[2025-07-13 23:44:43] [INFO] - features.engineer_features -  Features added for NSE:SONACOMS-EQ
+[2025-07-13 23:44:43] [INFO] - features.engineer_features -  Features added for NSE:SONATSOFTW-EQ
+[2025-07-13 23:44:44] [INFO] - features.engineer_features -  Features added for NSE:SOUTHWEST-BE
+[2025-07-13 23:44:44] [INFO] - features.engineer_features -  Features added for NSE:SPANDANA-EQ
+[2025-07-13 23:44:44] [INFO] - features.engineer_features -  Features added for NSE:SPARC-EQ
+[2025-07-13 23:44:44] [INFO] - features.engineer_features -  Features added for NSE:SPENCERS-EQ
+[2025-07-13 23:44:45] [INFO] - features.engineer_features -  Features added for NSE:SPIC-EQ
+[2025-07-13 23:44:45] [INFO] - features.engineer_features -  Features added for NSE:SPMLINFRA-EQ
+[2025-07-13 23:44:45] [INFO] - features.engineer_features -  Features added for NSE:SPORTKING-EQ
+[2025-07-13 23:44:45] [INFO] - features.engineer_features -  Features added for NSE:SRD-EQ
+[2025-07-13 23:44:46] [INFO] - features.engineer_features -  Features added for NSE:SRF-EQ
+[2025-07-13 23:44:46] [INFO] - features.engineer_features -  Features added for NSE:SRM-EQ
+[2025-07-13 23:44:46] [INFO] - features.engineer_features -  Features added for NSE:SSWL-EQ
+[2025-07-13 23:44:46] [INFO] - features.engineer_features -  Features added for NSE:STALLION-BE
+[2025-07-13 23:44:47] [INFO] - features.engineer_features -  Features added for NSE:STAR-EQ
+[2025-07-13 23:44:47] [INFO] - features.engineer_features -  Features added for NSE:STARCEMENT-EQ
+[2025-07-13 23:44:47] [INFO] - features.engineer_features -  Features added for NSE:STARHEALTH-EQ
+[2025-07-13 23:44:48] [INFO] - features.engineer_features -  Features added for NSE:STCINDIA-BE
+[2025-07-13 23:44:48] [INFO] - features.engineer_features -  Features added for NSE:STERTOOLS-EQ
+[2025-07-13 23:44:48] [INFO] - features.engineer_features -  Features added for NSE:STLTECH-EQ
+[2025-07-13 23:44:48] [INFO] - features.engineer_features -  Features added for NSE:STOVEKRAFT-EQ
+[2025-07-13 23:44:49] [INFO] - features.engineer_features -  Features added for NSE:STYLEBAAZA-EQ
+[2025-07-13 23:44:49] [INFO] - features.engineer_features -  Features added for NSE:SUBROS-EQ
+[2025-07-13 23:44:49] [INFO] - features.engineer_features -  Features added for NSE:SUDARSCHEM-EQ
+[2025-07-13 23:44:49] [INFO] - features.engineer_features -  Features added for NSE:SULA-EQ
+[2025-07-13 23:44:50] [INFO] - features.engineer_features -  Features added for NSE:SUMICHEM-EQ
+[2025-07-13 23:44:50] [INFO] - features.engineer_features -  Features added for NSE:SUNDARMHLD-EQ
+[2025-07-13 23:44:50] [INFO] - features.engineer_features -  Features added for NSE:SUNDRMFAST-EQ
+[2025-07-13 23:44:51] [INFO] - features.engineer_features -  Features added for NSE:SUNFLAG-EQ
+[2025-07-13 23:44:51] [INFO] - features.engineer_features -  Features added for NSE:SUNPHARMA-EQ
+[2025-07-13 23:44:51] [INFO] - features.engineer_features -  Features added for NSE:SUNTECK-EQ
+[2025-07-13 23:44:51] [INFO] - features.engineer_features -  Features added for NSE:SUNTV-EQ
+[2025-07-13 23:44:52] [INFO] - features.engineer_features -  Features added for NSE:SUPRAJIT-EQ
+[2025-07-13 23:44:52] [INFO] - features.engineer_features -  Features added for NSE:SUPREME-EQ
+[2025-07-13 23:44:52] [INFO] - features.engineer_features -  Features added for NSE:SUPREMEIND-EQ
+[2025-07-13 23:44:52] [INFO] - features.engineer_features -  Features added for NSE:SUPRIYA-EQ
+[2025-07-13 23:44:53] [INFO] - features.engineer_features -  Features added for NSE:SURAJEST-EQ
+[2025-07-13 23:44:53] [INFO] - features.engineer_features -  Features added for NSE:SURYAROSNI-EQ
+[2025-07-13 23:44:53] [INFO] - features.engineer_features -  Features added for NSE:SURYODAY-EQ
+[2025-07-13 23:44:54] [INFO] - features.engineer_features -  Features added for NSE:SUVEN-BE
+[2025-07-13 23:44:54] [INFO] - features.engineer_features -  Features added for NSE:SUZLON-EQ
+[2025-07-13 23:44:54] [INFO] - features.engineer_features -  Features added for NSE:SWANENERGY-EQ
+[2025-07-13 23:44:54] [INFO] - features.engineer_features -  Features added for NSE:SWIGGY-EQ
+[2025-07-13 23:44:55] [INFO] - features.engineer_features -  Features added for NSE:SWSOLAR-EQ
+[2025-07-13 23:44:55] [INFO] - features.engineer_features -  Features added for NSE:SYMPHONY-EQ
+[2025-07-13 23:44:55] [INFO] - features.engineer_features -  Features added for NSE:SYNGENE-EQ
+[2025-07-13 23:44:55] [INFO] - features.engineer_features -  Features added for NSE:SYRMA-EQ
+[2025-07-13 23:44:56] [INFO] - features.engineer_features -  Features added for NSE:TAJGVK-EQ
+[2025-07-13 23:44:56] [INFO] - features.engineer_features -  Features added for NSE:TALBROAUTO-EQ
+[2025-07-13 23:44:56] [INFO] - features.engineer_features -  Features added for NSE:TANLA-EQ
+[2025-07-13 23:44:57] [INFO] - features.engineer_features -  Features added for NSE:TARACHAND-EQ
+[2025-07-13 23:44:57] [INFO] - features.engineer_features -  Features added for NSE:TARC-EQ
+[2025-07-13 23:44:57] [INFO] - features.engineer_features -  Features added for NSE:TARIL-EQ
+[2025-07-13 23:44:57] [INFO] - features.engineer_features -  Features added for NSE:TATACHEM-EQ
+[2025-07-13 23:44:58] [INFO] - features.engineer_features -  Features added for NSE:TATACOMM-EQ
+[2025-07-13 23:44:58] [INFO] - features.engineer_features -  Features added for NSE:TATACONSUM-EQ
+[2025-07-13 23:44:58] [INFO] - features.engineer_features -  Features added for NSE:TATAELXSI-EQ
+[2025-07-13 23:44:59] [INFO] - features.engineer_features -  Features added for NSE:TATAMOTORS-EQ
+[2025-07-13 23:44:59] [INFO] - features.engineer_features -  Features added for NSE:TATAPOWER-EQ
+[2025-07-13 23:44:59] [INFO] - features.engineer_features -  Features added for NSE:TATASTEEL-EQ
+[2025-07-13 23:44:59] [INFO] - features.engineer_features -  Features added for NSE:TATATECH-EQ
+[2025-07-13 23:44:59] [INFO] - features.engineer_features -  Features added for NSE:TBOTEK-EQ
+[2025-07-13 23:45:00] [INFO] - features.engineer_features -  Features added for NSE:TBZ-EQ
+[2025-07-13 23:45:00] [INFO] - features.engineer_features -  Features added for NSE:TCS-EQ
+[2025-07-13 23:45:00] [INFO] - features.engineer_features -  Features added for NSE:TDPOWERSYS-EQ
+[2025-07-13 23:45:01] [INFO] - features.engineer_features -  Features added for NSE:TECHM-EQ
+[2025-07-13 23:45:01] [INFO] - features.engineer_features -  Features added for NSE:TECHNOE-EQ
+[2025-07-13 23:45:01] [INFO] - features.engineer_features -  Features added for NSE:TEJASNET-EQ
+[2025-07-13 23:45:02] [INFO] - features.engineer_features -  Features added for NSE:TEXINFRA-EQ
+[2025-07-13 23:45:02] [INFO] - features.engineer_features -  Features added for NSE:TEXRAIL-EQ
+[2025-07-13 23:45:02] [INFO] - features.engineer_features -  Features added for NSE:TFCILTD-EQ
+[2025-07-13 23:45:02] [INFO] - features.engineer_features -  Features added for NSE:THELEELA-EQ
+[2025-07-13 23:45:03] [INFO] - features.engineer_features -  Features added for NSE:THEMISMED-EQ
+[2025-07-13 23:45:03] [INFO] - features.engineer_features -  Features added for NSE:THERMAX-EQ
+[2025-07-13 23:45:03] [INFO] - features.engineer_features -  Features added for NSE:THOMASCOOK-EQ
+[2025-07-13 23:45:03] [INFO] - features.engineer_features -  Features added for NSE:TI-EQ
+[2025-07-13 23:45:04] [INFO] - features.engineer_features -  Features added for NSE:TIINDIA-EQ
+[2025-07-13 23:45:04] [INFO] - features.engineer_features -  Features added for NSE:TIMETECHNO-EQ
+[2025-07-13 23:45:04] [INFO] - features.engineer_features -  Features added for NSE:TIMKEN-EQ
+[2025-07-13 23:45:05] [INFO] - features.engineer_features -  Features added for NSE:TIPSMUSIC-EQ
+[2025-07-13 23:45:05] [INFO] - features.engineer_features -  Features added for NSE:TIRUMALCHM-EQ
+[2025-07-13 23:45:05] [INFO] - features.engineer_features -  Features added for NSE:TITAGARH-EQ
+[2025-07-13 23:45:06] [INFO] - features.engineer_features -  Features added for NSE:TITAN-EQ
+[2025-07-13 23:45:06] [INFO] - features.engineer_features -  Features added for NSE:TNPETRO-EQ
+[2025-07-13 23:45:06] [INFO] - features.engineer_features -  Features added for NSE:TNPL-EQ
+[2025-07-13 23:45:06] [INFO] - features.engineer_features -  Features added for NSE:TOLINS-EQ
+[2025-07-13 23:45:07] [INFO] - features.engineer_features -  Features added for NSE:TOP10ADD-EQ
+[2025-07-13 23:45:07] [INFO] - features.engineer_features -  Features added for NSE:TORNTPHARM-EQ
+[2025-07-13 23:45:07] [INFO] - features.engineer_features -  Features added for NSE:TORNTPOWER-EQ
+[2025-07-13 23:45:07] [INFO] - features.engineer_features -  Features added for NSE:TPLPLASTEH-EQ
+[2025-07-13 23:45:08] [INFO] - features.engineer_features -  Features added for NSE:TRACXN-EQ
+[2025-07-13 23:45:08] [INFO] - features.engineer_features -  Features added for NSE:TRANSRAILL-EQ
+[2025-07-13 23:45:08] [INFO] - features.engineer_features -  Features added for NSE:TRENT-EQ
+[2025-07-13 23:45:09] [INFO] - features.engineer_features -  Features added for NSE:TRITURBINE-EQ
+[2025-07-13 23:45:09] [INFO] - features.engineer_features -  Features added for NSE:TRIVENI-EQ
+[2025-07-13 23:45:09] [INFO] - features.engineer_features -  Features added for NSE:TTKPRESTIG-EQ
+[2025-07-13 23:45:10] [INFO] - features.engineer_features -  Features added for NSE:TTML-BE
+[2025-07-13 23:45:10] [INFO] - features.engineer_features -  Features added for NSE:TVSELECT-BE
+[2025-07-13 23:45:10] [INFO] - features.engineer_features -  Features added for NSE:TVSMOTOR-EQ
+[2025-07-13 23:45:11] [INFO] - features.engineer_features -  Features added for NSE:TVSSCS-EQ
+[2025-07-13 23:45:11] [INFO] - features.engineer_features -  Features added for NSE:UBL-EQ
+[2025-07-13 23:45:11] [INFO] - features.engineer_features -  Features added for NSE:UDS-EQ
+[2025-07-13 23:45:12] [INFO] - features.engineer_features -  Features added for NSE:UFO-EQ
+[2025-07-13 23:45:12] [INFO] - features.engineer_features -  Features added for NSE:ULTRACEMCO-EQ
+[2025-07-13 23:45:12] [INFO] - features.engineer_features -  Features added for NSE:UMAEXPORTS-BE
+[2025-07-13 23:45:12] [INFO] - features.engineer_features -  Features added for NSE:UNIECOM-EQ
+[2025-07-13 23:45:12] [INFO] - features.engineer_features -  Features added for NSE:UNIMECH-BE
+[2025-07-13 23:45:13] [INFO] - features.engineer_features -  Features added for NSE:UNIONBANK-EQ
+[2025-07-13 23:45:13] [INFO] - features.engineer_features -  Features added for NSE:UNITDSPR-EQ
+[2025-07-13 23:45:13] [INFO] - features.engineer_features -  Features added for NSE:UNIVCABLES-EQ
+[2025-07-13 23:45:14] [INFO] - features.engineer_features -  Features added for NSE:UNOMINDA-EQ
+[2025-07-13 23:45:14] [INFO] - features.engineer_features -  Features added for NSE:UPL-EQ
+[2025-07-13 23:45:14] [INFO] - features.engineer_features -  Features added for NSE:USHAMART-EQ
+[2025-07-13 23:45:14] [INFO] - features.engineer_features -  Features added for NSE:UTIBANKETF-EQ
+[2025-07-13 23:45:15] [INFO] - features.engineer_features -  Features added for NSE:UTINEXT50-EQ
+[2025-07-13 23:45:15] [INFO] - features.engineer_features -  Features added for NSE:UTINIFTETF-EQ
+[2025-07-13 23:45:15] [INFO] - features.engineer_features -  Features added for NSE:VAIBHAVGBL-EQ
+[2025-07-13 23:45:16] [INFO] - features.engineer_features -  Features added for NSE:VARROC-EQ
+[2025-07-13 23:45:16] [INFO] - features.engineer_features -  Features added for NSE:VASCONEQ-EQ
+[2025-07-13 23:45:16] [INFO] - features.engineer_features -  Features added for NSE:VBL-EQ
+[2025-07-13 23:45:16] [INFO] - features.engineer_features -  Features added for NSE:VEDL-EQ
+[2025-07-13 23:45:17] [INFO] - features.engineer_features -  Features added for NSE:VENTIVE-EQ
+[2025-07-13 23:45:17] [INFO] - features.engineer_features -  Features added for NSE:VENUSPIPES-EQ
+[2025-07-13 23:45:17] [INFO] - features.engineer_features -  Features added for NSE:VERANDA-EQ
+[2025-07-13 23:45:17] [INFO] - features.engineer_features -  Features added for NSE:VESUVIUS-EQ
+[2025-07-13 23:45:18] [INFO] - features.engineer_features -  Features added for NSE:VETO-EQ
+[2025-07-13 23:45:18] [INFO] - features.engineer_features -  Features added for NSE:VGUARD-EQ
+[2025-07-13 23:45:18] [INFO] - features.engineer_features -  Features added for NSE:VIMTALABS-EQ
+[2025-07-13 23:45:18] [INFO] - features.engineer_features -  Features added for NSE:VINCOFE-EQ
+[2025-07-13 23:45:19] [INFO] - features.engineer_features -  Features added for NSE:VIPIND-EQ
+[2025-07-13 23:45:19] [INFO] - features.engineer_features -  Features added for NSE:VISAKAIND-BE
+[2025-07-13 23:45:19] [INFO] - features.engineer_features -  Features added for NSE:VISHNU-EQ
+[2025-07-13 23:45:20] [INFO] - features.engineer_features -  Features added for NSE:VLEGOV-BE
+[2025-07-13 23:45:20] [INFO] - features.engineer_features -  Features added for NSE:VMART-EQ
+[2025-07-13 23:45:20] [INFO] - features.engineer_features -  Features added for NSE:VMM-EQ
+[2025-07-13 23:45:20] [INFO] - features.engineer_features -  Features added for NSE:VOLTAS-EQ
+[2025-07-13 23:45:20] [INFO] - features.engineer_features -  Features added for NSE:VPRPL-EQ
+[2025-07-13 23:45:21] [INFO] - features.engineer_features -  Features added for NSE:VRLLOG-EQ
+[2025-07-13 23:45:21] [INFO] - features.engineer_features -  Features added for NSE:VSSL-EQ
+[2025-07-13 23:45:21] [INFO] - features.engineer_features -  Features added for NSE:VSTIND-EQ
+[2025-07-13 23:45:22] [INFO] - features.engineer_features -  Features added for NSE:VTL-EQ
+[2025-07-13 23:45:22] [INFO] - features.engineer_features -  Features added for NSE:WAAREEENER-EQ
+[2025-07-13 23:45:22] [INFO] - features.engineer_features -  Features added for NSE:WAAREERTL-EQ
+[2025-07-13 23:45:22] [INFO] - features.engineer_features -  Features added for NSE:WABAG-EQ
+[2025-07-13 23:45:22] [INFO] - features.engineer_features -  Features added for NSE:WALCHANNAG-BE
+[2025-07-13 23:45:23] [INFO] - features.engineer_features -  Features added for NSE:WANBURY-BE
+[2025-07-13 23:45:23] [INFO] - features.engineer_features -  Features added for NSE:WCIL-EQ
+[2025-07-13 23:45:23] [INFO] - features.engineer_features -  Features added for NSE:WEBELSOLAR-EQ
+[2025-07-13 23:45:23] [INFO] - features.engineer_features -  Features added for NSE:WEL-EQ
+[2025-07-13 23:45:24] [INFO] - features.engineer_features -  Features added for NSE:WELCORP-EQ
+[2025-07-13 23:45:24] [INFO] - features.engineer_features -  Features added for NSE:WELENT-EQ
+[2025-07-13 23:45:24] [INFO] - features.engineer_features -  Features added for NSE:WELSPUNLIV-EQ
+[2025-07-13 23:45:25] [INFO] - features.engineer_features -  Features added for NSE:WESTLIFE-EQ
+[2025-07-13 23:45:25] [INFO] - features.engineer_features -  Features added for NSE:WHIRLPOOL-EQ
+[2025-07-13 23:45:25] [INFO] - features.engineer_features -  Features added for NSE:WINDMACHIN-EQ
+[2025-07-13 23:45:25] [INFO] - features.engineer_features -  Features added for NSE:WIPRO-EQ
+[2025-07-13 23:45:26] [INFO] - features.engineer_features -  Features added for NSE:WOCKPHARMA-EQ
+[2025-07-13 23:45:26] [INFO] - features.engineer_features -  Features added for NSE:WSTCSTPAPR-EQ
+[2025-07-13 23:45:26] [INFO] - features.engineer_features -  Features added for NSE:XCHANGING-EQ
+[2025-07-13 23:45:27] [INFO] - features.engineer_features -  Features added for NSE:YATHARTH-EQ
+[2025-07-13 23:45:27] [INFO] - features.engineer_features -  Features added for NSE:YATRA-EQ
+[2025-07-13 23:45:27] [INFO] - features.engineer_features -  Features added for NSE:ZAGGLE-EQ
+[2025-07-13 23:45:27] [INFO] - features.engineer_features -  Features added for NSE:ZEEL-EQ
+[2025-07-13 23:45:28] [INFO] - features.engineer_features -  Features added for NSE:ZENSARTECH-EQ
+[2025-07-13 23:45:28] [INFO] - features.engineer_features -  Features added for NSE:ZENTEC-EQ
+[2025-07-13 23:45:28] [INFO] - features.engineer_features -  Features added for NSE:ZOTA-EQ
+[2025-07-13 23:45:28] [INFO] - features.engineer_features -  Features added for NSE:ZUARI-EQ
+[2025-07-13 23:45:29] [INFO] - features.engineer_features -  Features added for NSE:ZYDUSLIFE-EQ
+[2025-07-13 23:45:29] [INFO] - model.train_model - Loading data for simplified model training...
+[2025-07-13 23:45:29] [INFO] - model.train_model - Validating available features...
+[2025-07-13 23:45:29] [INFO] - model.train_model - Available Core Features:
+[2025-07-13 23:45:29] [INFO] - model.train_model -   Technical Indicators: ['rsi', 'atr', 'bb_position']
+[2025-07-13 23:45:29] [INFO] - model.train_model -   Price Movement: ['daily_return', 'range_pct']
+[2025-07-13 23:45:29] [INFO] - model.train_model -   Volume: ['volume_ratio']
+[2025-07-13 23:45:29] [INFO] - model.train_model -   Support/Resistance: ['norm_dist_to_support', 'norm_dist_to_resistance']
+[2025-07-13 23:45:29] [INFO] - model.train_model - Total Core Features Available: 8
+[2025-07-13 23:45:29] [INFO] - model.train_model - Creating basic features...
+[2025-07-13 23:45:30] [INFO] - model.train_model - Filtering and preparing training data...
+[2025-07-13 23:45:30] [INFO] - model.train_model - Initial data shape: (689410, 160)
+[2025-07-13 23:45:30] [INFO] - model.train_model - After filtering to binary targets: (678681, 160)
+[2025-07-13 23:45:30] [INFO] - model.train_model - Using 14 core features for training
+[2025-07-13 23:45:30] [INFO] - model.train_model - Selected features: ['rsi', 'atr', 'bb_position', 'daily_return', 'range_pct', 'volume_ratio', 'trend_strength', 'norm_dist_to_support', 'norm_dist_to_resistance', 'rsi_oversold', 'rsi_overbought', 'ema20_distance', 'ema50_distance', 'ema_spread']
+[2025-07-13 23:45:31] [INFO] - model.train_model - Class distribution: {0: 480731, 1: 197931}
+[2025-07-13 23:45:31] [INFO] - model.train_model - Class weights: {np.int64(0): np.float64(0.7058646103538153), np.int64(1): np.float64(1.7143903683606914)}
+[2025-07-13 23:45:31] [INFO] - model.train_model - Training on 542929 samples, testing on 135733 samples
+[2025-07-13 23:45:31] [INFO] - model.train_model - Selected 10 most important features: ['rsi', 'bb_position', 'daily_return', 'range_pct', 'trend_strength', 'norm_dist_to_support', 'norm_dist_to_resistance', 'rsi_oversold', 'rsi_overbought', 'ema20_distance']
+[2025-07-13 23:45:31] [INFO] - model.train_model - Creating simple model...
+[2025-07-13 23:48:30] [INFO] - model.train_model - RF Cross-validation AUC: 0.613 (+/- 0.012)
+[2025-07-13 23:48:30] [INFO] - model.train_model - LR Cross-validation AUC: 0.577 (+/- 0.005)
+[2025-07-13 23:48:30] [INFO] - model.train_model - Selected Random Forest model
+[2025-07-13 23:49:24] [INFO] - model.train_model - Evaluating model performance...
+[2025-07-13 23:49:25] [INFO] - model.train_model - 
+MODEL PERFORMANCE METRICS:
+[2025-07-13 23:49:25] [INFO] - model.train_model -   Win Rate: 35.3%
+[2025-07-13 23:49:25] [INFO] - model.train_model -   AUC Score: 0.612
+[2025-07-13 23:49:25] [INFO] - model.train_model -   Precision: 0.353
+[2025-07-13 23:49:25] [INFO] - model.train_model -   Recall: 0.586
+[2025-07-13 23:49:25] [INFO] - model.train_model -   Train Accuracy: 0.569
+[2025-07-13 23:49:25] [INFO] - model.train_model -   Test Accuracy: 0.566
+[2025-07-13 23:49:25] [INFO] - model.train_model -   Overfitting Gap: 0.003
+[2025-07-13 23:49:25] [INFO] - model.train_model -   Model shows good generalization
+[2025-07-13 23:49:25] [INFO] - model.train_model - 
+Top 5 Most Important Features:
+[2025-07-13 23:49:25] [INFO] - model.train_model -   1. norm_dist_to_resistance: 0.405
+[2025-07-13 23:49:25] [INFO] - model.train_model -   2. norm_dist_to_support: 0.335
+[2025-07-13 23:49:25] [INFO] - model.train_model -   3. range_pct: 0.087
+[2025-07-13 23:49:25] [INFO] - model.train_model -   4. ema20_distance: 0.057
+[2025-07-13 23:49:25] [INFO] - model.train_model -   5. daily_return: 0.038
+[2025-07-13 23:49:25] [INFO] - model.train_model - Simplified model pipeline saved to model\model.pkl
+[2025-07-13 23:49:25] [INFO] - model.train_model - 
+TRADING RECOMMENDATIONS:
+[2025-07-13 23:49:25] [INFO] - model.train_model -   Model shows good generalization
+[2025-07-13 23:49:25] [INFO] - model.train_model -   Model needs improvement - consider more data or different features
+[2025-07-13 23:49:25] [INFO] - model.train_model -   Conservative approach recommended (win rate: 35.3%)
+[2025-07-13 23:49:26] [INFO] - Main -  Saving latest data (1073 records) to outputs\latest_full_data.parquet

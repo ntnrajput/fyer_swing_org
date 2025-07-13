@@ -186,7 +186,7 @@ def calculate_pattern_strength(df):
     return pattern_strength
 
 
-def get_support_resistance(df, window=5, min_strength=2):
+def get_support_resistance(df, window=10, min_strength=2):
     """Enhanced support and resistance detection with fractal analysis."""
     df = df.copy()
     

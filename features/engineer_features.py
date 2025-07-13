@@ -46,12 +46,14 @@ def add_technical_indicators(df: pd.DataFrame) -> pd.DataFrame:
         open_price = symbol_df['open'].values
         volume = symbol_df['volume'].values if 'volume' in symbol_df.columns else None
         
+
+        
         # ➕ Basic Technical Indicators (vectorized)
         symbol_df = add_basic_indicators_vectorized(symbol_df, close, high, low, open_price)
-        
+        print(symbol_df)
         # ➕ Advanced Technical Indicators (optimized)
         symbol_df = add_advanced_indicators_optimized(symbol_df, close, high, low, volume)
-        
+        print(symbol_df)
         # ➕ Candlestick Pattern Features
         symbol_df = add_candle_features(symbol_df)
         
