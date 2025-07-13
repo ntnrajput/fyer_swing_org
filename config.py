@@ -13,7 +13,7 @@ TOKEN_PATH = Path("outputs/fyers_access_token.txt")
 
 
 #=====Good Stock Filter====
-AVG_VOL = 5000000
+AVG_VOL = 50
 AVG_PRICE = 500
 
 # === DATA SETTINGS ===

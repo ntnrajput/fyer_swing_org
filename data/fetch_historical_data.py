@@ -34,6 +34,7 @@ def fetch_ohlcv_data_range(fyers, symbol: str, from_date: datetime, to_date: dat
 
         if data["s"] == "ok":
             df = pd.DataFrame(data["candles"], columns=["timestamp", "open", "high", "low", "close", "volume"])
+            df["volume"] = df["volume"] / 100000 
             df["symbol"] = symbol
             df["date"] = pd.to_datetime(df["timestamp"], unit="s")
             return df.drop(columns=["timestamp"])

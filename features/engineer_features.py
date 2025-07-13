@@ -31,8 +31,8 @@ def add_technical_indicators(df: pd.DataFrame) -> pd.DataFrame:
     
     for symbol, symbol_df in grouped:
         if symbol_df['volume'].iloc[-50:].mean() < AVG_VOL or symbol_df['close'].iloc[-50:].mean() < AVG_PRICE:
-            
             continue
+
         symbol_df = symbol_df.copy()
         symbol_df.sort_values("date", inplace=True)
         

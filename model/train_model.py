@@ -222,8 +222,8 @@ def optimize_hyperparameters(X_train, y_train):
 
     rf_params = {
         'n_estimators': [100],
-        'max_depth': [5],
-        'min_samples_split': [2],
+        'max_depth': [10,None],
+        'min_samples_split': [2, 5],
         'min_samples_leaf': [1],
         'max_features': ['sqrt', None]
     }
@@ -397,7 +397,11 @@ def train_model(df):
             'days_to_target_8', 
             'days_to_target_10', 
             'trade_type_success',
-            'price_atr_position'
+            'price_atr_position',
+            'price_volume_correlation',
+            'volume_momentum_10',
+            'volume_momentum_5',
+            'volume_momentum_20',
 
         ]
 
@@ -500,6 +504,13 @@ def train_model(df):
         split_idx = int(len(X) * 0.8)
         X_train, X_test = X.iloc[:split_idx], X.iloc[split_idx:]
         y_train, y_test = y.iloc[:split_idx], y.iloc[split_idx:]
+
+        X.to_csv('check.csv')
+
+        print("Any NaN:", np.isnan(X_train).any())
+        print("Any Inf:", np.isinf(X_train).any())
+        print("Max Value:", np.nanmax(X_train))
+        print("Min Value:", np.nanmin(X_train))
         
         logger.info(f" Training advanced model on {len(X_train)} samples, testing on {len(X_test)} samples...")
         
@@ -508,8 +519,6 @@ def train_model(df):
             logger.error("Insufficient data for training/testing split")
             raise ValueError("Insufficient data for training/testing split")
         
-
-
         # Feature scaling
         scaler = RobustScaler()
         X_train_scaled = pd.DataFrame(
