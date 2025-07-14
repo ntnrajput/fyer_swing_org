@@ -7,3 +7,5 @@ joblib
 requests
 fyers-apiv3
 python-dotenv
+numba
+pyarrow
