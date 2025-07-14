@@ -50,22 +50,28 @@ def add_technical_indicators(df: pd.DataFrame) -> pd.DataFrame:
         
         # ➕ Basic Technical Indicators (vectorized)
         symbol_df = add_basic_indicators_vectorized(symbol_df, close, high, low, open_price)
-        print(symbol_df)
+        
         # ➕ Advanced Technical Indicators (optimized)
-        symbol_df = add_advanced_indicators_optimized(symbol_df, close, high, low, volume)
-        print(symbol_df)
+        # symbol_df = add_advanced_indicators_optimized(symbol_df, close, high, low, volume)
+       
         # ➕ Candlestick Pattern Features
         symbol_df = add_candle_features(symbol_df)
         
         # ➕ Bollinger Band position
         symbol_df["bb_position"] = calculate_bb_position(symbol_df["close"], 20)
         
+        
         # ➕ Support & Resistance
         support_levels, resistance_levels = get_support_resistance(symbol_df)
+        
         symbol_df = add_nearest_sr(symbol_df, support_levels, resistance_levels)
+
+        print(symbol_df['symbol'].iloc[-1],support_levels, resistance_levels)
+
+       
         
         # ➕ All other features in one optimized pass
-        symbol_df = add_all_features_optimized(symbol_df, close, high, low, open_price, volume)
+        # symbol_df = add_all_features_optimized(symbol_df, close, high, low, open_price, volume)
         
         # ➕ Swing Labels
         symbol_df = generate_swing_labels(symbol_df)
