@@ -74,10 +74,10 @@ def add_candle_features(df):
                              (df['lower_shadow_to_range'] < 0.1)).astype(np.int8)
     
     # Advanced patterns
-    df = add_advanced_candle_patterns(df)
+    # df = add_advanced_candle_patterns(df)
     
     # Pattern strength
-    df['pattern_strength'] = calculate_pattern_strength(df)
+    # df['pattern_strength'] = calculate_pattern_strength(df)
     
     return df
 
@@ -186,57 +186,104 @@ def calculate_pattern_strength(df):
     return pattern_strength
 
 
-def get_support_resistance(df, window=10, min_strength=2):
-    """Enhanced support and resistance detection with fractal analysis."""
+def cluster_levels(levels, price_threshold=0.01):
+    """
+    Cluster support/resistance levels that are within a certain price threshold.
+    Args:
+        levels: List of (idx, price, touches) tuples.
+        price_threshold: Fractional threshold (e.g., 0.01 for 1%) for clustering levels.
+    Returns:
+        List of clustered (idx, price, touches) tuples.
+    """
+    if not levels:
+        return []
+    # Sort by price
+    levels = sorted(levels, key=lambda x: x[1])
+    clustered = []
+    cluster = [levels[0]]
+    for lvl in levels[1:]:
+        prev_price = cluster[-1][1]
+        if abs(lvl[1] - prev_price) / prev_price < price_threshold:
+            cluster.append(lvl)
+        else:
+            # Merge cluster
+            idxs, prices, touches = zip(*cluster)
+            avg_idx = int(np.mean(idxs))
+            avg_price = np.mean(prices)
+            total_touches = int(np.sum(touches))
+            clustered.append((avg_idx, avg_price, total_touches))
+            cluster = [lvl]
+    # Merge last cluster
+    if cluster:
+        idxs, prices, touches = zip(*cluster)
+        avg_idx = int(np.mean(idxs))
+        avg_price = np.mean(prices)
+        total_touches = int(np.sum(touches))
+        clustered.append((avg_idx, avg_price, total_touches))
+    return clustered
+
+
+def get_support_resistance(df, window=10, min_strength=2, tolerance=0.02, cluster_threshold=0.01):
+    """Enhanced support and resistance detection with fractal analysis and clustering."""
     df = df.copy()
-    
-    # Use scipy to find local maxima and minima
     highs = df['high'].values
     lows = df['low'].values
-    
-    # Find local maxima (resistance)
     resistance_indices = argrelextrema(highs, np.greater, order=window)[0]
-    
-    # Find local minima (support)  
     support_indices = argrelextrema(lows, np.less, order=window)[0]
-    
-    # Vectorized distance calculations for strength
-    tolerance = 0.02
-    
-    # Calculate support levels with strength
     support_levels = []
     for idx in support_indices:
         if idx < len(df):
             level_price = df.iloc[idx]['low']
-            
-            # Vectorized touch calculation
             low_touches = np.sum(np.abs(lows - level_price) / level_price < tolerance)
             high_touches = np.sum(np.abs(highs - level_price) / level_price < tolerance)
             touches = low_touches + high_touches
-            
             if touches >= min_strength:
                 support_levels.append((idx, level_price, touches))
-    
-    # Calculate resistance levels with strength
     resistance_levels = []
     for idx in resistance_indices:
         if idx < len(df):
             level_price = df.iloc[idx]['high']
-            
-            # Vectorized touch calculation
             high_touches = np.sum(np.abs(highs - level_price) / level_price < tolerance)
             low_touches = np.sum(np.abs(lows - level_price) / level_price < tolerance)
             touches = high_touches + low_touches
-            
             if touches >= min_strength:
                 resistance_levels.append((idx, level_price, touches))
+    # Cluster levels
+    support_levels = cluster_levels(support_levels, price_threshold=cluster_threshold)
+    resistance_levels = cluster_levels(resistance_levels, price_threshold=cluster_threshold)
     
     # Add dynamic support/resistance based on moving averages
-    support_levels.extend(get_dynamic_support_resistance(df, 'support'))
-    resistance_levels.extend(get_dynamic_support_resistance(df, 'resistance'))
+    # support_levels.extend(get_dynamic_support_resistance(df, 'support'))
+    # resistance_levels.extend(get_dynamic_support_resistance(df, 'resistance'))
     
     return support_levels, resistance_levels
 
+
+def plot_support_resistance(df, support_levels, resistance_levels, n_bars=100):
+    """
+    Plot price with clustered support and resistance levels.
+    Args:
+        df: DataFrame with 'close' prices.
+        support_levels: List of (idx, price, touches) tuples.
+        resistance_levels: List of (idx, price, touches) tuples.
+        n_bars: Number of bars to plot from the end.
+    """
+    import matplotlib.pyplot as plt
+    plt.figure(figsize=(14, 7))
+    plot_df = df.tail(n_bars).reset_index(drop=True)
+    plt.plot(plot_df['close'], label='Close Price', color='black')
+    for idx, price, touches in support_levels:
+        if idx >= len(df) - n_bars:
+            plt.axhline(price, color='green', linestyle='--', alpha=0.7, label='Support' if touches == support_levels[0][2] else None)
+    for idx, price, touches in resistance_levels:
+        if idx >= len(df) - n_bars:
+            plt.axhline(price, color='red', linestyle='--', alpha=0.7, label='Resistance' if touches == resistance_levels[0][2] else None)
+    plt.title('Support and Resistance Levels')
+    plt.xlabel('Bar')
+    plt.ylabel('Price')
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
 
 def get_dynamic_support_resistance(df, level_type='support'):
     """Get dynamic support/resistance from moving averages and trend lines."""
