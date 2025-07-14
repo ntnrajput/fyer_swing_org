@@ -201,6 +201,7 @@ def cluster_levels(levels, price_threshold=0.01):
     levels = sorted(levels, key=lambda x: x[1])
     clustered = []
     cluster = [levels[0]]
+    
     for lvl in levels[1:]:
         prev_price = cluster[-1][1]
         if abs(lvl[1] - prev_price) / prev_price < price_threshold:
@@ -213,6 +214,7 @@ def cluster_levels(levels, price_threshold=0.01):
             total_touches = int(np.sum(touches))
             clustered.append((avg_idx, avg_price, total_touches))
             cluster = [lvl]
+    
     # Merge last cluster
     if cluster:
         idxs, prices, touches = zip(*cluster)
@@ -220,44 +222,116 @@ def cluster_levels(levels, price_threshold=0.01):
         avg_price = np.mean(prices)
         total_touches = int(np.sum(touches))
         clustered.append((avg_idx, avg_price, total_touches))
+    
     return clustered
 
-
-def get_support_resistance(df, window=10, min_strength=2, tolerance=0.02, cluster_threshold=0.01):
-    """Enhanced support and resistance detection with fractal analysis and clustering."""
+def get_support_resistance(df, window=7, min_strength=3, tolerance=0.015, cluster_threshold=0.015):
+    """
+    Enhanced support and resistance detection with proper touch counting:
+    - Support levels: Only count low touches
+    - Resistance levels: Only count high touches  
+    - Flip zones: Must have both high_touches >= 1 and low_touches >= 1
+    """
     df = df.copy()
     highs = df['high'].values
     lows = df['low'].values
-    resistance_indices = argrelextrema(highs, np.greater, order=window)[0]
+    
+    # Find traditional support levels (only count low touches)
     support_indices = argrelextrema(lows, np.less, order=window)[0]
     support_levels = []
+    
     for idx in support_indices:
         if idx < len(df):
             level_price = df.iloc[idx]['low']
             low_touches = np.sum(np.abs(lows - level_price) / level_price < tolerance)
-            high_touches = np.sum(np.abs(highs - level_price) / level_price < tolerance)
-            touches = low_touches + high_touches
-            if touches >= min_strength:
-                support_levels.append((idx, level_price, touches))
+            
+            if low_touches >= min_strength:
+                support_levels.append((idx, level_price, low_touches))
+    
+    # Find traditional resistance levels (only count high touches)
+    resistance_indices = argrelextrema(highs, np.greater, order=window)[0]
     resistance_levels = []
+    
     for idx in resistance_indices:
         if idx < len(df):
             level_price = df.iloc[idx]['high']
             high_touches = np.sum(np.abs(highs - level_price) / level_price < tolerance)
-            low_touches = np.sum(np.abs(lows - level_price) / level_price < tolerance)
-            touches = high_touches + low_touches
-            if touches >= min_strength:
-                resistance_levels.append((idx, level_price, touches))
+            
+            if high_touches >= min_strength:
+                resistance_levels.append((idx, level_price, high_touches))
+    
+    # Find flip zones (levels with both support and resistance touches)
+    # Only check levels from significant peaks/troughs to avoid noise
+    significant_prices = []
+    
+    # Add resistance peak prices
+    for idx in resistance_indices:
+        if idx < len(df):
+            significant_prices.append(df.iloc[idx]['high'])
+    
+    # Add support trough prices  
+    for idx in support_indices:
+        if idx < len(df):
+            significant_prices.append(df.iloc[idx]['low'])
+    
+    # Remove duplicates and only check significant price levels
+    significant_prices = list(set(significant_prices))
+    
+    for price in significant_prices:
+        high_touches = np.sum(np.abs(highs - price) / price < tolerance)
+        low_touches = np.sum(np.abs(lows - price) / price < tolerance)
+        
+        # Flip zone condition: at least 1 of each type and total >= min_strength
+        if high_touches >= 1 and low_touches >= 1 and (high_touches + low_touches) >= (min_strength +1):
+            # Find the most recent index for this level
+            high_indices = np.where(np.abs(highs - price) / price < tolerance)[0]
+            low_indices = np.where(np.abs(lows - price) / price < tolerance)[0]
+            
+            if len(high_indices) > 0 and len(low_indices) > 0:
+                recent_idx = max(np.max(high_indices), np.max(low_indices))
+                
+                # Check if this flip zone is already captured by traditional levels
+                is_duplicate_support = any(abs(level[1] - price) / price < tolerance for level in support_levels)
+                is_duplicate_resistance = any(abs(level[1] - price) / price < tolerance for level in resistance_levels)
+                
+                # Add to support list with low_touches count
+                if not is_duplicate_support:
+                    support_levels.append((recent_idx, price, low_touches))
+                
+                # Add to resistance list with high_touches count  
+                if not is_duplicate_resistance:
+                    resistance_levels.append((recent_idx, price, high_touches))
+    
+    # Remove duplicates within each category (keep stronger levels)
+    support_levels = remove_duplicates(support_levels, tolerance)
+    resistance_levels = remove_duplicates(resistance_levels, tolerance)
+    
     # Cluster levels
     support_levels = cluster_levels(support_levels, price_threshold=cluster_threshold)
     resistance_levels = cluster_levels(resistance_levels, price_threshold=cluster_threshold)
     
-    # Add dynamic support/resistance based on moving averages
-    # support_levels.extend(get_dynamic_support_resistance(df, 'support'))
-    # resistance_levels.extend(get_dynamic_support_resistance(df, 'resistance'))
-    
     return support_levels, resistance_levels
 
+def remove_duplicates(levels, tolerance):
+    """Remove duplicate levels that are too close to each other."""
+    if not levels:
+        return []
+    
+    levels = sorted(levels, key=lambda x: x[1])
+    filtered = [levels[0]]
+    
+    for current in levels[1:]:
+        prev_price = filtered[-1][1]
+        current_price = current[1]
+        
+        # If levels are too close, keep the one with more touches
+        if abs(current_price - prev_price) / prev_price < tolerance:
+            if current[2] > filtered[-1][2]:
+                filtered[-1] = current
+        else:
+            filtered.append(current)
+    
+    return filtered
 
 def plot_support_resistance(df, support_levels, resistance_levels, n_bars=100):
     """
@@ -363,65 +437,78 @@ def calculate_trend_lines(df, level_type='support', lookback=50):
 
 
 def add_nearest_sr(df, support_levels, resistance_levels):
-    """Enhanced support/resistance distance calculation."""
+    """Simplified support/resistance distance calculation."""
     df = df.copy()
     
-    # Convert to arrays for vectorized operations
-    support_data = np.array([(level[1], level[2]) for level in support_levels]) if support_levels else np.array([]).reshape(0, 2)
-    resistance_data = np.array([(level[1], level[2]) for level in resistance_levels]) if resistance_levels else np.array([]).reshape(0, 2)
+    # Initialize output arrays
+    nearest_support = []
+    nearest_resistance = []
+    support_strength = []
+    resistance_strength = []
+    multiple_support_levels = []
+    multiple_resistance_levels = []
+    support_distance_pct = []
+    resistance_distance_pct = []
     
-    close_prices = df['close'].values
-    n_rows = len(df)
-    
-    # Pre-allocate arrays
-    nearest_support = np.zeros(n_rows)
-    nearest_resistance = np.zeros(n_rows)
-    support_strength = np.ones(n_rows)
-    resistance_strength = np.ones(n_rows)
-    multiple_support_levels = np.zeros(n_rows, dtype=int)
-    multiple_resistance_levels = np.zeros(n_rows, dtype=int)
-    
-    # Vectorized processing
-    for i in range(n_rows):
-        close = close_prices[i]
+    # Process each row
+    for i in range(len(df)):
+        close = df.iloc[i]['close']
         
-        # Process support levels
-        if len(support_data) > 0:
-            # Find supports within 10% of current price
-            distances = np.abs(support_data[:, 0] - close) / close
-            close_mask = distances < 0.1
+        # Find nearest support
+        if support_levels:
+            # Find support below current price
+            valid_supports = [level for level in support_levels if level[1] <= close]
             
-            if np.any(close_mask):
-                close_supports = support_data[close_mask]
-                weights = close_supports[:, 1] / (distances[close_mask] + 0.01)
-                best_idx = np.argmax(weights)
-                
-                nearest_support[i] = close_supports[best_idx, 0]
-                support_strength[i] = close_supports[best_idx, 1]
-                multiple_support_levels[i] = np.sum(close_supports[:, 0] <= close)
+            if valid_supports:
+                # Get the highest support below current price
+                best_support = max(valid_supports, key=lambda x: x[1])
+                nearest_support.append(best_support[1])
+                support_strength.append(best_support[2])
+                multiple_support_levels.append(len(valid_supports))
+                # Calculate percentage distance to support
+                support_distance_pct.append((close - best_support[1]) / close * 100)
             else:
-                nearest_support[i] = close * 0.95
+                # No support found, use default
+                default_support = close * 0.95
+                nearest_support.append(default_support)
+                support_strength.append(1)
+                multiple_support_levels.append(0)
+                support_distance_pct.append((close - default_support) / close * 100)
         else:
-            nearest_support[i] = close * 0.95
+            # No support levels provided
+            default_support = close * 0.95
+            nearest_support.append(default_support)
+            support_strength.append(1)
+            multiple_support_levels.append(0)
+            support_distance_pct.append((close - default_support) / close * 100)
         
-        # Process resistance levels
-        if len(resistance_data) > 0:
-            # Find resistances within 10% of current price
-            distances = np.abs(resistance_data[:, 0] - close) / close
-            close_mask = distances < 0.1
+        # Find nearest resistance
+        if resistance_levels:
+            # Find resistance above current price
+            valid_resistances = [level for level in resistance_levels if level[1] >= close]
             
-            if np.any(close_mask):
-                close_resistances = resistance_data[close_mask]
-                weights = close_resistances[:, 1] / (distances[close_mask] + 0.01)
-                best_idx = np.argmax(weights)
-                
-                nearest_resistance[i] = close_resistances[best_idx, 0]
-                resistance_strength[i] = close_resistances[best_idx, 1]
-                multiple_resistance_levels[i] = np.sum(close_resistances[:, 0] >= close)
+            if valid_resistances:
+                # Get the lowest resistance above current price
+                best_resistance = min(valid_resistances, key=lambda x: x[1])
+                nearest_resistance.append(best_resistance[1])
+                resistance_strength.append(best_resistance[2])
+                multiple_resistance_levels.append(len(valid_resistances))
+                # Calculate percentage distance to resistance
+                resistance_distance_pct.append((best_resistance[1] - close) / close * 100)
             else:
-                nearest_resistance[i] = close * 1.05
+                # No resistance found, use default
+                default_resistance = close * 1.05
+                nearest_resistance.append(default_resistance)
+                resistance_strength.append(1)
+                multiple_resistance_levels.append(0)
+                resistance_distance_pct.append((default_resistance - close) / close * 100)
         else:
-            nearest_resistance[i] = close * 1.05
+            # No resistance levels provided
+            default_resistance = close * 1.05
+            nearest_resistance.append(default_resistance)
+            resistance_strength.append(1)
+            multiple_resistance_levels.append(0)
+            resistance_distance_pct.append((default_resistance - close) / close * 100)
     
     # Add to dataframe
     df['nearest_support'] = nearest_support
@@ -430,20 +517,8 @@ def add_nearest_sr(df, support_levels, resistance_levels):
     df['resistance_strength'] = resistance_strength
     df['multiple_support_levels'] = multiple_support_levels
     df['multiple_resistance_levels'] = multiple_resistance_levels
-    
-    # Vectorized calculations
-    df['dist_to_support'] = df['close'] - df['nearest_support']
-    df['dist_to_resistance'] = df['nearest_resistance'] - df['close']
-    df['pct_to_support'] = (df['close'] - df['nearest_support']) / df['close'] * 100
-    df['pct_to_resistance'] = (df['nearest_resistance'] - df['close']) / df['close'] * 100
-    
-    # Support/Resistance zones
-    df['in_support_zone'] = (df['pct_to_support'] < 2).astype(np.int8)
-    df['in_resistance_zone'] = (df['pct_to_resistance'] < 2).astype(np.int8)
-    
-    # Confluence zones
-    df['support_confluence'] = (df['multiple_support_levels'] >= 2).astype(np.int8)
-    df['resistance_confluence'] = (df['multiple_resistance_levels'] >= 2).astype(np.int8)
+    df['support_distance_pct'] = support_distance_pct
+    df['resistance_distance_pct'] = resistance_distance_pct
     
     return df
 
@@ -453,7 +528,7 @@ def generate_swing_labels(df, target_pct=0.05, window=10, stop_loss_pct=0.03):
     df = df.copy()
     
     # Multiple target levels
-    targets = [0.03, 0.05, 0.08, 0.10]
+    targets = [0.07, 0.10, 0.125]
     
     n_rows = len(df)
     
@@ -546,7 +621,7 @@ def generate_swing_labels(df, target_pct=0.05, window=10, stop_loss_pct=0.03):
         df[days_key] = days_arrays[days_key]
     
     # Advanced labeling features
-    df = add_advanced_swing_labels(df, window)
+    # df = add_advanced_swing_labels(df, window)
     
     return df
 

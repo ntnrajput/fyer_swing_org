@@ -66,15 +66,18 @@ def add_technical_indicators(df: pd.DataFrame) -> pd.DataFrame:
         
         symbol_df = add_nearest_sr(symbol_df, support_levels, resistance_levels)
 
-        print(symbol_df['symbol'].iloc[-1],support_levels, resistance_levels)
 
-       
-        
         # ➕ All other features in one optimized pass
         # symbol_df = add_all_features_optimized(symbol_df, close, high, low, open_price, volume)
         
         # ➕ Swing Labels
+
         symbol_df = generate_swing_labels(symbol_df)
+
+        print(symbol_df)
+
+
+        
         
         all_dfs.append(symbol_df)
         logger.info(f" Features added for {symbol}")

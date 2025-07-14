@@ -393,9 +393,9 @@ def train_model(df):
         cols_to_remove = [
             'days_to_target', 
             'days_to_target_3', 
-            'days_to_target_5', 
-            'days_to_target_8', 
+            'days_to_target_7', 
             'days_to_target_10', 
+            'days_to_target_12', 
             'trade_type_success',
             'price_atr_position',
             'price_volume_correlation',
