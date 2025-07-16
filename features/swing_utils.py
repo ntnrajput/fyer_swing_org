@@ -435,193 +435,122 @@ def calculate_trend_lines(df, level_type='support', lookback=50):
     
     return trend_levels
 
-
 def add_nearest_sr(df, support_levels, resistance_levels):
     """Simplified support/resistance distance calculation."""
     df = df.copy()
     
-    # Initialize output arrays
     nearest_support = []
-    nearest_resistance = []
     support_strength = []
-    resistance_strength = []
-    multiple_support_levels = []
-    multiple_resistance_levels = []
     support_distance_pct = []
+
+    nearest_resistance = []
+    resistance_strength = []
     resistance_distance_pct = []
-    
-    # Process each row
+
     for i in range(len(df)):
         close = df.iloc[i]['close']
-        
-        # Find nearest support
-        if support_levels:
-            # Find support below current price
-            valid_supports = [level for level in support_levels if level[1] <= close]
-            
-            if valid_supports:
-                # Get the highest support below current price
-                best_support = max(valid_supports, key=lambda x: x[1])
-                nearest_support.append(best_support[1])
-                support_strength.append(best_support[2])
-                multiple_support_levels.append(len(valid_supports))
-                # Calculate percentage distance to support
-                support_distance_pct.append((close - best_support[1]) / close * 100)
-            else:
-                # No support found, use default
-                default_support = close * 0.95
-                nearest_support.append(default_support)
-                support_strength.append(1)
-                multiple_support_levels.append(0)
-                support_distance_pct.append((close - default_support) / close * 100)
+
+        # Nearest Support
+        valid_supports = [level for level in support_levels if level[1] <= close] if support_levels else []
+        if valid_supports:
+            best_support = max(valid_supports, key=lambda x: x[1])
+            nearest_support.append(best_support[1])
+            support_strength.append(best_support[2])
+            support_distance_pct.append((close - best_support[1]) / close * 100)
         else:
-            # No support levels provided
             default_support = close * 0.95
             nearest_support.append(default_support)
             support_strength.append(1)
-            multiple_support_levels.append(0)
             support_distance_pct.append((close - default_support) / close * 100)
-        
-        # Find nearest resistance
-        if resistance_levels:
-            # Find resistance above current price
-            valid_resistances = [level for level in resistance_levels if level[1] >= close]
-            
-            if valid_resistances:
-                # Get the lowest resistance above current price
-                best_resistance = min(valid_resistances, key=lambda x: x[1])
-                nearest_resistance.append(best_resistance[1])
-                resistance_strength.append(best_resistance[2])
-                multiple_resistance_levels.append(len(valid_resistances))
-                # Calculate percentage distance to resistance
-                resistance_distance_pct.append((best_resistance[1] - close) / close * 100)
-            else:
-                # No resistance found, use default
-                default_resistance = close * 1.05
-                nearest_resistance.append(default_resistance)
-                resistance_strength.append(1)
-                multiple_resistance_levels.append(0)
-                resistance_distance_pct.append((default_resistance - close) / close * 100)
+
+        # Nearest Resistance
+        valid_resistances = [level for level in resistance_levels if level[1] >= close] if resistance_levels else []
+        if valid_resistances:
+            best_resistance = min(valid_resistances, key=lambda x: x[1])
+            nearest_resistance.append(best_resistance[1])
+            resistance_strength.append(best_resistance[2])
+            resistance_distance_pct.append((best_resistance[1] - close) / close * 100)
         else:
-            # No resistance levels provided
             default_resistance = close * 1.05
             nearest_resistance.append(default_resistance)
             resistance_strength.append(1)
-            multiple_resistance_levels.append(0)
             resistance_distance_pct.append((default_resistance - close) / close * 100)
-    
-    # Add to dataframe
+
     df['nearest_support'] = nearest_support
-    df['nearest_resistance'] = nearest_resistance
     df['support_strength'] = support_strength
-    df['resistance_strength'] = resistance_strength
-    df['multiple_support_levels'] = multiple_support_levels
-    df['multiple_resistance_levels'] = multiple_resistance_levels
     df['support_distance_pct'] = support_distance_pct
+
+    df['nearest_resistance'] = nearest_resistance
+    df['resistance_strength'] = resistance_strength
     df['resistance_distance_pct'] = resistance_distance_pct
-    
+
     return df
 
 
-def generate_swing_labels(df, target_pct=0.05, window=10, stop_loss_pct=0.03):
-    """Enhanced swing label generation with multiple target levels."""
+def generate_swing_labels(df, target_pct=0.07, window=10, stop_loss_pct=0.03):
+    """
+    Simplified swing label generation for single target.
+    
+    Parameters:
+    - df: DataFrame with OHLC data
+    - target_pct: Target return (default 7%)
+    - window: Days to look ahead (default 10)
+    - stop_loss_pct: Maximum acceptable loss (default 3%)
+    
+    Returns:
+    - DataFrame with target_hit column (1 if target hit without stop loss, 0 otherwise)
+    - Additional columns: max_return, min_return, risk_reward_ratio
+    """
     df = df.copy()
-    
-    # Multiple target levels
-    targets = [0.07, 0.10, 0.125]
-    
     n_rows = len(df)
     
-    # Pre-allocate arrays
+    # Pre-allocate arrays for results
     target_hit = np.full(n_rows, np.nan)
     max_return = np.full(n_rows, np.nan)
     min_return = np.full(n_rows, np.nan)
-    days_to_target = np.full(n_rows, np.nan)
     risk_reward_ratio = np.full(n_rows, np.nan)
     
-    # Multi-target arrays
-    target_arrays = {}
-    days_arrays = {}
-    for target in targets:
-        target_key = f'target_hit_{int(target*100)}'
-        days_key = f'days_to_target_{int(target*100)}'
-        target_arrays[target_key] = np.full(n_rows, np.nan)
-        days_arrays[days_key] = np.full(n_rows, np.nan)
-    
-    # Vectorized processing
+    # Get price arrays for vectorized operations
     close_prices = df['close'].values
     high_prices = df['high'].values
     low_prices = df['low'].values
     
-    valid_indices = np.arange(n_rows - window)
-    
-    for i in valid_indices:
+    # Process each row (except last 'window' rows)
+    for i in range(n_rows - window):
         entry_price = close_prices[i]
+        
+        # Get future prices for the next 'window' days
         future_highs = high_prices[i+1:i+1+window]
         future_lows = low_prices[i+1:i+1+window]
         
         if len(future_highs) == 0:
             continue
             
-        max_high = np.max(future_highs)
-        min_low = np.min(future_lows)
+        # Calculate returns
+        max_ret = (np.max(future_highs) - entry_price) / entry_price
+        min_ret = (np.min(future_lows) - entry_price) / entry_price
         
-        max_ret = (max_high - entry_price) / entry_price
-        min_ret = (min_low - entry_price) / entry_price
-        
+        # Store risk metrics
         max_return[i] = max_ret
         min_return[i] = min_ret
         
-        # Check primary target
-        if max_ret >= target_pct and min_ret > -stop_loss_pct:
-            target_hit[i] = 1
-            
-            # Find days to target using vectorized operation
-            target_reached = (future_highs - entry_price) / entry_price >= target_pct
-            if np.any(target_reached):
-                days_to_target[i] = np.argmax(target_reached) + 1
-            else:
-                days_to_target[i] = window
-        else:
-            target_hit[i] = 0
-        
-        # Risk-reward ratio
+        # Calculate risk-reward ratio
         if min_ret < 0:
             risk_reward_ratio[i] = max_ret / abs(min_ret)
         else:
-            risk_reward_ratio[i] = max_ret / 0.01
+            risk_reward_ratio[i] = max_ret / 0.01  # Use small denominator if no downside
         
-        # Check multiple targets
-        for target in targets:
-            target_key = f'target_hit_{int(target*100)}'
-            days_key = f'days_to_target_{int(target*100)}'
-            
-            if max_ret >= target and min_ret > -stop_loss_pct:
-                target_arrays[target_key][i] = 1
-                
-                # Find days to this target
-                target_reached = (future_highs - entry_price) / entry_price >= target
-                if np.any(target_reached):
-                    days_arrays[days_key][i] = np.argmax(target_reached) + 1
-            else:
-                target_arrays[target_key][i] = 0
+        # Check if target hit without exceeding stop loss
+        if max_ret >= target_pct and min_ret > -stop_loss_pct:
+            target_hit[i] = 1
+        else:
+            target_hit[i] = 0
     
-    # Add to dataframe
+    # Add results to dataframe
     df['target_hit'] = target_hit
     df['max_return'] = max_return
     df['min_return'] = min_return
-    df['days_to_target'] = days_to_target
     df['risk_reward_ratio'] = risk_reward_ratio
-    
-    # Add multi-target columns
-    for target in targets:
-        target_key = f'target_hit_{int(target*100)}'
-        days_key = f'days_to_target_{int(target*100)}'
-        df[target_key] = target_arrays[target_key]
-        df[days_key] = days_arrays[days_key]
-    
-    # Advanced labeling features
-    # df = add_advanced_swing_labels(df, window)
     
     return df
 

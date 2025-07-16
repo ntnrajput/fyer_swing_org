@@ -16,6 +16,9 @@ def get_fyers_client():
         raise ValueError("Access token is missing. Please authenticate.")
     return fyersModel.FyersModel(token=token, is_async=False, client_id=None)
 
+def live_data():
+    print('we wil use it later to get live data in bulk of 50')
+
 def fetch_ohlcv_data_range(fyers, symbol: str, from_date: datetime, to_date: datetime, resolution: str = "1D"):
     """Fetch OHLCV data for a given date range"""
     try:
@@ -47,13 +50,16 @@ def fetch_ohlcv_data_range(fyers, symbol: str, from_date: datetime, to_date: dat
 def fetch_and_store_all(symbols: list, years: int = 3):
     """Fetch and save historical data for all symbols, incrementally"""
     fyers = get_fyers_client()
-    today = datetime.now().date()
+    today = pd.Timestamp.now().normalize()
     start_date_default = today - timedelta(days=365 * years)
 
     # Load existing data if available
     if os.path.exists(HISTORICAL_DATA_FILE):
         existing_data = pd.read_parquet(HISTORICAL_DATA_FILE)
-        existing_data['date'] = pd.to_datetime(existing_data['date']).dt.date
+        existing_data['date'] = pd.to_datetime(existing_data['date'])
+
+        print(existing_data[existing_data["symbol"] == 'NSE:SKMEGGPROD-BE'])
+        
         logger.info(f" Loaded existing historical data from {HISTORICAL_DATA_FILE}")
     else:
         existing_data = pd.DataFrame()
@@ -67,11 +73,16 @@ def fetch_and_store_all(symbols: list, years: int = 3):
 
         if not symbol_data.empty:
             latest_date = symbol_data["date"].max()
-            fetch_from = latest_date + timedelta(days=1)
+            
+            fetch_from = latest_date 
+            symbol_data = symbol_data[symbol_data["date"] < pd.to_datetime(latest_date)]
+            
+            logger.info(f" Latest data for {symbol} is till {latest_date}. Removing and refetching from {latest_date}.")
+
         else:
             fetch_from = start_date_default
 
-        if fetch_from >= today:
+        if fetch_from > today:
             logger.info(f" Up-to-date: {symbol}")
             updated_data.append(symbol_data)
             continue
@@ -91,6 +102,8 @@ def fetch_and_store_all(symbols: list, years: int = 3):
     if updated_data:
         full_data = pd.concat(updated_data, ignore_index=True)
         full_data = full_data.drop_duplicates(subset=["symbol", "date"]).sort_values(by=["symbol", "date"])
+        print(full_data)
+
         full_data.to_parquet(HISTORICAL_DATA_FILE, index=False)
         logger.info(f"Updated historical data saved to {HISTORICAL_DATA_FILE}")
     else:

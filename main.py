@@ -51,13 +51,14 @@ def main():
         logger.info(" Starting model training...")
         df = pd.read_parquet(HISTORICAL_DATA_FILE)
         df = add_technical_indicators(df)
+
+        df.to_csv('check.csv')
        
         
         if 'target_hit' not in df.columns:
             logger.error("'target_hit' column not found. Cannot train model.")
         else:
             train_model(df)
-
 
         # Save latest data for screener
         df_latest = df.copy()
@@ -72,6 +73,8 @@ def main():
         # Load historical data with features
         df = pd.read_parquet(HISTORICAL_DATA_FILE)
         df = add_technical_indicators(df)
+
+        print(df)
         
         # Prepare backtest parameters
         backtest_params = {
