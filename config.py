@@ -13,7 +13,7 @@ TOKEN_PATH = Path("outputs/fyers_access_token.txt")
 
 
 #=====Good Stock Filter====
-AVG_VOL = 100
+AVG_VOL = 1
 AVG_PRICE = 50
 
 # === DATA SETTINGS ===
@@ -36,12 +36,10 @@ LOG_FILE = Path("outputs/logs/system.log")
 
 #====Feature Columns====
 FEATURE_COLUMNS = [
-    'daily_return', 'range_pct', 'volatility_5', 'volatility_10', 'volatility_20',
-    'return_mean_5', 'return_mean_10', 'return_mean_20',
-    'price_above_ema20', 'price_above_ema50', 'ema20_above_ema50',
-    'ema20_distance', 'ema50_distance', 'ema_spread',
-    'norm_dist_to_support', 'norm_dist_to_resistance',
-    'volume_ma', 'volume_ratio', 'price_volume',
-    'rsi', 'bb_position', 'trend_strength',
-    'is_doji', 'is_hammer'
-]
+            'rsi', 'atr', 'bb_position',  # Technical indicators
+            'support_distance_pct','resistance_distance_pct', 'support_strength', 'resistance_strength'
+            'is_bullish',	'is_bearish', 'body_to_range',	'upper_shadow_to_range','lower_shadow_to_range',
+            'is_doji',	'is_hammer',	'is_shooting_star', ' risk_reward_ratio'
+        ]
+
+

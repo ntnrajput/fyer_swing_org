@@ -1,7 +1,7 @@
 # model/train_model.py
 
 import sys
-sys.stdout.reconfigure(encoding='utf-8')
+
 import pandas as pd
 import numpy as np
 import os
@@ -15,6 +15,7 @@ from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.utils.class_weight import compute_class_weight
 import warnings
 warnings.filterwarnings('ignore')
+sys.stdout.reconfigure(encoding='utf-8')
 
 from utils.logger import get_logger
 from config import FEATURE_COLUMNS, MODEL_FILE
@@ -194,7 +195,7 @@ def train_model(df):
         df = df.copy()
         
         # Validate existing features
-        available_features = validate_features(df)
+        # available_features = validate_features(df)
         
         # Create only basic features
         df = create_basic_features(df)
@@ -215,31 +216,10 @@ def train_model(df):
         df = df[df["target_hit"].isin([0, 1])]
         logger.info(f"After filtering to binary targets: {df.shape}")
         
-        # Remove problematic columns
-        cols_to_remove = [
-            'days_to_target', 'days_to_target_3', 'days_to_target_5', 
-            'days_to_target_8', 'days_to_target_10', 'trade_type_success',
-            'price_atr_position', 'price_volume_correlation',
-            'volume_momentum_10', 'volume_momentum_5',
-            'price_ma_10', 'price_ma_20', 'volume_ma'  # Remove intermediate calculations
-        ]
-        df = df.drop(columns=[col for col in cols_to_remove if col in df.columns])
+    
         
         # Select only core features to prevent overfitting
-        core_features = [
-            'rsi', 'atr', 'bb_position',  # Technical indicators
-            'daily_return', 'range_pct',  # Price movement
-            'volume_ratio',  # Volume
-            'trend_strength',  # Trend
-            'norm_dist_to_support', 'norm_dist_to_resistance',  # Support/Resistance
-            'rsi_oversold', 'rsi_overbought'  # Simple RSI features
-        ]
-        
-        # Add any existing EMA features (but limit to main ones)
-        ema_features = ['ema20_distance', 'ema50_distance', 'ema_spread']
-        for ema_feat in ema_features:
-            if ema_feat in df.columns:
-                core_features.append(ema_feat)
+        core_features = FEATURE_COLUMNS
         
         # Filter to features that actually exist
         final_features = [col for col in core_features if col in df.columns]
