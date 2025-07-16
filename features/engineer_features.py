@@ -49,7 +49,7 @@ def add_technical_indicators(df: pd.DataFrame) -> pd.DataFrame:
 
         
         # ➕ Basic Technical Indicators (vectorized)
-        symbol_df = add_basic_indicators_vectorized(symbol_df, close, high, low, open_price)
+        symbol_df = add_basic_indicators_vectorized(symbol_df, close, high, low, open_price,volume)
         
         # ➕ Advanced Technical Indicators (optimized)
         # symbol_df = add_advanced_indicators_optimized(symbol_df, close, high, low, volume)
@@ -76,25 +76,71 @@ def add_technical_indicators(df: pd.DataFrame) -> pd.DataFrame:
 
         print(symbol_df)
 
-
-        
-        
         all_dfs.append(symbol_df)
         logger.info(f" Features added for {symbol}")
     
     return pd.concat(all_dfs, ignore_index=True)
 
+def calculate_rolling_fib_pivots(df, window=10):
+    """Calculate rolling Fibonacci pivot levels using a rolling window."""
+    
+    # Calculate rolling high, low, close over window periods
+    rolling_high = df['high'].rolling(window=window).max()
+    rolling_low = df['low'].rolling(window=window).min()
+    rolling_close = df['close'].rolling(window=window).mean()
+    
+    # Calculate pivot point
+    pivot = (rolling_high + rolling_low + rolling_close) / 3
+    
+    # Fibonacci levels
+    fib_range = rolling_high - rolling_low
+    fib_r1 = pivot + 0.382 * fib_range
+    fib_r2 = pivot + 0.618 * fib_range
+    fib_s1 = pivot - 0.382 * fib_range
+    fib_s2 = pivot - 0.618 * fib_range
+    
+    # Calculate distances as percentages
+    df['fib_pivot_distance_pct'] = (df['close'] - pivot) / pivot * 100
+    df['fib_r1_distance_pct'] = (df['close'] - fib_r1) / fib_r1 * 100
+    df['fib_r2_distance_pct'] = (df['close'] - fib_r2) / fib_r2 * 100
+    df['fib_s1_distance_pct'] = (df['close'] - fib_s1) / fib_s1 * 100
+    df['fib_s2_distance_pct'] = (df['close'] - fib_s2) / fib_s2 * 100
+    
+    return df
 
-def add_basic_indicators_vectorized(df: pd.DataFrame, close: np.ndarray, high: np.ndarray, low: np.ndarray, open_price: np.ndarray) -> pd.DataFrame:
+
+def add_basic_indicators_vectorized(df: pd.DataFrame, close: np.ndarray, high: np.ndarray, low: np.ndarray, open_price: np.ndarray, volume:np.ndarray) -> pd.DataFrame:
     """Add basic indicators using vectorized operations."""
     
     # EMA calculations (vectorized)
     for period in EMA_PERIODS:
         df[f"ema{period}"] = calculate_ema(df["close"], period)
     
+
+    df['ema20_ema50'] = df['ema20']/df['ema50']
+    df['ema50_ema200'] = df['ema50']/df['ema200']
     # RSI and ATR
     df["rsi"] = calculate_rsi(df["close"], RSI_PERIOD)
     df["atr"] = calculate_atr(df)
+
+    volume = np.array(volume, dtype=float)
+    
+    # Calculate rolling mean while skipping nan
+    rolling_mean = pd.Series(volume).rolling(window= 50 , min_periods=1).mean()
+    
+    # Compute volume / rolling mean
+    ratio = volume / rolling_mean.to_numpy()
+
+    df['vol_by_avg_vol'] = ratio
+
+    df['price_change_pct'] = (close - np.roll(close, 1)) / np.roll(close, 1) * 100
+    df['high_low_pct'] = (high - low) / close * 100
+    range_hl = high - low
+    df['close_position_in_range'] = np.where(range_hl != 0, (close - low) / range_hl, 0.5)
+    df['gap_pct'] = (open_price - np.roll(close, 1)) / np.roll(close, 1) * 100
+
+    df = calculate_rolling_fib_pivots(df,window=5)
+
     
     return df
 

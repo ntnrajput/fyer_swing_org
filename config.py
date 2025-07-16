@@ -13,8 +13,8 @@ TOKEN_PATH = Path("outputs/fyers_access_token.txt")
 
 
 #=====Good Stock Filter====
-AVG_VOL = 1
-AVG_PRICE = 50
+AVG_VOL = 0.5
+AVG_PRICE = 15
 
 # === DATA SETTINGS ===
 SYMBOLS_FILE = Path("symbols.csv")
@@ -36,10 +36,12 @@ LOG_FILE = Path("outputs/logs/system.log")
 
 #====Feature Columns====
 FEATURE_COLUMNS = [
-            'rsi', 'atr', 'bb_position',  # Technical indicators
-            'support_distance_pct','resistance_distance_pct', 'support_strength', 'resistance_strength'
-            'is_bullish',	'is_bearish', 'body_to_range',	'upper_shadow_to_range','lower_shadow_to_range',
-            'is_doji',	'is_hammer',	'is_shooting_star', ' risk_reward_ratio'
-        ]
+    'rsi', 'atr', 'bb_position',  # Technical indicators
+    'support_distance_pct', 'resistance_distance_pct', 'support_strength', 'resistance_strength',  # Added comma here
+    'is_bullish', 'is_bearish', 'body_to_range', 'upper_shadow_to_range', 'lower_shadow_to_range',
+    'is_doji', 'is_hammer', 'is_shooting_star', 'vol_by_avg_vol', 'ema20_ema50', 'ema50_ema200',
+    'price_change_pct', 'high_low_pct', 'close_position_in_range', 'gap_pct', 'fib_pivot_distance_pct',
+    'fib_r1_distance_pct', 'fib_r2_distance_pct', 'fib_s1_distance_pct', 'fib_s2_distance_pct'
+]
 
 

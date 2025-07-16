@@ -13,9 +13,15 @@ from sklearn.metrics import classification_report, confusion_matrix, roc_auc_sco
 from sklearn.preprocessing import StandardScaler
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.utils.class_weight import compute_class_weight
+from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
 import warnings
 warnings.filterwarnings('ignore')
 sys.stdout.reconfigure(encoding='utf-8')
+
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 from utils.logger import get_logger
 from config import FEATURE_COLUMNS, MODEL_FILE
@@ -188,58 +194,206 @@ def evaluate_model_performance(model, X_test, y_test, X_train, y_train):
         'classification_report': report
     }
 
-def train_model(df):
-    """Simplified model training to reduce overfitting"""
-    try:
-        logger.info("Loading data for simplified model training...")
-        df = df.copy()
+# def train_model(df):
+#     """Simplified model training to reduce overfitting"""
+#     try:
+#         logger.info("Loading data for simplified model training...")
+#         df = df.copy()
         
-        # Validate existing features
-        # available_features = validate_features(df)
+#         # Validate existing features
+#         # available_features = validate_features(df)
         
-        # Create only basic features
-        df = create_basic_features(df)
+#         # Create only basic features
+#         df = create_basic_features(df)
         
-        logger.info("Filtering and preparing training data...")
+#         logger.info("Filtering and preparing training data...")
         
-        # Check target column
-        if 'target_hit' not in df.columns:
-            logger.error("target_hit column not found in dataframe")
-            raise ValueError("target_hit column not found in dataframe")
+#         # Check target column
+#         if 'target_hit' not in df.columns:
+#             logger.error("target_hit column not found in dataframe")
+#             raise ValueError("target_hit column not found in dataframe")
         
-        # Data cleaning
-        logger.info(f"Initial data shape: {df.shape}")
-        df = df.dropna(subset=["target_hit"])
-        df["target_hit"] = df["target_hit"].astype(int)
+#         # Data cleaning
+#         logger.info(f"Initial data shape: {df.shape}")
+#         df = df.dropna(subset=["target_hit"])
+#         df["target_hit"] = df["target_hit"].astype(int)
         
-        # Filter to binary targets only
-        df = df[df["target_hit"].isin([0, 1])]
-        logger.info(f"After filtering to binary targets: {df.shape}")
+#         # Filter to binary targets only
+#         df = df[df["target_hit"].isin([0, 1])]
+#         logger.info(f"After filtering to binary targets: {df.shape}")
         
     
         
-        # Select only core features to prevent overfitting
-        core_features = FEATURE_COLUMNS
+#         # Select only core features to prevent overfitting
+#         core_features = FEATURE_COLUMNS
         
-        # Filter to features that actually exist
-        final_features = [col for col in core_features if col in df.columns]
+#         # Filter to features that actually exist
+#         final_features = [col for col in core_features if col in df.columns]
         
-        # Remove features with too many missing values
-        for feature in final_features.copy():
-            if df[feature].isna().sum() / len(df) > 0.3:  # Remove if >30% missing
-                logger.warning(f"Removing feature {feature} due to high missing values")
-                final_features.remove(feature)
+#         # Remove features with too many missing values
+#         for feature in final_features.copy():
+#             if df[feature].isna().sum() / len(df) > 0.3:  # Remove if >30% missing
+#                 logger.warning(f"Removing feature {feature} due to high missing values")
+#                 final_features.remove(feature)
         
-        logger.info(f"Using {len(final_features)} core features for training")
-        logger.info(f"Selected features: {final_features}")
+#         logger.info(f"Using {len(final_features)} core features for training")
+#         logger.info(f"Selected features: {final_features}")
+#         print('o'*50)
+
         
-        # Prepare data
-        df = df.dropna(subset=final_features)
-        X = df[final_features]
-        y = df["target_hit"]
         
-        # Fill any remaining NaN values
+#         # Prepare data
+#         df = df.dropna(subset=final_features)
+#         X = df[final_features]
+#         y = df["target_hit"]
+        
+#         # Fill any remaining NaN values
+#         X = X.fillna(0)
+        
+#         # Check class distribution
+#         class_counts = y.value_counts()
+#         logger.info(f"Class distribution: {class_counts.to_dict()}")
+        
+#         if len(class_counts) < 2:
+#             logger.error("Only one class found in target variable")
+#             raise ValueError("Only one class found in target variable")
+        
+#         # Calculate class weights
+#         classes = np.unique(y)
+#         class_weights = compute_class_weight('balanced', classes=classes, y=y)
+#         class_weight_dict = dict(zip(classes, class_weights))
+#         logger.info(f"Class weights: {class_weight_dict}")
+        
+#         # Time-aware split
+#         split_idx = int(len(X) * 0.8)
+#         X_train, X_test = X.iloc[:split_idx], X.iloc[split_idx:]
+#         y_train, y_test = y.iloc[:split_idx], y.iloc[split_idx:]
+        
+#         logger.info(f"Training on {len(X_train)} samples, testing on {len(X_test)} samples")
+        
+#         # Simple feature scaling
+#         scaler = StandardScaler()
+#         X_train_scaled = pd.DataFrame(
+#             scaler.fit_transform(X_train),
+#             columns=X_train.columns,
+#             index=X_train.index
+#         )
+#         X_test_scaled = pd.DataFrame(
+#             scaler.transform(X_test),
+#             columns=X_test.columns,
+#             index=X_test.index
+#         )
+        
+#         # Feature selection - limit to top features only
+#         max_features = min(10, len(final_features))  # Limit to 10 features max
+#         selector = SelectKBest(score_func=f_classif, k=max_features)
+#         X_train_selected = selector.fit_transform(X_train_scaled, y_train)
+#         X_test_selected = selector.transform(X_test_scaled)
+        
+#         # Get selected feature names
+#         selected_features = X_train_scaled.columns[selector.get_support()]
+#         X_train_selected = pd.DataFrame(X_train_selected, columns=selected_features, index=X_train.index)
+#         X_test_selected = pd.DataFrame(X_test_selected, columns=selected_features, index=X_test.index)
+        
+#         logger.info(f"Selected {len(selected_features)} most important features: {list(selected_features)}")
+        
+#         # Train simple model
+#         model = create_simple_model(X_train_selected, y_train, class_weight_dict)
+        
+#         # Evaluate model
+#         metrics = evaluate_model_performance(model, X_test_selected, y_test, X_train_selected, y_train)
+        
+#         # Create simplified model pipeline
+#         model_pipeline = {
+#             'scaler': scaler,
+#             'selector': selector,
+#             'model': model,
+#             'selected_features': list(selected_features),
+#             'feature_columns': final_features,
+#             'metrics': metrics
+#         }
+        
+#         # Save model
+#         joblib.dump(model_pipeline, MODEL_FILE)
+#         logger.info(f"Simplified model pipeline saved to {MODEL_FILE}")
+        
+#         # Trading recommendations
+#         logger.info("\nTRADING RECOMMENDATIONS:")
+#         if metrics['overfitting_gap'] < 0.05:
+#             logger.info("  Model shows good generalization")
+#         else:
+#             logger.warning("  Model may still be overfitting - use with caution")
+        
+#         if metrics['win_rate'] >= 55:
+#             logger.info("  Model shows reasonable predictive power")
+#         else:
+#             logger.info("  Model needs improvement - consider more data or different features")
+        
+#         logger.info(f"  Conservative approach recommended (win rate: {metrics['win_rate']:.1f}%)")
+        
+#         return model_pipeline
+        
+#     except Exception as e:
+#         logger.error(f"Failed to train simplified model: {e}", exc_info=True)
+#         raise e
+    
+
+
+
+
+
+
+
+
+def train_model(df_all, available_features=None, model_params=None):
+    """
+    Enhanced trading model with hyperparameter tuning and volume analysis
+    
+    Args:
+        df_all: DataFrame with all features and target
+        available_features: List of feature column names (optional, can be imported from config)
+        model_params: Optional hyperparameter grid for tuning
+    
+    Returns:
+        tuple: (best_model, scaler, available_features)
+    """
+    # Import FEATURE_COLUMNS if not provided
+    if available_features is None:
+        try:
+            from config import FEATURE_COLUMNS
+            available_features = FEATURE_COLUMNS
+        except ImportError:
+            raise ValueError("available_features must be provided or FEATURE_COLUMNS must be available in config")
+    
+    # Validate that all features exist in the dataframe
+    missing_features = [col for col in available_features if col not in df_all.columns]
+    if missing_features:
+        raise ValueError(f"Missing features in dataframe: {missing_features}")
+    
+    # Also check if target column exists
+    if 'target_hit' not in df_all.columns:
+        raise ValueError("Target column 'target_hit' not found in dataframe")
+    try:
+        # Data preparation - handle NaN values in both features and target
+        print("📊 Initial data shape:", df_all.shape)
+        
+        # First, drop rows where target is NaN
+        df_all = df_all.dropna(subset=['target_hit'])
+        print("📊 After dropping NaN targets:", df_all.shape)
+        
+        # Then drop rows where any of the features are NaN
+        df_all = df_all.dropna(subset=available_features)
+        print("📊 After dropping NaN features:", df_all.shape)
+        
+        X = df_all[available_features]
+        y = df_all['target_hit']
+        
+        # Fill any remaining NaN values in features
         X = X.fillna(0)
+        
+        # Verify no NaN values remain
+        print(f"📊 NaN values in features: {X.isnull().sum().sum()}")
+        print(f"📊 NaN values in target: {y.isnull().sum()}")
         
         # Check class distribution
         class_counts = y.value_counts()
@@ -248,82 +402,135 @@ def train_model(df):
         if len(class_counts) < 2:
             logger.error("Only one class found in target variable")
             raise ValueError("Only one class found in target variable")
+            
+        # Check if we have enough samples after cleaning
+        if len(df_all) < 50:
+            logger.warning(f"Very few samples remaining after cleaning: {len(df_all)}")
+            
+        # Additional check for target variable data types
+        if y.dtype not in ['int64', 'int32', 'float64', 'float32', 'bool']:
+            logger.warning(f"Target variable dtype is {y.dtype}, converting to numeric")
+            y = pd.to_numeric(y, errors='coerce')
+            # Drop any rows that couldn't be converted
+            mask = ~y.isnull()
+            X = X[mask]
+            y = y[mask]
+            print(f"📊 After numeric conversion: {len(X)} samples")
         
-        # Calculate class weights
-        classes = np.unique(y)
-        class_weights = compute_class_weight('balanced', classes=classes, y=y)
-        class_weight_dict = dict(zip(classes, class_weights))
-        logger.info(f"Class weights: {class_weight_dict}")
+        # Scale features
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
         
-        # Time-aware split
-        split_idx = int(len(X) * 0.8)
-        X_train, X_test = X.iloc[:split_idx], X.iloc[split_idx:]
-        y_train, y_test = y.iloc[:split_idx], y.iloc[split_idx:]
+        # Split data with stratification (replaces time-aware split)
+        X_train, X_test, y_train, y_test = train_test_split(
+            X_scaled, y, stratify=y, test_size=0.2, random_state=42
+        )
         
         logger.info(f"Training on {len(X_train)} samples, testing on {len(X_test)} samples")
         
-        # Simple feature scaling
-        scaler = StandardScaler()
-        X_train_scaled = pd.DataFrame(
-            scaler.fit_transform(X_train),
-            columns=X_train.columns,
-            index=X_train.index
-        )
-        X_test_scaled = pd.DataFrame(
-            scaler.transform(X_test),
-            columns=X_test.columns,
-            index=X_test.index
-        )
+        # Enhanced hyperparameter tuning
+        if model_params is None:
+            model_params = {
+                'n_estimators': [100],
+                'max_depth': [10, None],
+                'min_samples_split': [2, 5],
+                'min_samples_leaf': [1],
+                'max_features': ['sqrt']
+            }
         
-        # Feature selection - limit to top features only
-        max_features = min(10, len(final_features))  # Limit to 10 features max
-        selector = SelectKBest(score_func=f_classif, k=max_features)
-        X_train_selected = selector.fit_transform(X_train_scaled, y_train)
-        X_test_selected = selector.transform(X_test_scaled)
+        print("🔍 Performing enhanced hyperparameter tuning...")
+        rf = RandomForestClassifier(random_state=42, n_jobs=-1)
+        grid_search = GridSearchCV(rf, model_params, cv=3, scoring='roc_auc', n_jobs=-1)
+        grid_search.fit(X_train, y_train)
         
-        # Get selected feature names
-        selected_features = X_train_scaled.columns[selector.get_support()]
-        X_train_selected = pd.DataFrame(X_train_selected, columns=selected_features, index=X_train.index)
-        X_test_selected = pd.DataFrame(X_test_selected, columns=selected_features, index=X_test.index)
-        
-        logger.info(f"Selected {len(selected_features)} most important features: {list(selected_features)}")
-        
-        # Train simple model
-        model = create_simple_model(X_train_selected, y_train, class_weight_dict)
+        best_model = grid_search.best_estimator_
+        print(f"✅ Best parameters: {grid_search.best_params_}")
         
         # Evaluate model
-        metrics = evaluate_model_performance(model, X_test_selected, y_test, X_train_selected, y_train)
+        y_pred = best_model.predict(X_test)
+        y_pred_proba = best_model.predict_proba(X_test)[:, 1]
         
-        # Create simplified model pipeline
-        model_pipeline = {
-            'scaler': scaler,
-            'selector': selector,
-            'model': model,
-            'selected_features': list(selected_features),
-            'feature_columns': final_features,
-            'metrics': metrics
+        print("\n📊 Enhanced Model Evaluation:")
+        print(classification_report(y_test, y_pred))
+        print(f"ROC AUC Score: {roc_auc_score(y_test, y_pred_proba):.4f}")
+        
+        # Feature importance analysis
+        feature_importance = pd.DataFrame({
+            'feature': available_features,
+            'importance': best_model.feature_importances_
+        }).sort_values('importance', ascending=False)
+        
+        print("\n📈 Top 15 Most Important Features:")
+        print(feature_importance.head(15))
+        
+        # Separate volume features importance
+        volume_features = feature_importance[feature_importance['feature'].str.contains('volume|vwap|obv|ad_line')]
+        print(f"\n🔊 Volume Features Importance (Top 10):")
+        print(volume_features.head(10))
+        
+        # Plot feature importance and save instead of showing
+        try:
+            plt.figure(figsize=(12, 10))                        
+            sns.barplot(data=feature_importance.head(20), x='importance', y='feature')
+            plt.title('Enhanced Feature Importance with Volume Analysis')
+            plt.tight_layout()
+            plt.savefig('feature_importance_plot.png', dpi=300, bbox_inches='tight')
+            plt.close()  # Close the figure to free memory
+            print("📊 Feature importance plot saved as 'feature_importance_plot.png'")
+        except Exception as e:
+            print(f"⚠️ Could not create feature importance plot: {e}")
+        
+        # Calculate additional metrics for comparison with original
+        train_pred = best_model.predict(X_train)
+        train_accuracy = np.mean(train_pred == y_train)
+        test_accuracy = np.mean(y_pred == y_test)
+        overfitting_gap = train_accuracy - test_accuracy
+        win_rate = test_accuracy * 100
+        
+        metrics = {
+            'train_accuracy': train_accuracy,
+            'test_accuracy': test_accuracy,
+            'overfitting_gap': overfitting_gap,
+            'win_rate': win_rate,
+            'roc_auc': roc_auc_score(y_test, y_pred_proba)
         }
         
-        # Save model
-        joblib.dump(model_pipeline, MODEL_FILE)
-        logger.info(f"Simplified model pipeline saved to {MODEL_FILE}")
+        logger.info(f"Model metrics: {metrics}")
+        
+        # Create enhanced model pipeline
+        model_pipeline = {
+            'scaler': scaler,
+            'model': best_model,
+            'feature_columns': available_features,
+            'metrics': metrics,
+            'best_params': grid_search.best_params_,
+            'feature_importance': feature_importance
+        }
+        
+        # Save model and scaler
+        joblib.dump(best_model, "enhanced_swing_model_with_volume.pkl")
+        joblib.dump(scaler, "feature_scaler_with_volume.pkl")
+        joblib.dump(available_features, "feature_columns_with_volume.pkl")
+        joblib.dump(model_pipeline, "enhanced_model_pipeline.pkl")
+        
+        print("✅ Enhanced model with volume analysis saved!")
         
         # Trading recommendations
         logger.info("\nTRADING RECOMMENDATIONS:")
-        if metrics['overfitting_gap'] < 0.05:
+        if overfitting_gap < 0.05:
             logger.info("  Model shows good generalization")
         else:
             logger.warning("  Model may still be overfitting - use with caution")
         
-        if metrics['win_rate'] >= 55:
+        if win_rate >= 55:
             logger.info("  Model shows reasonable predictive power")
         else:
             logger.info("  Model needs improvement - consider more data or different features")
         
-        logger.info(f"  Conservative approach recommended (win rate: {metrics['win_rate']:.1f}%)")
+        logger.info(f"  Enhanced approach with ROC AUC: {metrics['roc_auc']:.4f} (win rate: {win_rate:.1f}%)")
         
-        return model_pipeline
+        return best_model, scaler, available_features
         
     except Exception as e:
-        logger.error(f"Failed to train simplified model: {e}", exc_info=True)
-        raise e
+        logger.error(f"Failed to train enhanced model: {e}", exc_info=True)
+        raise

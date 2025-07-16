@@ -51,7 +51,7 @@ def add_candle_features(df):
     ohlc_max = np.maximum(df['open'], df['close'])
     ohlc_min = np.minimum(df['open'], df['close'])
     
-    df['upper_shadow'] = df['high'] - ohlc_max
+    df['upper_shadow'] = df['high'] - ohlc_max 
     df['lower_shadow'] = ohlc_min - df['low']
     
     # Candle direction
