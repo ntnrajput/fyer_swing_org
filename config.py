@@ -19,6 +19,7 @@ AVG_PRICE = 15
 # === DATA SETTINGS ===
 SYMBOLS_FILE = Path("symbols.csv")
 HISTORICAL_DATA_FILE = Path("outputs/all_symbols_history.parquet")
+HISTORICAL_DATA_FILE_csv = Path("outputs/all_symbols_history.csv")
 LATEST_DATA_FILE = Path("outputs/latest_full_data.parquet")
 DAILY_DATA_FILE = Path("outputs/today_data.csv")
 
