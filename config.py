@@ -30,7 +30,7 @@ RSI_PERIOD = 14
 VOLUME_LOOKBACK = 20
 
 # === MODEL ===
-MODEL_FILE = Path("model/model.pkl")
+MODEL_FILE = Path("enhanced_model_pipeline.pkl")
 
 # === LOGGING ===
 LOG_FILE = Path("outputs/logs/system.log")
@@ -42,7 +42,7 @@ FEATURE_COLUMNS = [
     'is_bullish', 'is_bearish', 'body_to_range', 'upper_shadow_to_range', 'lower_shadow_to_range',
     'is_doji', 'is_hammer', 'is_shooting_star', 'vol_by_avg_vol', 'ema20_ema50', 'ema50_ema200',
     'price_change_pct', 'high_low_pct', 'close_position_in_range', 'gap_pct', 'fib_pivot_distance_pct',
-    'fib_r1_distance_pct', 'fib_r2_distance_pct', 'fib_s1_distance_pct', 'fib_s2_distance_pct'
+    'fib_r1_distance_pct', 'fib_r2_distance_pct', 'fib_s1_distance_pct', 'fib_s2_distance_pct', 'ema20_price', 'ema50_price', 'ema200_price'
 ]
 
 

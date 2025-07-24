@@ -37,10 +37,10 @@ class SwingTradingBacktester:
         """Load trained model pipeline"""
         try:
             self.model_pipeline = joblib.load(model_path)
-            logger.info(f"✅ Model loaded from {model_path}")
+            logger.info(f"Model loaded from {model_path}")
             return True
         except Exception as e:
-            logger.error(f"❌ Failed to load model: {e}")
+            logger.error(f" Failed to load model: {e}")
             return False
     
     def prepare_features(self, df):
@@ -48,8 +48,7 @@ class SwingTradingBacktester:
         try:
             # Use the same preprocessing pipeline as training
             scaler = self.model_pipeline['scaler']
-            selector = self.model_pipeline['selector']
-            selected_features = self.model_pipeline['selected_features']
+            selected_features = self.model_pipeline['feature_columns']
             
             # Ensure all required features are present
             missing_features = [f for f in selected_features if f not in df.columns]
@@ -65,17 +64,11 @@ class SwingTradingBacktester:
                 index=X.index
             )
             
-            X_selected = selector.transform(X_scaled)
-            X_final = pd.DataFrame(
-                X_selected,
-                columns=selected_features,
-                index=X.index
-            )
-            
-            return X_final
+            return X_scaled
+
             
         except Exception as e:
-            logger.error(f"❌ Error preparing features: {e}")
+            logger.error(f" Error preparing features: {e}")
             return None
     
     def generate_signals(self, df):
@@ -103,7 +96,7 @@ class SwingTradingBacktester:
             return df
             
         except Exception as e:
-            logger.error(f"❌ Error generating signals: {e}")
+            logger.error(f" Error generating signals: {e}")
             return df
     
     def calculate_position_size(self, current_price, confidence, volatility=None):
@@ -235,7 +228,7 @@ class SwingTradingBacktester:
             stop_loss_pct: Stop loss percentage
             take_profit_pct: Take profit percentage
         """
-        logger.info("🚀 Starting backtest simulation...")
+        logger.info(" Starting backtest simulation...")
         
         # Generate signals
         df = self.generate_signals(df)
@@ -264,7 +257,7 @@ class SwingTradingBacktester:
                 shares = self.calculate_position_size(current_price, confidence, volatility)
                 
                 if self.execute_trade(symbol, 'BUY', current_price, shares, date, confidence):
-                    logger.info(f"📈 BUY {shares} shares of {symbol} at ${current_price:.2f} on {date}")
+                    logger.info(f"BUY {shares} shares of {symbol} at ${current_price:.2f} on {date}")
             
             # Process sell signals (stop loss, take profit, holding period)
             elif symbol in self.current_positions:
@@ -290,7 +283,7 @@ class SwingTradingBacktester:
                 if sell_reason:
                     shares_to_sell = position['shares']
                     if self.execute_trade(symbol, 'SELL', current_price, shares_to_sell, date):
-                        logger.info(f"📉 SELL {shares_to_sell} shares of {symbol} at ${current_price:.2f} on {date} - {sell_reason}")
+                        logger.info(f" SELL {shares_to_sell} shares of {symbol} at ${current_price:.2f} on {date} - {sell_reason}")
         
         # Calculate final portfolio value
         final_prices = {}
@@ -310,7 +303,7 @@ class SwingTradingBacktester:
                 'positions_value': portfolio_value - self.cash
             })
         
-        logger.info(f"✅ Backtest completed. Final portfolio value: ${final_portfolio_value:,.2f}")
+        logger.info(f" Backtest completed. Final portfolio value: ${final_portfolio_value:,.2f}")
         
         return self.calculate_performance_metrics()
     
@@ -395,44 +388,44 @@ class SwingTradingBacktester:
     def generate_report(self, results):
         """Generate comprehensive backtest report"""
         logger.info("\n" + "="*80)
-        logger.info("📊 BACKTEST PERFORMANCE REPORT")
+        logger.info(" BACKTEST PERFORMANCE REPORT")
         logger.info("="*80)
         
         # Trading Statistics
-        logger.info("📈 TRADING STATISTICS:")
+        logger.info(" TRADING STATISTICS:")
         logger.info(f"   Total Trades: {results['total_trades']}")
         logger.info(f"   Completed Trades: {results['completed_trades']}")
         logger.info(f"   Win Rate: {results['win_rate']:.1f}%")
         logger.info(f"   Profit Factor: {results['profit_factor']:.2f}")
         
         # P&L Analysis
-        logger.info("\n💰 P&L ANALYSIS:")
+        logger.info("\n P&L ANALYSIS:")
         logger.info(f"   Total P&L: ${results['total_pnl']:,.2f}")
         logger.info(f"   Average Win: ${results['avg_win']:,.2f}")
         logger.info(f"   Average Loss: ${results['avg_loss']:,.2f}")
         
         # Portfolio Performance
-        logger.info("\n📊 PORTFOLIO PERFORMANCE:")
+        logger.info("\n PORTFOLIO PERFORMANCE:")
         logger.info(f"   Initial Capital: ${self.initial_capital:,.2f}")
         logger.info(f"   Final Value: ${results['final_portfolio_value']:,.2f}")
         logger.info(f"   Total Return: {results['total_return']:.2f}%")
         logger.info(f"   Max Drawdown: {results['max_drawdown']:.2f}%")
         
         # Risk Metrics
-        logger.info("\n⚡ RISK METRICS:")
+        logger.info("\n RISK METRICS:")
         logger.info(f"   Sharpe Ratio: {results['sharpe_ratio']:.2f}")
         logger.info(f"   Volatility: {results['volatility']:.2f}%")
         
         # Performance Rating
-        logger.info("\n🎯 PERFORMANCE RATING:")
+        logger.info("\n PERFORMANCE RATING:")
         if results['win_rate'] >= 60 and results['sharpe_ratio'] >= 1.5:
-            logger.info("   🟢 EXCELLENT - Strategy shows strong performance")
+            logger.info("    EXCELLENT - Strategy shows strong performance")
         elif results['win_rate'] >= 50 and results['sharpe_ratio'] >= 1.0:
-            logger.info("   🟡 GOOD - Strategy shows decent performance")
+            logger.info("    GOOD - Strategy shows decent performance")
         elif results['win_rate'] >= 45 and results['sharpe_ratio'] >= 0.5:
-            logger.info("   🟠 MODERATE - Strategy needs improvement")
+            logger.info("    MODERATE - Strategy needs improvement")
         else:
-            logger.info("   🔴 POOR - Strategy requires significant optimization")
+            logger.info("    POOR - Strategy requires significant optimization")
         
         logger.info("="*80)
         
@@ -508,12 +501,12 @@ class SwingTradingBacktester:
             
             if save_path:
                 plt.savefig(save_path, dpi=300, bbox_inches='tight')
-                logger.info(f"📊 Charts saved to {save_path}")
+                logger.info(f" Charts saved to {save_path}")
             
             plt.show()
             
         except Exception as e:
-            logger.error(f"❌ Error creating plots: {e}")
+            logger.error(f" Error creating plots: {e}")
 
 
 def run_backtest(df, model_path=None, **kwargs):
@@ -556,7 +549,7 @@ def run_backtest(df, model_path=None, **kwargs):
         return results
         
     except Exception as e:
-        logger.error(f"❌ Backtest failed: {e}")
+        logger.error(f" Backtest failed: {e}")
         return None
 
 

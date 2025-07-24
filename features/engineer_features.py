@@ -119,6 +119,9 @@ def add_basic_indicators_vectorized(df: pd.DataFrame, close: np.ndarray, high: n
 
     df['ema20_ema50'] = df['ema20']/df['ema50']
     df['ema50_ema200'] = df['ema50']/df['ema200']
+    df['ema20_price'] =df['ema20']/df['close']
+    df['ema50_price'] =df['ema50']/df['close']
+    df['ema200_price'] =df['ema200']/df['close']
     # RSI and ATR
     df["rsi"] = calculate_rsi(df["close"], RSI_PERIOD)
     df["atr"] = calculate_atr(df)
@@ -141,7 +144,6 @@ def add_basic_indicators_vectorized(df: pd.DataFrame, close: np.ndarray, high: n
 
     df = calculate_rolling_fib_pivots(df,window=5)
 
-    
     return df
 
 
