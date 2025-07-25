@@ -7,6 +7,7 @@ import seaborn as sns
 from datetime import datetime, timedelta
 import joblib
 import warnings
+from time import sleep
 warnings.filterwarnings('ignore')
 
 from utils.logger import get_logger
@@ -49,6 +50,8 @@ class SwingTradingBacktester:
             # Use the same preprocessing pipeline as training
             scaler = self.model_pipeline['scaler']
             selected_features = self.model_pipeline['feature_columns']
+            print(selected_features)
+            sleep(100)
             
             # Ensure all required features are present
             missing_features = [f for f in selected_features if f not in df.columns]
@@ -91,7 +94,7 @@ class SwingTradingBacktester:
             
             # Enhanced signal filtering
             df['strong_signal'] = ((df['signal'] == 1) & 
-                                  (df['signal_confidence'] > 0.6)).astype(int)
+                                  (df['signal_confidence'] > 0.7)).astype(int)
             
             return df
             
@@ -218,7 +221,7 @@ class SwingTradingBacktester:
         self.total_portfolio_value = self.cash + position_value
         return self.total_portfolio_value
     
-    def run_backtest(self, df, holding_period=5, stop_loss_pct=0.05, take_profit_pct=0.08):
+    def run_backtest(self, df, holding_period=5, stop_loss_pct=0.03, take_profit_pct=0.08):
         """
         Run complete backtest simulation
         
@@ -535,7 +538,7 @@ def run_backtest(df, model_path=None, **kwargs):
         results = backtester.run_backtest(
             df,
             holding_period=kwargs.get('holding_period', 5),
-            stop_loss_pct=kwargs.get('stop_loss_pct', 0.05),
+            stop_loss_pct=kwargs.get('stop_loss_pct', 0.03),
             take_profit_pct=kwargs.get('take_profit_pct', 0.08)
         )
         
